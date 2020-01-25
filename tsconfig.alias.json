@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["./app/*", "./app/"],
+      "@routes": ["./app/Routes.tsx"],
+      "@theme": ["./app/assets/ts/theme.ts"],
+      "@assets/*": ["./app/assets/*", "./app/assets/"],
+      "@css/*": ["./app/assets/css/*", "./app/assets/css/"],
+      "@images/*": ["./app/assets/images/*", "./app/assets/images/"],
+      "@tsStyles/*": ["./app/assets/ts/*", "./app/assets/ts/"],
+      "@components/*": ["./app/components/*", "./app/components/"],
+      "@containers/*": ["./app/containers/*", "./app/containers/"],
+      "@views/*": ["./app/views/*", "./app/views/"],
+      "@gitlab/*": ["./app/gitlab/*", "./app/gitlab/"],
+      "@private/*": ["./app/private/*", "./app/private/"],
+      "@state/*": ["./app/state/*", "./app/state/"],
+      "@ducks/*": ["./app/state/ducks/*", "./app/state/ducks/"],
+      "@middlewares/*": [
+        "./app/state/middlewares/*",
+        "./app/state/middlewares/"
+      ],
+      "@stateUtils/*": ["./app/state/utils/*", "./app/state/utils/"]
+    }
+  }
+}
