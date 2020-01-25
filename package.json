@@ -13,7 +13,7 @@
     "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
     "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
     "ts": "tsc",
-    "lint": "cross-env NODE_ENV=development eslint --cache .",
+    "lint": "cross-env NODE_ENV=development eslint . --cache --ext .js,.jsx,.ts,.tsx",
     "lint-fix": "yarn --silent lint --fix; exit 0",
     "lint-styles": "stylelint --ignore-path .eslintignore '**/*.*(css|scss)' --syntax scss",
     "lint-styles-fix": "yarn --silent lint-styles --fix; exit 0",
@@ -23,7 +23,7 @@
     "package-linux": "yarn build && electron-builder build --linux",
     "package-win": "yarn build && electron-builder build --win --x64",
     "postinstall": "node -r @babel/register internals/scripts/CheckNativeDep.js && electron-builder install-app-deps && yarn build-dll && opencollective-postinstall",
-    "postlint-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{js,jsx,json,html,css,less,scss,yml}'",
+    "postlint-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{js,jsx,ts,tsx,json,html,css,less,scss,yml}'",
     "postlint-styles-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{css,scss}'",
     "preinstall": "node ./internals/scripts/CheckYarn.js",
     "prestart": "yarn build",
@@ -56,8 +56,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "ElectronReactTS",
+    "appId": "org.sdc224.ElectronReactTS",
     "files": [
       "dist/",
       "node_modules/",
@@ -100,9 +100,9 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
-      "private": false
+      "owner": "sdc224",
+      "repo": "electron-react-ts",
+      "private": true
     }
   },
   "repository": {
@@ -187,6 +187,7 @@
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/history": "^4.7.4",
     "@types/jest": "^24.9.0",
+    "@types/material-ui": "^0.21.7",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.5",
     "@types/react-redux": "^7.1.6",
@@ -222,6 +223,7 @@
     "eslint": "^6.8.0",
     "eslint-config-erb": "^0.2.0-1",
     "eslint-config-prettier": "^6.9.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-webpack": "^0.12.0",
     "eslint-plugin-compat": "^3.5.0-0",
     "eslint-plugin-import": "^2.19.1",
@@ -257,6 +259,7 @@
     "testcafe-browser-provider-electron": "^0.0.13",
     "testcafe-react-selectors": "^3.3.0",
     "typed-css-modules-webpack-plugin": "^0.1.2",
+    "typesafe-actions": "^5.1.0",
     "typescript": "^3.7.4",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.5",
@@ -269,12 +272,15 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@hot-loader/react-dom": "^16.11.0",
+    "@material-ui/core": "^4.8.3",
+    "@material-ui/icons": "^4.5.1",
     "connected-react-router": "^6.6.1",
     "core-js": "^3.6.1",
     "devtron": "^1.4.0",
     "electron-debug": "^3.0.1",
     "electron-log": "^4.0.2",
     "electron-updater": "^4.2.0",
+    "gitlab": "^14.2.1",
     "history": "^4.10.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -283,6 +289,7 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
+    "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.16"
   },
