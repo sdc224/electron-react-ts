@@ -6,6 +6,22 @@ import path from 'path';
 import webpack from 'webpack';
 import { dependencies as externals } from '../app/package.json';
 
+function getAppPath() {
+  return path.join(__dirname, '..', 'app');
+}
+
+function getAppFoldersPath(folder) {
+  return path.join(getAppPath(), folder);
+}
+
+function getSrcPath() {
+  return path.join(__dirname, '..');
+}
+
+function getSrcFoldersPath(folder) {
+  return path.join(getSrcPath(), folder);
+}
+
 export default {
   externals: [...Object.keys(externals || {})],
 
@@ -25,7 +41,7 @@ export default {
   },
 
   output: {
-    path: path.join(__dirname, '..', 'app'),
+    path: getAppPath(),
     // https://github.com/webpack/webpack/issues/1114
     libraryTarget: 'commonjs2'
   },
@@ -34,8 +50,32 @@ export default {
    * Determine the array of extensions that should be used to resolve modules.
    */
   resolve: {
+    alias: {
+      '@app': getAppPath(),
+      '@routes': getAppFoldersPath('./Routes.tsx'),
+      '@theme': getAppFoldersPath('./assets/ts/theme.tsx'),
+      '@assets': getAppFoldersPath('assets'),
+      '@css': getAppFoldersPath('assets/css'),
+      '@images': getAppFoldersPath('assets/images'),
+      '@tsStyles': getAppFoldersPath('assets/tsStyles'),
+      '@actions': getAppFoldersPath('actions'),
+      '@components': getAppFoldersPath('components'),
+      '@constants': getAppFoldersPath('constants'),
+      '@containers': getAppFoldersPath('containers'),
+      '@reducers': getAppFoldersPath('reducers'),
+      '@store': getAppFoldersPath('store'),
+      '@state': getAppFoldersPath('state'),
+      '@ducks': getAppFoldersPath('state/ducks'),
+      '@middlewares': getAppFoldersPath('state/middlewares'),
+      '@stateUtils': getAppFoldersPath('state/utils'),
+      '@views': getAppFoldersPath('views'),
+      '@utils': getAppFoldersPath('utils'),
+      '@resources': getSrcFoldersPath('resources'),
+      '@gitlab': getAppFoldersPath('gitlab'),
+      '@private': getAppFoldersPath('private')
+    },
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-    modules: [path.join(__dirname, '..', 'app'), 'node_modules']
+    modules: [getAppPath(), 'node_modules']
   },
 
   plugins: [
