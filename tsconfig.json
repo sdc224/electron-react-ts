@@ -35,6 +35,7 @@
     "app/dist",
     "dll",
     "app/main.js",
-    "app/main.js.map"
+    "app/main.js.map",
+    "node_modules"
   ]
 }
