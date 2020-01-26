@@ -52,7 +52,6 @@ export default {
   resolve: {
     alias: {
       '@app': getAppPath(),
-      '@routes': getAppFoldersPath('./Routes.tsx'),
       '@theme': getAppFoldersPath('./assets/ts/theme.tsx'),
       '@assets': getAppFoldersPath('assets'),
       '@css': getAppFoldersPath('assets/css'),
@@ -61,6 +60,7 @@ export default {
       '@components': getAppFoldersPath('components'),
       '@constants': getAppFoldersPath('constants'),
       '@containers': getAppFoldersPath('containers'),
+      '@routes': getAppFoldersPath('./routes'),
       '@state': getAppFoldersPath('state'),
       '@ducks': getAppFoldersPath('state/ducks'),
       '@middlewares': getAppFoldersPath('state/middlewares'),

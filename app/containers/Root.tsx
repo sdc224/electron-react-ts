@@ -5,7 +5,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { IApplicationState } from '@ducks/index';
-import Routes from '../Routes';
+import Routes from '@routes/';
 
 type Props = {
   store: Store<IApplicationState>;

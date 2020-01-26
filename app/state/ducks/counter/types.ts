@@ -5,12 +5,12 @@ export const CounterActionTypes = {
   DECREMENT_COUNTER: '@@counter/DECREMENT_COUNTER'
 };
 
-export type CounterStateType = {
+export interface ICounterAwareState {
   counter: number;
-};
+}
 
-export type GetState = () => CounterStateType;
+export type GetState = () => ICounterAwareState;
 
 export type Dispatch = ReduxDispatch<Action<string>>;
 
-export type Store = ReduxStore<CounterStateType, Action<string>>;
+export type Store = ReduxStore<ICounterAwareState, Action<string>>;

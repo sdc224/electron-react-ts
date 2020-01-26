@@ -9,8 +9,8 @@ import { IPostRaw, PostActionTypes } from './types';
  */
 function* handleFetch(action: MetaAction): Generator {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (action.meta) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const res: IPostRaw[] | any = yield call(
         apiCaller,
         action.meta.method,
