@@ -1,5 +1,3 @@
-/* eslint no-console: off */
-
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -48,7 +46,7 @@ const installExtensions = async () => {
     extensions.map(extension =>
       electronDevtoolsInstaller(extension, forceDownload)
     )
-  ).catch(console.log);
+  ).catch(Promise.reject(new Error('Error while installing extensions')));
 };
 
 const createWindow = async () => {
@@ -70,7 +68,7 @@ const createWindow = async () => {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-  // @TODO: Use 'ready-to-show' event
+  // TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {

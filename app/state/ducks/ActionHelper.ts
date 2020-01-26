@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/interface-name-prefix */
 import { Action, PayloadAction, TypeConstant } from 'typesafe-actions';
 
+interface IMeta {
+  method: string;
+  route: string;
+}
+
 /**
  * @desc Action with only Meta
  */
@@ -14,12 +19,6 @@ export type MetaAction = IMetaAction<TypeConstant, IMeta>;
 export interface IReducerAction<TPayload>
   extends Action<TypeConstant>,
     PayloadAction<TypeConstant, TPayload> {}
-
-export function createAction<T extends string, P>(
-  type: T,
-  payload: P,
-  meta?: { [key: string]: string }
-): ActionWithPayload<T, P>;
 
 /**
  * @copyright Copyright (c) 2018 Martin Hochel

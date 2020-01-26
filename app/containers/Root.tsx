@@ -1,4 +1,5 @@
 import React from 'react';
+import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
@@ -7,7 +8,7 @@ import { IApplicationState } from '@ducks/index';
 import Routes from '../Routes';
 
 type Props = {
-  store: IApplicationState;
+  store: Store<IApplicationState>;
   history: History;
 };
 
