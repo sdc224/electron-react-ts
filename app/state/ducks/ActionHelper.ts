@@ -26,6 +26,7 @@ export interface IReducerAction<TPayload>
  */
 
 type ActionsCreatorsMapObject = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [actionCreator: string]: (...args: any[]) => any;
 };
 

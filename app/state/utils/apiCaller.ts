@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const requestHeaders = (): HeadersInit => ({
   Accept: 'application/json',
   'Content-Type': 'application/json'

@@ -1,12 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-  AllEffect,
-  ForkEffect
-} from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import apiCaller from '@stateUtils/apiCaller';
 import { MetaAction } from '../ActionHelper';
 import { fetchPostsError, fetchPostsSuccess } from './actions';
@@ -17,6 +9,7 @@ import { IPostRaw, PostActionTypes } from './types';
  */
 function* handleFetch(action: MetaAction): Generator {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: IPostRaw[] | any = yield call(
       apiCaller,
       action.meta.method,
@@ -43,10 +36,6 @@ function* watchFetchRequest(): Generator {
 /**
  * @desc saga init, forks in effects, other sagas
  */
-export default function* postSaga(): Generator<
-  AllEffect<ForkEffect<Generator<unknown, any, unknown>>>,
-  void,
-  unknown
-> {
+export default function* postSaga() {
   yield all([fork(watchFetchRequest)]);
 }

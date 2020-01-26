@@ -5,6 +5,7 @@ export interface IPostState {
   readonly loading: boolean;
   readonly errors: [];
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ApiResponse = Record<string, any>;
 export interface IPostRaw extends ApiResponse {
   id: number;

@@ -9,7 +9,8 @@ module.exports = {
       {
         prefixWithI: 'always'
       }
-    ]
+    ],
+    'no-console': 'warn'
   },
   settings: {
     polyfills: [
