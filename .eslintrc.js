@@ -12,6 +12,12 @@ module.exports = {
     ]
   },
   settings: {
+    polyfills: [
+      // Example of marking entire API and all methods and properties as polyfilled
+      'Promise',
+      // Example of API with no property (i.e. a function)
+      'fetch'
+    ],
     'import/resolver': {
       // alias: {
       //   map: [

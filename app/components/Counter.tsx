@@ -5,20 +5,12 @@ import routes from '../constants/routes.json';
 
 type Props = {
   increment: () => void;
-  incrementIfOdd: () => void;
-  incrementAsync: () => void;
   decrement: () => void;
   counter: number;
 };
 
 export default function Counter(props: Props) {
-  const {
-    increment,
-    incrementIfOdd,
-    incrementAsync,
-    decrement,
-    counter
-  } = props;
+  const { increment, decrement, counter } = props;
 
   return (
     <div>
@@ -46,22 +38,6 @@ export default function Counter(props: Props) {
           type="button"
         >
           <i className="fa fa-minus" />
-        </button>
-        <button
-          className={styles.btn}
-          onClick={incrementIfOdd}
-          data-tclass="btn"
-          type="button"
-        >
-          odd
-        </button>
-        <button
-          className={styles.btn}
-          onClick={() => incrementAsync()}
-          data-tclass="btn"
-          type="button"
-        >
-          async
         </button>
       </div>
     </div>

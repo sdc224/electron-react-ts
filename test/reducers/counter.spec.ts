@@ -1,25 +1,26 @@
-import counter from '../../app/reducers/counter';
-import {
-  INCREMENT_COUNTER,
-  DECREMENT_COUNTER
-} from '../../app/actions/counter';
+import { counterReducer } from '@ducks/counter/reducers';
+import { CounterActionTypes } from '@ducks/counter/types';
 
 describe('reducers', () => {
   describe('counter', () => {
     it('should handle initial state', () => {
-      expect(counter(undefined, {})).toMatchSnapshot();
+      expect(counterReducer(undefined, {})).toMatchSnapshot();
     });
 
     it('should handle INCREMENT_COUNTER', () => {
-      expect(counter(1, { type: INCREMENT_COUNTER })).toMatchSnapshot();
+      expect(
+        counterReducer(1, { type: CounterActionTypes.INCREMENT_COUNTER })
+      ).toMatchSnapshot();
     });
 
     it('should handle DECREMENT_COUNTER', () => {
-      expect(counter(1, { type: DECREMENT_COUNTER })).toMatchSnapshot();
+      expect(
+        counterReducer(1, { type: CounterActionTypes.DECREMENT_COUNTER })
+      ).toMatchSnapshot();
     });
 
     it('should handle unknown action type', () => {
-      expect(counter(1, { type: 'unknown' })).toMatchSnapshot();
+      expect(counterReducer(1, { type: 'unknown' })).toMatchSnapshot();
     });
   });
 });

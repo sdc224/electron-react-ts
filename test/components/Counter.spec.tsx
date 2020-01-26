@@ -5,15 +5,13 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { BrowserRouter as Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
-import Counter from '../../app/components/Counter';
+import Counter from '@components/Counter';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 function setup() {
   const actions = {
     increment: spy(),
-    incrementIfOdd: spy(),
-    incrementAsync: spy(),
     decrement: spy()
   };
   const component = shallow(<Counter counter={1} {...actions} />);
@@ -55,17 +53,5 @@ describe('Counter component', () => {
     const { buttons, actions } = setup();
     buttons.at(1).simulate('click');
     expect(actions.decrement.called).toBe(true);
-  });
-
-  it('should third button should call incrementIfOdd', () => {
-    const { buttons, actions } = setup();
-    buttons.at(2).simulate('click');
-    expect(actions.incrementIfOdd.called).toBe(true);
-  });
-
-  it('should fourth button should call incrementAsync', () => {
-    const { buttons, actions } = setup();
-    buttons.at(3).simulate('click');
-    expect(actions.incrementAsync.called).toBe(true);
   });
 });

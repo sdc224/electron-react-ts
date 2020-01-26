@@ -183,6 +183,7 @@
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/register": "^7.8.3",
+    "@types/electron-devtools-installer": "^2.2.0",
     "@types/enzyme": "^3.10.4",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/history": "^4.7.4",
@@ -306,7 +307,7 @@
   "collective": {
     "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
-  "browserslist": "electron 7.1.7",
+  "browserslist": "electron 7.1.10",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

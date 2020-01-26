@@ -1,16 +1,18 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
+/* eslint-disable @typescript-eslint/interface-name-prefix */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { applyMiddleware, createStore, Store, compose } from 'redux';
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
-import createRootReducer from '../reducers';
-import * as counterActions from '../actions/counter';
-import { counterStateType } from '../reducers/types';
+import { IApplicationState, createRootReducer, rootSaga } from './ducks';
+import sagaMiddleware from './middlewares/sagas';
+import * as counterActions from './ducks/counter/actions';
+// import * as postActions from './ducks/post/actions';
+// import * as drawerActions from './ducks/drawer/action';
 
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: (
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       obj: Record<string, any>
     ) => Function;
   }
@@ -22,16 +24,16 @@ declare global {
 }
 
 const history = createHashHistory();
-
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: counterStateType) => {
-  // Redux Configuration
-  const middleware = [];
+const configureStore = (
+  initialState?: IApplicationState
+): Store<IApplicationState> => {
+  const middlewares = [];
   const enhancers = [];
 
-  // Thunk Middleware
-  middleware.push(thunk);
+  // Saga Middleware
+  middlewares.push(sagaMiddleware);
 
   // Logging Middleware
   const logger = createLogger({
@@ -41,12 +43,12 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Skip redux logs in console during the tests
   if (process.env.NODE_ENV !== 'test') {
-    middleware.push(logger);
+    middlewares.push(logger);
   }
 
   // Router Middleware
   const router = routerMiddleware(history);
-  middleware.push(router);
+  middlewares.push(router);
 
   // Redux DevTools Configuration
   const actionCreators = {
@@ -64,7 +66,7 @@ const configureStore = (initialState?: counterStateType) => {
   /* eslint-enable no-underscore-dangle */
 
   // Apply Middleware & Compose Enhancers
-  enhancers.push(applyMiddleware(...middleware));
+  enhancers.push(applyMiddleware(...middlewares));
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
@@ -72,11 +74,13 @@ const configureStore = (initialState?: counterStateType) => {
 
   if (module.hot) {
     module.hot.accept(
-      '../reducers',
+      './ducks',
       // eslint-disable-next-line global-require
-      () => store.replaceReducer(require('../reducers').default)
+      () => store.replaceReducer(require('./ducks').default)
     );
   }
+
+  sagaMiddleware.run(rootSaga);
 
   return store;
 };
