@@ -142,7 +142,25 @@
     "testURL": "http://localhost/",
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
+      "\\.(css|less|sass|scss)$": "identity-obj-proxy",
+      "^@app(.*)$": "<rootDir>/app$1",
+      "^@routes": "<rootDir>/app/Routes.tsx",
+      "^@theme": "<rootDir>/app/assets/ts/theme.tsx",
+      "^@assets(.*)$": "<rootDir>/app/assets$1",
+      "^@images(.*)$": "<rootDir>/app/assets/images$1",
+      "^@tsStyles(.*)$": "<rootDir>/app/assets/ts$1",
+      "^@components(.*)$": "<rootDir>/app/components$1",
+      "^@constants(.*)$": "<rootDir>/app/constants$1",
+      "^@containers(.*)$": "<rootDir>/app/containers$1",
+      "^@stateUtils(.*)$": "<rootDir>/app/state/utils$1",
+      "^@state(.*)$": "<rootDir>/app/state$1",
+      "^@ducks(.*)$": "<rootDir>/app/state/ducks$1",
+      "^@middlewares(.*)$": "<rootDir>/app/state/middlewares$1",
+      "^@views(.*)$": "<rootDir>/app/views$1",
+      "^@utils(.*)$": "<rootDir>/app/utils$1",
+      "^@resources(.*)$": "<rootDir>/resources$1",
+      "^@gitlab(.*)$": "<rootDir>/app/gitlab$1",
+      "^@private(.*)$": "<rootDir>/app/private$1"
     },
     "moduleFileExtensions": [
       "js",

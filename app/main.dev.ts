@@ -46,7 +46,7 @@ const installExtensions = async () => {
     extensions.map(extension =>
       electronDevtoolsInstaller(extension, forceDownload)
     )
-  ).catch(Promise.reject(new Error('Error while installing extensions')));
+  ).catch(error => new Error(`Error while installing extensions\n${error}`));
 };
 
 const createWindow = async () => {

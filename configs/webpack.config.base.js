@@ -57,7 +57,7 @@ export default {
       '@assets': getAppFoldersPath('assets'),
       '@css': getAppFoldersPath('assets/css'),
       '@images': getAppFoldersPath('assets/images'),
-      '@tsStyles': getAppFoldersPath('assets/tsStyles'),
+      '@tsStyles': getAppFoldersPath('assets/ts'),
       '@components': getAppFoldersPath('components'),
       '@constants': getAppFoldersPath('constants'),
       '@containers': getAppFoldersPath('containers'),

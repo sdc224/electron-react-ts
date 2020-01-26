@@ -2,12 +2,12 @@
 
 exports[`actions should decrement should create decrement action 1`] = `
 Object {
-  "type": "DECREMENT_COUNTER",
+  "type": "@@counter/DECREMENT_COUNTER",
 }
 `;
 
 exports[`actions should increment should create increment action 1`] = `
 Object {
-  "type": "INCREMENT_COUNTER",
+  "type": "@@counter/INCREMENT_COUNTER",
 }
 `;
