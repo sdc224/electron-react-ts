@@ -10,13 +10,15 @@ import { IPostRaw, PostActionTypes } from './types';
 function* handleFetch(action: MetaAction): Generator {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const res: IPostRaw[] | any = yield call(
-      apiCaller,
-      action.meta.method,
-      action.meta.route
-    );
+    if (action.meta) {
+      const res: IPostRaw[] | any = yield call(
+        apiCaller,
+        action.meta.method,
+        action.meta.method
+      );
 
-    yield put(fetchPostsSuccess(res));
+      yield put(fetchPostsSuccess(res));
+    }
   } catch (err) {
     if (err instanceof Error) {
       yield put(fetchPostsError(err.stack!));
