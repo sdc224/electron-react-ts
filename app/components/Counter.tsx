@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import jsonRoutes from '@routes/jsonRoutes';
-import styles from './Counter.css';
+import jsonRoutes from '@routes/jsonRoutes.json';
+import styles from '@css/components/Counter.css';
 
 type Props = {
   increment: () => void;
