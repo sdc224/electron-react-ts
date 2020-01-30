@@ -37,8 +37,8 @@ steps:
     displayName: Start xvfb
     condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
   # Install deps with yarn and run tests
-  # TODO yarn test-all instead of yarn test
-  - script: yarn --frozen-lockfile && yarn test
+  # TODO yarn test-all instead of yarn test-except-e2e
+  - script: yarn --frozen-lockfile && yarn test-except-e2e
     env:
       DISPLAY: ':99.0'
   # Generate coverage report
