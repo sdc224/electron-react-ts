@@ -46,7 +46,8 @@ export default function OperationButton(
     // link,
     // justIcon,
     // className = '',
-    muiClasses
+    muiClasses,
+    children
     // ...rest
   } = props;
   // const btnClasses = classNames({

@@ -7,6 +7,7 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
+import { CSSProperties } from '@material-ui/core/styles/withStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { IApplicationState } from '@state/ducks';
 import { setMobileOpen } from '@state/ducks/drawer/action';
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none'
       }
     },
-    toolbar: theme.mixins.toolbar,
+    toolbar: theme.mixins.toolbar as CSSProperties,
     drawerPaper: {
       width: drawerWidth
     },

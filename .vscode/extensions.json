@@ -1,3 +1,11 @@
 {
-  "recommendations": ["dbaeumer.vscode-eslint", "EditorConfig.EditorConfig"]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.EditorConfig",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vs-keybindings",
+    "eamodio.gitlens",
+    "kisstkondoros.vscode-codemetrics",
+    "PKief.material-icon-theme"
+  ]
 }

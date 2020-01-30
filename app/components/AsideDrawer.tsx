@@ -8,7 +8,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 // Stylings
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from '@tsStyles/styles/components/drawerStyles';
 
 const useStyles = makeStyles(styles);

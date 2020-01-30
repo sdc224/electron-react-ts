@@ -1,8 +1,7 @@
-import { createStyles, Theme, StyleRules } from '@material-ui/core';
+import { Theme, createStyles } from '@material-ui/core';
+import { CSSProperties } from '@material-ui/core/styles/withStyles';
 
-type ClassKey = 'toolbar';
-
-export default (theme: Theme): StyleRules<ClassKey> =>
+export default (theme: Theme) =>
   createStyles({
-    toolbar: theme.mixins.toolbar
+    toolbar: theme.mixins.toolbar as CSSProperties
   });
