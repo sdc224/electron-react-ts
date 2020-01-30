@@ -37,7 +37,8 @@ steps:
     displayName: Start xvfb
     condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
   # Install deps with yarn and run tests
-  - script: yarn --frozen-lockfile && yarn test-all
+  # TODO yarn test-all instead of yarn test
+  - script: yarn --frozen-lockfile && yarn test
     env:
       DISPLAY: ':99.0'
   # Generate coverage report
