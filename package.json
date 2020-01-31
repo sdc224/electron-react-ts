@@ -103,7 +103,7 @@
       "provider": "github",
       "owner": "sdc224",
       "repo": "electron-react-ts",
-      "private": true
+      "private": false
     }
   },
   "repository": {
