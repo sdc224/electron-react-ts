@@ -1,13 +1,10 @@
+import { action } from 'typesafe-actions';
 import { CounterActionTypes } from './types';
 
 export function increment() {
-  return {
-    type: CounterActionTypes.INCREMENT_COUNTER
-  };
+  action(CounterActionTypes.INCREMENT_COUNTER);
 }
 
 export function decrement() {
-  return {
-    type: CounterActionTypes.DECREMENT_COUNTER
-  };
+  action(CounterActionTypes.DECREMENT_COUNTER);
 }

@@ -1,4 +1,4 @@
-import { Action, PayloadAction, TypeConstant } from 'typesafe-actions';
+import { Action } from 'redux';
 import { IDrawerState, DrawerActionTypes } from './types';
 
 const initialState: IDrawerState = {
@@ -8,11 +8,11 @@ const initialState: IDrawerState = {
 // eslint-disable-next-line import/prefer-default-export
 export const drawerReducer = (
   state: IDrawerState = initialState,
-  action: Action<TypeConstant> & PayloadAction<TypeConstant, boolean>
+  action: Action<string>
 ): IDrawerState => {
   switch (action.type) {
-    case DrawerActionTypes.SET_MOBILE_OPEN:
-      return { ...state, mobileOpen: action.payload };
+    case DrawerActionTypes.TOGGLE_MOBILE_OPEN:
+      return { ...state, mobileOpen: !state.mobileOpen };
 
     default:
       return state;

@@ -1,27 +1,24 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import styles from '@assets/ts/styles/components/sideDrawerStyles';
-import { IApplicationState } from '@state/ducks';
-import { setMobileOpen } from '@state/ducks/drawer/action';
+import styles from '@tsStyles/styles/components/sideDrawerStyles';
+import { IDrawerState } from '@ducks/drawer/types';
 import AsideDrawer from './AsideDrawer';
 
 const useStyles = makeStyles(styles);
 
-export default function SideDrawer(): JSX.Element {
+interface IProps {
+  mobileOpen: boolean;
+  handleDrawerToggle: () => any;
+}
+
+export default function SideDrawer({
+  mobileOpen,
+  handleDrawerToggle
+}: IProps): JSX.Element {
   const classes = useStyles();
   const theme = useTheme();
-
-  // const [mobileOpen, setMobileOpen] = React.useState(false);
-  const mobileOpen = useSelector<IApplicationState, boolean>(
-    (state: IApplicationState) => state.drawer.mobileOpen
-  );
-  const dispatch = useDispatch();
-
-  // const handleDrawerToggle = (): void => setMobileOpen(!mobileOpen);
-  const handleDrawerToggle = () => dispatch(setMobileOpen(!mobileOpen));
 
   return (
     <nav className={classes.drawer} aria-label="mailbox folders">

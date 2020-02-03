@@ -1,6 +1,6 @@
 import { RouteProps } from 'react-router';
 import HomePage from '@containers/HomePage';
-import CounterPage from '@containers/CounterPage';
+import CounterModule from '@containers/CounterPage';
 import { Dashboard } from '@views/index';
 import jsonRoutes from './jsonRoutes.json';
 
@@ -21,7 +21,7 @@ const routes: RoutePropsWithKey[] = [
     key: '2',
     path: jsonRoutes.COUNTER,
     exact: true,
-    component: CounterPage
+    component: CounterModule
   },
   {
     key: '3',

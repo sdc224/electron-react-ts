@@ -1,23 +1,15 @@
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { increment, decrement } from '@ducks/counter/actions';
-import { ICounterAwareState } from '@ducks/counter/types';
+import React from 'react';
+import { DynamicModuleLoader } from 'redux-dynamic-modules';
 import Counter from '@components/Counter';
+import counterModule from '@ducks/counter/module';
+import { useCounter } from '@ducks/counter/selectors';
 
-function mapStateToProps(state: ICounterAwareState) {
-  return {
-    counter: state.counter
-  };
-}
+export default function SideDrawerModule() {
+  const { counter, increment, decrement } = useCounter();
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(
-    {
-      increment,
-      decrement
-    },
-    dispatch
+  return (
+    <DynamicModuleLoader modules={[counterModule]}>
+      <Counter counter={counter} increment={increment} decrement={decrement} />
+    </DynamicModuleLoader>
   );
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
