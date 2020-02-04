@@ -52,10 +52,10 @@ export default {
   resolve: {
     alias: {
       '@app': getAppPath(),
-      '@theme': getAppFoldersPath('./assets/ts/theme.tsx'),
       '@assets': getAppFoldersPath('assets'),
       '@css': getAppFoldersPath('assets/css'),
       '@images': getAppFoldersPath('assets/images'),
+      '@theme': getAppFoldersPath('./assets/theme'),
       '@tsStyles': getAppFoldersPath('assets/ts'),
       '@components': getAppFoldersPath('components'),
       '@constants': getAppFoldersPath('constants'),

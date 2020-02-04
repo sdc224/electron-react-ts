@@ -5,8 +5,10 @@ let newTheme = createMuiTheme({
     primary: {
       main: '#0288d1'
       // main: "#232c39"
+    },
+    secondary: {
+      main: '#E2432A'
     }
-    // secondary: '#ffffff'
   }
 });
 

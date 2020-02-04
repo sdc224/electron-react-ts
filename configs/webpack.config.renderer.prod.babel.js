@@ -172,6 +172,10 @@ export default merge.smart(baseConfig, {
   },
 
   optimization: {
+    spitChunks: {
+      chunks: 'all',
+      minChunks: 2
+    },
     minimizer: process.env.E2E_BUILD
       ? []
       : [

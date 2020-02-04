@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { IApplicationState } from '@ducks/index';
-import Routes from '@routes/';
+import Loading from '@components/Loading';
+import { ThemeProvider } from '@material-ui/core';
+import theme from '@theme/';
+
+const Routes = React.lazy(() => import('@routes/'));
 
 type Props = {
   store: Store<IApplicationState>;
@@ -15,7 +19,11 @@ type Props = {
 const Root = ({ store, history }: Props) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Routes />
+      <ThemeProvider theme={theme}>
+        <Suspense fallback={<Loading />}>
+          <Routes />
+        </Suspense>
+      </ThemeProvider>
     </ConnectedRouter>
   </Provider>
 );

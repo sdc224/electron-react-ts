@@ -1,11 +1,15 @@
-import React from 'react';
-import Counter from '@components/Counter';
+import React, { Suspense } from 'react';
 import { useCounter } from '@ducks/counter/selectors';
+import Loading from '@components/Loading';
+
+const Counter = React.lazy(() => import('@components/Counter'));
 
 export default function CounterModel() {
   const { counter, increment, decrement } = useCounter();
 
   return (
-    <Counter counter={counter} increment={increment} decrement={decrement} />
+    <Suspense fallback={<Loading />}>
+      <Counter counter={counter} increment={increment} decrement={decrement} />
+    </Suspense>
   );
 }
