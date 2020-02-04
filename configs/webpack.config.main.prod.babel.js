@@ -27,7 +27,7 @@ export default merge.smart(baseConfig, {
   },
 
   optimization: {
-    spitChunks: {
+    splitChunks: {
       chunks: 'all',
       minChunks: 2
     },
