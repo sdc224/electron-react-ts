@@ -6,7 +6,7 @@ import { postReducer } from './post/reducers';
 import postSaga from './post/sagas';
 import { IPostState } from './post/types';
 import { IDrawerState } from './drawer/types';
-import { drawerReducer } from './drawer/reducer';
+import { drawerReducer } from './drawer/reducers';
 import { counterReducer } from './counter/reducers';
 
 // The top-level state object

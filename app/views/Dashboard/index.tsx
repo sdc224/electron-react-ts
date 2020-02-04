@@ -1,12 +1,10 @@
 import React from 'react';
-import Header from '@components/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import SideDrawer from '@components/SideDrawer';
 import Typography from '@material-ui/core/Typography';
-
-// Stylings
 import { makeStyles } from '@material-ui/core/styles';
 import styles from '@tsStyles/styles/views/dashboardStyles';
+import HeaderModel from '@containers/HeaderModel';
+import SideDrawerModel from '@containers/SideDrawerModel';
 
 const useStyles = makeStyles(styles);
 
@@ -16,8 +14,8 @@ const Dashboard: React.FC = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Header />
-      <SideDrawer />
+      <HeaderModel />
+      <SideDrawerModel />
       <main className={classes.main}>
         <div className={classes.toolbar} />
         <Typography paragraph>
