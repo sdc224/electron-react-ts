@@ -27,6 +27,7 @@ function setup(initialState = {}) {
   };
 }
 
+// TODO: To be changed to react-testing-library
 // Stopping tests for React.lazy and Suspense
 // https://github.com/airbnb/enzyme/issues/2212
 describe('containers', () => {

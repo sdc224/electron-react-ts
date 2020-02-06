@@ -3,7 +3,7 @@
 let newTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#0288d1'
+      main: '#0288D1'
       // main: "#232c39"
     },
     secondary: {
