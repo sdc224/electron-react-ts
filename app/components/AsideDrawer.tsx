@@ -12,7 +12,7 @@ import {
   ForkIcon,
   UpdateIcon,
   CreateMRIcon,
-  FeaturedVideoIcon
+  FeatureBranchIcon
 } from '@tsStyles/icons/OperationIcons';
 import { useHistory } from 'react-router';
 
@@ -52,7 +52,7 @@ const operationsList2: IOperation[] = [
   },
   {
     text: 'Feature Branch',
-    icon: <FeaturedVideoIcon />,
+    icon: <FeatureBranchIcon />,
     click: () => {}
   }
 ];

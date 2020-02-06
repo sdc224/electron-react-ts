@@ -1,5 +1,4 @@
 import React from 'react';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ShareIcon from '@material-ui/icons/Share';
 import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
@@ -25,4 +24,4 @@ const CreateMRIcon = () => <MergeTypeIcon />;
 
 const FeatureBranchIcon = () => <FeaturedVideoIcon />;
 
-export { CloneIcon, ForkIcon, UpdateIcon, CreateMRIcon, FeaturedVideoIcon };
+export { CloneIcon, ForkIcon, UpdateIcon, CreateMRIcon, FeatureBranchIcon };
