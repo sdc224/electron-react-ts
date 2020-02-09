@@ -1,18 +1,17 @@
-﻿import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core';
 
-let newTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#0288D1'
-      // main: "#232c39"
-    },
-    secondary: {
-      main: '#E2432A'
-    }
+import palette from './palette';
+import typography from './typography';
+import overrides from './overrides';
+
+const theme = createMuiTheme({
+  palette,
+  typography,
+  overrides,
+  zIndex: {
+    appBar: 1200,
+    drawer: 1100
   }
 });
 
-newTheme = responsiveFontSizes(newTheme);
-
-const theme = newTheme;
 export default theme;

@@ -61,6 +61,8 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
+    frame: false,
+    fullscreenable: false,
     webPreferences: {
       nodeIntegration: true
     }

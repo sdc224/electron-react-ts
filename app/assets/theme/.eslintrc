@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "dot-notation": "off",
+    "@typescript-eslint/interface-name-prefix": "off"
+  }
+}

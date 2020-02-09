@@ -4,7 +4,8 @@ import { DRAWER_WIDTH } from '@constants/styleConstants';
 export default (theme: Theme) =>
   createStyles({
     grow: {
-      flexGrow: 1
+      flexGrow: 1,
+      width: '7vh'
     },
     menuButton: {
       marginRight: theme.spacing(2),

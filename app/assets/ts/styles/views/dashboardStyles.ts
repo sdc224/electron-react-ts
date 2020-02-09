@@ -1,19 +1,17 @@
 import { createStyles, Theme, StyleRules } from '@material-ui/core';
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
 
-type ClassKey = 'root' | 'main' | 'header' | 'footer' | 'toolbar';
+type ClassKey = 'root' | 'main' | 'header' | 'footer';
 
 const dashboardStyles = (theme: Theme): StyleRules<ClassKey> =>
   createStyles({
     root: {
-      display: 'flex'
+      padding: theme.spacing(4)
     },
     header: {},
     main: {
       flexGrow: 1,
       padding: theme.spacing(3)
     },
-    toolbar: theme.mixins.toolbar as CSSProperties,
     footer: {}
   });
 

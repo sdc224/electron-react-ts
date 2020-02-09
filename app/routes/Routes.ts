@@ -1,33 +1,39 @@
 import { RouteProps } from 'react-router';
-import HomePage from '@containers/HomePage';
-import CounterModel from '@app/containers/CounterModel';
-import { Dashboard } from '@views/index';
+// import HomePage from '@containers/HomePage';
+import CounterModel from '@containers/CounterModel';
+import Main from '@layouts/Main';
+import { Dashboard } from '@views/';
 import jsonRoutes from './jsonRoutes.json';
 
-interface IKey {
+interface IRouteWithLayout {
   key: string;
+  layout: React.FC;
 }
 
-type RoutePropsWithKey = RouteProps & IKey;
+type RoutePropsWithLayout = RouteProps & IRouteWithLayout;
 
-const routes: RoutePropsWithKey[] = [
+const routes: RoutePropsWithLayout[] = [
   {
     key: '1',
     path: jsonRoutes.HOME,
     exact: true,
-    component: HomePage
+    // component: HomePage,
+    component: Dashboard,
+    layout: Main
   },
   {
     key: '2',
     path: jsonRoutes.COUNTER,
     exact: true,
-    component: CounterModel
+    component: CounterModel,
+    layout: Main
   },
   {
     key: '3',
     path: jsonRoutes.DASHBOARD,
     exact: true,
-    component: Dashboard
+    component: Dashboard,
+    layout: Main
   }
 ];
 

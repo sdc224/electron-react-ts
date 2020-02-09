@@ -10,6 +10,7 @@ module.exports = {
         prefixWithI: 'always'
       }
     ],
+    'react/jsx-props-no-spreading': 'off',
     'no-console': 'warn'
   },
   settings: {

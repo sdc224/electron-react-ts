@@ -1,6 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch } from 'react-router';
 import App from '@containers/App';
+import RouteWithLayout from '@components/RouteWithLayout';
 import routes from './Routes';
 
 export default function Routes() {
@@ -8,11 +9,12 @@ export default function Routes() {
     <App>
       <Switch>
         {routes.map(route => (
-          <Route
+          <RouteWithLayout
             key={route.key}
             exact={route.exact}
             path={route.path}
             component={route.component}
+            layout={route.layout}
           />
         ))}
       </Switch>
