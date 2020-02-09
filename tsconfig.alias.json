@@ -12,6 +12,7 @@
       "@constants/*": ["./app/constants/*", "./app/constants/"],
       "@containers/*": ["./app/containers/*", "./app/containers/"],
       "@views/*": ["./app/views/*", "./app/views/"],
+      "@layouts/*": ["./app/layouts/*", "./app/layouts/"],
       "@gitlab/*": ["./app/gitlab/*", "./app/gitlab/"],
       "@private/*": ["./app/private/*", "./app/private/"],
       "@routes/*": ["./app/routes/*", "./app/routes/"],

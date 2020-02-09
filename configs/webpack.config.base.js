@@ -65,6 +65,7 @@ export default {
       '@ducks': getAppFoldersPath('state/ducks'),
       '@middlewares': getAppFoldersPath('state/middlewares'),
       '@stateUtils': getAppFoldersPath('state/utils'),
+      '@layouts': getAppFoldersPath('layouts'),
       '@views': getAppFoldersPath('views'),
       '@utils': getAppFoldersPath('utils'),
       '@resources': getSrcFoldersPath('resources'),

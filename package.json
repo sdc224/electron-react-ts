@@ -158,6 +158,7 @@
       "^@ducks(.*)$": "<rootDir>/app/state/ducks$1",
       "^@middlewares(.*)$": "<rootDir>/app/state/middlewares$1",
       "^@views(.*)$": "<rootDir>/app/views$1",
+      "^@layouts(.*)$": "<rootDir>/app/layouts$1",
       "^@utils(.*)$": "<rootDir>/app/utils$1",
       "^@resources(.*)$": "<rootDir>/resources$1",
       "^@gitlab(.*)$": "<rootDir>/app/gitlab$1",
