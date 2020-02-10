@@ -1,5 +1,6 @@
 {
   "HOME": "/",
   "COUNTER": "/counter",
-  "DASHBOARD": "/dashboard"
+  "DASHBOARD": "/dashboard",
+  "CLONE": "/clone"
 }

@@ -33,8 +33,8 @@ const operations: IOperationState[] = [
     icon: <DashboardIcon />
   },
   {
-    title: 'Users',
-    href: '/users',
+    title: 'Clone',
+    href: '/clone',
     icon: <PeopleIcon />
   },
   {

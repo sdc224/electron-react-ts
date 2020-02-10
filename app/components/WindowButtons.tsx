@@ -67,9 +67,9 @@ const MaximizeButton: React.FC = () => {
   return (
     <WindowButton click={maximize}>
       {maximizedState ? (
-        <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>&#xE922;</span>
-      ) : (
         <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>&#xE923;</span>
+      ) : (
+        <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>&#xE922;</span>
       )}
     </WindowButton>
   );

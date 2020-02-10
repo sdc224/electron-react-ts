@@ -5,8 +5,8 @@ export default (theme: Theme) =>
     drawer: {
       width: 240,
       [theme.breakpoints.up('lg')]: {
-        marginTop: 64,
-        height: 'calc(100% - 64px)'
+        marginTop: 38,
+        height: 'calc(100% - 38px)'
       }
     },
     root: {

@@ -1,13 +1,10 @@
-import { createStyles, Theme } from '@material-ui/core';
+import { createStyles } from '@material-ui/core';
 
-export default (theme: Theme) =>
+export default () =>
   createStyles({
     root: {
-      paddingTop: 40,
-      height: '100%',
-      [theme.breakpoints.up('sm')]: {
-        paddingTop: 38
-      }
+      paddingTop: 38,
+      height: '100%'
     },
     shiftContent: {
       paddingLeft: 240

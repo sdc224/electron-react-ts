@@ -20,6 +20,13 @@ export interface IReducerAction<TPayload>
   extends Action<TypeConstant>,
     PayloadAction<TypeConstant, TPayload> {}
 
+interface IErrorAction<TType extends TypeConstant, TError extends string> {
+  type: TType;
+  error: TError;
+}
+
+export type ErrorAction = IErrorAction<TypeConstant, string>;
+
 /**
  * @copyright Copyright (c) 2018 Martin Hochel
  * Borrowed from the rex-tils library
