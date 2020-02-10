@@ -1,14 +1,12 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
-import { Typography, Link, Theme } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import styles from '@tsStyles/styles/components/footerStyles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    padding: theme.spacing(4)
-  }
-}));
+const useStyles = makeStyles(styles);
 
 interface IProps {
   className?: string;

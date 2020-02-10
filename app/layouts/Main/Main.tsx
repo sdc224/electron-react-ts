@@ -5,22 +5,9 @@ import { useMediaQuery, Theme } from '@material-ui/core';
 import Topbar from '@components/Topbar';
 import Sidebar from '@components/Sidebar';
 import Footer from '@components/Footer';
+import styles from '@tsStyles/styles/layouts/mainStyles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    paddingTop: 56,
-    height: '100%',
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: 64
-    }
-  },
-  shiftContent: {
-    paddingLeft: 240
-  },
-  content: {
-    height: '100%'
-  }
-}));
+const useStyles = makeStyles(styles);
 
 interface IProps {
   children?: React.ReactNode;

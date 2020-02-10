@@ -19,8 +19,7 @@ export default () =>
         background: '#E81123 !important'
       },
       '&:active': {
-        background: '#f1707a !important',
-        color: '#000'
+        background: '#f1707a !important'
       }
     }
   });

@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
+import { Button, makeStyles, createStyles } from '@material-ui/core';
 import {
   minimizeWindow,
   maximizeWindow,
@@ -8,75 +8,47 @@ import {
   closeWindow,
   isMaximized
 } from '@app/electronFunctions';
-import { makeStyles } from '@material-ui/core';
 import styles from '@tsStyles/styles/components/windowButtonStyles';
 
 interface IWindowButtonProps {
-  classes?: any;
+  classes?: ReturnType<typeof createStyles>;
   className?: string;
   text?: string;
-  maximizedState?: boolean;
-  enableMaximize?: boolean;
-  click: () => any;
+  children?: React.ReactNode;
+  click: () => void;
 }
-
-interface IMaximizeButtonProps {
-  classes?: any;
-  maximizedState: boolean;
-}
-
-interface ICloseButtonProps {
-  classes?: any;
-}
-
-const MaximizeButton: React.FC<IMaximizeButtonProps> = ({
-  maximizedState
-}: IMaximizeButtonProps) =>
-  maximizedState ? (
-    <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>&#xE922;</span>
-  ) : (
-    <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>&#xE923;</span>
-  );
-
-const WindowButton: React.FC<IWindowButtonProps> = ({
-  classes,
-  className,
-  click,
-  text,
-  enableMaximize,
-  maximizedState
-}: IWindowButtonProps) => (
-  <Button
-    className={clsx(className, classes.windowButtons)}
-    onClick={click}
-    color="inherit"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
-  >
-    {enableMaximize ? (
-      <MaximizeButton maximizedState={maximizedState!} />
-    ) : (
-      <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>{text}</span>
-    )}
-  </Button>
-);
-
-const CloseButton: React.FC<ICloseButtonProps> = ({
-  classes
-}: ICloseButtonProps) => (
-  <WindowButton
-    classes={classes}
-    className={classes.closeButton}
-    text="&#xE8BB;"
-    click={closeWindow}
-  />
-);
 
 const useStyles = makeStyles(styles);
 
-const WindowButtons: React.FC = () => {
+const WindowButton: React.FC<IWindowButtonProps> = ({
+  className,
+  click,
+  text,
+  children
+}: IWindowButtonProps) => {
   const classes = useStyles();
+
+  return (
+    <Button
+      className={clsx(className, classes.windowButtons)}
+      onClick={click}
+      color="inherit"
+      disableRipple
+      disableFocusRipple
+      disableTouchRipple
+    >
+      {children || (
+        <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>{text}</span>
+      )}
+    </Button>
+  );
+};
+
+const MinimizeButton: React.FC = () => (
+  <WindowButton text="&#xE921;" click={minimizeWindow} />
+);
+
+const MaximizeButton: React.FC = () => {
   const [maximizedState, setMaximizedState] = React.useState(isMaximized());
 
   React.useEffect(() => {
@@ -92,17 +64,34 @@ const WindowButtons: React.FC = () => {
       setMaximizedState(true);
     }
   };
+  return (
+    <WindowButton click={maximize}>
+      {maximizedState ? (
+        <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>&#xE922;</span>
+      ) : (
+        <span style={{ fontFamily: 'Segoe MDL2 Assets' }}>&#xE923;</span>
+      )}
+    </WindowButton>
+  );
+};
 
+const CloseButton: React.FC = () => {
+  const classes = useStyles();
+  return (
+    <WindowButton
+      className={classes.closeButton}
+      text="&#xE8BB;"
+      click={closeWindow}
+    />
+  );
+};
+
+const WindowButtons: React.FC = () => {
   return (
     <>
-      <WindowButton classes={classes} text="&#xE921;" click={minimizeWindow} />
-      <WindowButton
-        classes={classes}
-        enableMaximize
-        maximizedState={maximizedState}
-        click={maximize}
-      />
-      <CloseButton classes={classes} />
+      <MinimizeButton />
+      <MaximizeButton />
+      <CloseButton />
     </>
   );
 };

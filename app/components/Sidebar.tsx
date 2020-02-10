@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
-import { Divider, Drawer, Theme } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
@@ -13,29 +14,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Profile from '@components/Profile';
 import SidebarNav from '@components/SidebarNav';
+import styles from '@tsStyles/styles/components/sidebarStyles';
+import { IOperationState } from '@ducks/operation/types';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  drawer: {
-    width: 240,
-    [theme.breakpoints.up('lg')]: {
-      marginTop: 64,
-      height: 'calc(100% - 64px)'
-    }
-  },
-  root: {
-    backgroundColor: theme.palette.white,
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    padding: theme.spacing(2)
-  },
-  divider: {
-    margin: theme.spacing(2, 0)
-  },
-  nav: {
-    marginBottom: theme.spacing(2)
-  }
-}));
+const useStyles = makeStyles(styles);
 
 interface IProps {
   className?: string;
@@ -44,53 +26,53 @@ interface IProps {
   variant?: 'permanent' | 'persistent' | 'temporary';
 }
 
+const operations: IOperationState[] = [
+  {
+    title: 'Dashboard',
+    href: '/',
+    icon: <DashboardIcon />
+  },
+  {
+    title: 'Users',
+    href: '/users',
+    icon: <PeopleIcon />
+  },
+  {
+    title: 'Products',
+    href: '/products',
+    icon: <ShoppingBasketIcon />
+  },
+  {
+    title: 'Authentication',
+    href: '/sign-in',
+    icon: <LockOpenIcon />
+  },
+  {
+    title: 'Typography',
+    href: '/typography',
+    icon: <TextFieldsIcon />
+  },
+  {
+    title: 'Icons',
+    href: '/icons',
+    icon: <ImageIcon />
+  },
+  {
+    title: 'Account',
+    href: '/account',
+    icon: <AccountBoxIcon />
+  },
+  {
+    title: 'Settings',
+    href: '/settings',
+    icon: <SettingsIcon />
+  }
+];
+
 const Sidebar = (props: IProps) => {
   const { open, variant, onClose, className, ...rest } = props;
 
   const classes = useStyles();
-
-  const pages = [
-    {
-      title: 'Dashboard',
-      href: '/dashboard',
-      icon: <DashboardIcon />
-    },
-    {
-      title: 'Users',
-      href: '/users',
-      icon: <PeopleIcon />
-    },
-    {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
-    },
-    {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
-    {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
-    },
-    {
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
-    },
-    {
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />
-    }
-  ];
 
   return (
     <Drawer
@@ -103,7 +85,7 @@ const Sidebar = (props: IProps) => {
       <div {...rest} className={clsx(classes.root, className)}>
         <Profile />
         <Divider className={classes.divider} />
-        <SidebarNav className={classes.nav} pages={pages} />
+        <SidebarNav className={classes.nav} operations={operations} />
         {/* <UpgradePlan /> */}
       </div>
     </Drawer>

@@ -8,7 +8,10 @@ export const OperationActionTypes = {
 
 export interface IOperationState {
   title: string;
-  children: React.ReactNode;
+  href?: string;
+  click?: () => any;
+  // component?: React.ReactElement;
+  icon: React.ReactElement;
 }
 
 export interface IOperationAwareState {

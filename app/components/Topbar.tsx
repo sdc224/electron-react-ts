@@ -9,7 +9,6 @@ import {
   Hidden,
   IconButton,
   AppBarProps,
-  Theme,
   Typography
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -17,41 +16,10 @@ import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import GitIcon from '@tsStyles/icons/GitIcon';
 import styles from '@css/components/Topbar.css';
+import muiStyles from '@tsStyles/styles/components/topbarStyles';
 import WindowButtons from './WindowButtons';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  flexGrow: {
-    flexGrow: 1
-  },
-  signOutButton: {
-    marginLeft: theme.spacing(1)
-  },
-  widthAdder: {
-    width: theme.spacing(2)
-  },
-  headerText: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '8rem',
-    paddingLeft: '12px',
-    paddingRight: '12px'
-  },
-  rightButtons: {
-    display: 'flex',
-    right: 0
-  },
-  iconButtons: {
-    paddingTop: 6,
-    paddingBottom: 6,
-    borderRadius: 0
-  },
-  toolbar: {
-    width: '100%',
-    minHeight: 'auto',
-    padding: 0
-  }
-}));
+const useStyles = makeStyles(muiStyles);
 
 interface IProps {
   className?: string;
@@ -67,7 +35,7 @@ const Topbar = (props: IProps & AppBarProps) => {
 
   return (
     <AppBar {...rest}>
-      <div style={{ padding: 1 }}>
+      <div className={classes.toolbarArea}>
         <Toolbar className={clsx(classes.toolbar, styles.titlebar)}>
           <Hidden lgUp>
             <IconButton
@@ -93,7 +61,7 @@ const Topbar = (props: IProps & AppBarProps) => {
           <Hidden mdDown>
             <IconButton
               color="inherit"
-              className={clsx(styles.titlebarButtons)}
+              className={clsx(classes.iconButtons, styles.titlebarButtons)}
             >
               <Badge
                 badgeContent={notifications.length}
@@ -104,7 +72,11 @@ const Topbar = (props: IProps & AppBarProps) => {
               </Badge>
             </IconButton>
             <IconButton
-              className={clsx(classes.signOutButton, styles.titlebarButtons)}
+              className={clsx(
+                classes.iconButtons,
+                classes.signOutButton,
+                styles.titlebarButtons
+              )}
               color="inherit"
             >
               <InputIcon />

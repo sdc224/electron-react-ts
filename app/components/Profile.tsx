@@ -1,24 +1,12 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
-import { Avatar, Typography, Theme } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import styles from '@tsStyles/styles/components/profileStyles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minHeight: 'fit-content'
-  },
-  avatar: {
-    width: 60,
-    height: 60
-  },
-  name: {
-    marginTop: theme.spacing(1)
-  }
-}));
+const useStyles = makeStyles(styles);
 
 interface IProps {
   className?: string;
@@ -36,13 +24,12 @@ const Profile = (
   const classes = useStyles();
 
   const user = {
-    name: 'Shen Zhi',
+    name: 'Sourodeep Chatterjee',
     avatar: '/images/avatars/avatar_11.png',
-    bio: 'Brain Director'
+    bio: 'Solving Deadlocks'
   };
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <div {...rest} className={clsx(classes.root, className)}>
       <Avatar
         alt="Person"
