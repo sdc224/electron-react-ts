@@ -1,31 +1,31 @@
-import React from 'react';
+// import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { Provider } from 'react-redux';
-import { createBrowserHistory } from 'history';
-import { ConnectedRouter } from 'connected-react-router';
-import CounterModel from '@containers/CounterModel';
-import { configureStore } from '@state/configureStore';
+// import { Provider } from 'react-redux';
+// import { createBrowserHistory } from 'history';
+// import { ConnectedRouter } from 'connected-react-router';
+// import CounterModel from '@containers/CounterModel';
+// import { configureStore } from '@state/configureStore';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-function setup(initialState = {}) {
-  const store = configureStore(initialState);
-  const history = createBrowserHistory();
-  const provider = (
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <CounterModel />
-      </ConnectedRouter>
-    </Provider>
-  );
-  const app = mount(provider);
-  return {
-    app,
-    buttons: app.find('button'),
-    p: app.find('.counter')
-  };
-}
+// function setup(initialState = {}) {
+//   const store = configureStore(initialState);
+//   const history = createBrowserHistory();
+//   const provider = (
+//     <Provider store={store}>
+//       <ConnectedRouter history={history}>
+//         <CounterModel />
+//       </ConnectedRouter>
+//     </Provider>
+//   );
+//   const app = mount(provider);
+//   return {
+//     app,
+//     buttons: app.find('button'),
+//     p: app.find('.counter')
+//   };
+// }
 
 // TODO: To be changed to react-testing-library
 // Stopping tests for React.lazy and Suspense
