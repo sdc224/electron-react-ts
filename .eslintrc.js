@@ -11,6 +11,7 @@ module.exports = {
       }
     ],
     'react/jsx-props-no-spreading': 'off',
+    'react/jsx-curly-newline': 'off',
     'no-console': 'warn'
   },
   settings: {

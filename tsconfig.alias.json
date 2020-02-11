@@ -22,7 +22,8 @@
         "./app/state/middlewares/*",
         "./app/state/middlewares/"
       ],
-      "@stateUtils/*": ["./app/state/utils/*", "./app/state/utils/"]
+      "@stateUtils/*": ["./app/state/utils/*", "./app/state/utils/"],
+      "@utils/*": ["./app/utils/*", "./app/utils/"]
     }
   }
 }
