@@ -8,6 +8,7 @@
       "@images/*": ["./app/assets/images/*", "./app/assets/images/"],
       "@theme/*": ["./app/assets/theme/*", "./app/assets/theme/"],
       "@tsStyles/*": ["./app/assets/ts/*", "./app/assets/ts/"],
+      "@commands/*": ["./app/commands/*", "./app/commands/"],
       "@components/*": ["./app/components/*", "./app/components/"],
       "@constants/*": ["./app/constants/*", "./app/constants/"],
       "@containers/*": ["./app/containers/*", "./app/containers/"],

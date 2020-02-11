@@ -149,6 +149,7 @@
       "^@images(.*)$": "<rootDir>/app/assets/images$1",
       "^@theme": "<rootDir>/app/assets/theme$1",
       "^@tsStyles(.*)$": "<rootDir>/app/assets/ts$1",
+      "^@commands(.*)$": "<rootDir>/app/commands$1",
       "^@components(.*)$": "<rootDir>/app/components$1",
       "^@constants(.*)$": "<rootDir>/app/constants$1",
       "^@containers(.*)$": "<rootDir>/app/containers$1",
