@@ -30,9 +30,11 @@ install:
   - yarn
 
 test_script:
-  - yarn package-ci
+  # TODO : Need to start again by finding a better credential mgmt
+  # Stopping packaging for git credentials
+  # - yarn package-ci
   - yarn lint
   - yarn ts
   # TODO : Need to start again by finding a better credential mgmt
-  # Stopping test for git credentials
-  # - yarn test
+  # Stopping test for git credentials(as it includes build and now build is failing)
+  - yarn test

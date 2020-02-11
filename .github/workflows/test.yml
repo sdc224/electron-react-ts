@@ -22,15 +22,17 @@ jobs:
       - name: yarn install
         run: |
           yarn install
-      # TODO : Need to start again by finding a better credential mgmt
-      # Stopping test for git credentials
-      # - name: yarn test
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     yarn package-ci
-      #     yarn lint
-      #     yarn ts
+
+      - name: yarn test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        # TODO : Need to start again by finding a better credential mgmt
+        # Stopping packaging for git credentials
+        # Write yarn package-ci inside run, whenever it gives success
+        run: |
+          yarn lint
+          yarn ts
 
 # Failing beacuse virtual framebuffer not installed
 #          yarn build-e2e

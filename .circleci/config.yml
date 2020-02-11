@@ -33,6 +33,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # TODO : Need to start again by finding a better credential mgmt
-      # Stopping test for git credentials
+      # Stopping test for git credentials(as it includes build and now build is failing)
       # run tests!
       # - run: yarn test-except-e2e
