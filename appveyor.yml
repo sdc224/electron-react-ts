@@ -30,7 +30,7 @@ install:
   - yarn
 
 test_script:
-  - yarn package
+  - yarn package-ci
   - yarn lint
   - yarn ts
   # TODO : Need to start again by finding a better credential mgmt
