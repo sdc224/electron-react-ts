@@ -15,8 +15,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import GitIcon from '@tsStyles/icons/GitIcon';
-import styles from '@css/components/Topbar.css';
-import muiStyles from '@tsStyles/styles/components/topbarStyles';
+import styles from '@componentsCSSStyles/Topbar.css';
+import muiStyles from '@componentsTSStyles/topbarStyles';
 import WindowButtons from './WindowButtons';
 
 const useStyles = makeStyles(muiStyles);

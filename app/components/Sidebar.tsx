@@ -14,7 +14,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Profile from '@components/Profile';
 import SidebarNav from '@components/SidebarNav';
-import styles from '@tsStyles/styles/components/sidebarStyles';
+import styles from '@componentsTSStyles/sidebarStyles';
 
 const useStyles = makeStyles(styles);
 

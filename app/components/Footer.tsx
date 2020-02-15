@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import styles from '@tsStyles/styles/components/footerStyles';
+import styles from '@componentsTSStyles/footerStyles';
 
 const useStyles = makeStyles(styles);
 

@@ -8,7 +8,7 @@ import {
   closeWindow,
   isMaximized
 } from '@app/electronFunctions';
-import styles from '@tsStyles/styles/components/windowButtonStyles';
+import styles from '@componentsTSStyles/windowButtonStyles';
 
 interface IWindowButtonProps {
   classes?: ReturnType<typeof createStyles>;

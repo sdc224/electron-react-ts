@@ -1,11 +1,8 @@
 import React from 'react';
-// import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from '@tsStyles/styles/views/dashboardStyles';
-// import HeaderModel from '@containers/HeaderModel';
-// import SideDrawerModel from '@containers/SideDrawerModel';
-// import OperationModel from '@containers/OperationModel';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import styles from '@viewsTSStyles/dashboardStyles';
 
 const useStyles = makeStyles(styles);
 
@@ -14,13 +11,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={classes.root}>
-      {/* <CssBaseline />
-      <SideDrawerModel />
-      <main className={classes.main}>
-        <HeaderModel />
-        <OperationModel />
-      </main>
-      <footer className={classes.footer} /> */}
+      <CssBaseline />
       <Typography>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
         pretium, velit in interdum auctor, eros nisi molestie ipsum, in

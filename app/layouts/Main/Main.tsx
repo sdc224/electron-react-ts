@@ -5,7 +5,7 @@ import { useMediaQuery, Theme } from '@material-ui/core';
 import Topbar from '@components/Topbar';
 import Sidebar from '@components/Sidebar';
 import Footer from '@components/Footer';
-import styles from '@tsStyles/styles/layouts/mainStyles';
+import styles from '@layoutsTSStyles/mainStyles';
 
 const useStyles = makeStyles(styles);
 

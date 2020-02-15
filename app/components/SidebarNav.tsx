@@ -5,7 +5,7 @@ import { NavLink as RouterLink, NavLinkProps } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, Button, ListProps } from '@material-ui/core';
-import styles from '@tsStyles/styles/components/sidebarNavStyles';
+import styles from '@componentsTSStyles/sidebarNavStyles';
 
 const useStyles = makeStyles(styles);
 

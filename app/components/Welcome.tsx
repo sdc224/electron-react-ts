@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import styles from '@tsStyles/styles/components/welcomeStyles';
+import styles from '@componentsTSStyles/welcomeStyles';
 
 const useStyles = makeStyles(styles);
 

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import styles from '@tsStyles/styles/components/profileStyles';
+import styles from '@componentsTSStyles/profileStyles';
 
 const useStyles = makeStyles(styles);
 

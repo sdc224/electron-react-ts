@@ -6,9 +6,33 @@
       "@types/*": ["./app/@types/*", "./app/@types/"],
       "@assets/*": ["./app/assets/*", "./app/assets/"],
       "@css/*": ["./app/assets/css/*", "./app/assets/css/"],
+      "@componentsCSSStyles/*": [
+        "./app/assets/css/components/*",
+        "./app/assets/css/components/"
+      ],
+      "@layoutsCSSStyles/*": [
+        "./app/assets/css/layouts/*",
+        "./app/assets/css/layouts/"
+      ],
+      "@viewsCSSStyles/*": [
+        "./app/assets/css/views/*",
+        "./app/assets/css/views/"
+      ],
       "@images/*": ["./app/assets/images/*", "./app/assets/images/"],
       "@theme/*": ["./app/assets/theme/*", "./app/assets/theme/"],
       "@tsStyles/*": ["./app/assets/ts/*", "./app/assets/ts/"],
+      "@componentsTSStyles/*": [
+        "./app/assets/ts/styles/components/*",
+        "./app/assets/ts/styles/components/"
+      ],
+      "@layoutsTSStyles/*": [
+        "./app/assets/ts/styles/layouts/*",
+        "./app/assets/ts/styles/layouts/"
+      ],
+      "@viewsTSStyles/*": [
+        "./app/assets/ts/styles/views/*",
+        "./app/assets/ts/styles/views/"
+      ],
       "@commands/*": ["./app/commands/*", "./app/commands/"],
       "@components/*": ["./app/components/*", "./app/components/"],
       "@constants/*": ["./app/constants/*", "./app/constants/"],

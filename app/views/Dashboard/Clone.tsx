@@ -13,14 +13,14 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularLoading from '@components/CircularLoading';
 import ProgressBar from '@components/ProgressBar';
 import CustomSnackbar from '@components/CustomSnackbar';
-import styles from '@tsStyles/styles/views/cloneStyles';
+import styles from '@viewsTSStyles/cloneStyles';
 import { useClone } from '@ducks/clone/selectors';
 import { openFolderSystemDialog } from '@app/electronFunctions';
 import Git from '@commands/git';
 import { useProgress } from '@ducks/progress/selectors';
 import CloningRepositoriesStore from '@ducks/progress/cloning';
 import { ProgressBarProps } from '@ducks/progress/types';
-import { useSnackbar } from '@app/state/ducks/snackbar/selectors';
+import { useSnackbar } from '@ducks/snackbar/selectors';
 
 const useStyles = makeStyles(styles);
 

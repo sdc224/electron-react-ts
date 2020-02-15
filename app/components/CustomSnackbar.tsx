@@ -13,7 +13,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import {
   snackbarStyles,
   snackbarContentStyles
-} from '@tsStyles/styles/components/customSnackbarStyles';
+} from '@componentsTSStyles/customSnackbarStyles';
 
 // TODO material-ui/lab
 
