@@ -25,14 +25,15 @@ const Profile = (
 
   const user = {
     name: 'Sourodeep Chatterjee',
-    avatar: '/images/avatars/avatar_11.png',
+    alt: 'S',
+    avatar: undefined,
     bio: 'Solving Deadlocks'
   };
 
   return (
     <div {...rest} className={clsx(classes.root, className)}>
       <Avatar
-        alt="Person"
+        alt={user.alt}
         className={classes.avatar}
         component={RouterLink}
         src={user.avatar}

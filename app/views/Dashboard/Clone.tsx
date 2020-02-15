@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-curly-newline */
 import React from 'react';
 import {
   FormControl,
@@ -6,12 +5,22 @@ import {
   MenuItem,
   Select,
   Checkbox,
-  Chip
+  Chip,
+  Button,
+  Typography
 } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularLoading from '@components/CircularLoading';
+import ProgressBar from '@components/ProgressBar';
+import CustomSnackbar from '@components/CustomSnackbar';
 import styles from '@tsStyles/styles/views/cloneStyles';
 import { useClone } from '@ducks/clone/selectors';
+import { openFolderSystemDialog } from '@app/electronFunctions';
+import Git from '@commands/git';
+import { useProgress } from '@ducks/progress/selectors';
+import CloningRepositoriesStore from '@ducks/progress/cloning';
+import { ProgressBarProps } from '@ducks/progress/types';
+import { useSnackbar } from '@app/state/ducks/snackbar/selectors';
 
 const useStyles = makeStyles(styles);
 
@@ -67,11 +76,19 @@ interface IProps {
 
 const Clone: React.FC<IProps> = () => {
   const classes = useStyles();
-  const { cloneState, getProjects } = useClone();
+  const { cloneState, getProjects, showCloneProgress } = useClone();
+  const { snackbarState, handleErrorSnackbar } = useSnackbar();
+  const progressState = useProgress();
   const [clonedRepo, setClonedRepo] = React.useState<number[]>([]);
 
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
+
+  const progressBarProps: ProgressBarProps = {
+    color: 'primary',
+    variant: 'determinate'
+  };
+  // const progress = new Progress(useProgress(), progressBarProps.variant);
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current!.offsetWidth);
@@ -80,6 +97,42 @@ const Clone: React.FC<IProps> = () => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setClonedRepo(event.target.value as number[]);
   };
+
+  // TODO Delete
+  const handleClick = async () => {
+    const folder = await openFolderSystemDialog();
+
+    if (folder.canceled) return;
+
+    try {
+      // TODO : Repo Path Delete
+      const test = new Git(folder.filePaths[0]);
+      // TODO : Uncomment whenever Dugite works without Git
+      // await test.init();
+      showCloneProgress();
+      const cloneProgress = new CloningRepositoriesStore(test, progressState);
+      const val = await cloneProgress.clone(
+        'https://github.com/sdc224/SouroRepo.git',
+        folder.filePaths[0],
+        {}
+      );
+      if (val)
+        progressState.handleProgress({
+          title: 'Cloning Completed',
+          value: 1
+        });
+      else progressState.handleProgress({ title: 'Cloning Failed', value: 0 });
+    } catch (error) {
+      // TODO : change progress bar color to red
+      handleErrorSnackbar(error.message.toString());
+    } finally {
+      setTimeout(() => {
+        showCloneProgress();
+      }, 2000);
+    }
+  };
+
+  const onCloseErrorSnackbar = () => handleErrorSnackbar('');
 
   // TODO: Create Own Component for Select
   return (
@@ -138,8 +191,34 @@ const Clone: React.FC<IProps> = () => {
               error={cloneState!.error}
             /> */}
           </Select>
+          <Button onClick={handleClick}>Test</Button>
+          {/* <LoadingButton content="Clone" reducer={} onClick={} /> */}
+          {cloneState!.showProgress && (
+            <ProgressBar
+              {...progressBarProps}
+              value={progressState.progressState.value * 100}
+            >
+              <Typography style={{ textAlign: 'right', fontSize: '0.8rem' }}>
+                {progressState.progressState.title}
+                {`... `}
+                {parseInt(
+                  (progressState.progressState.value * 100).toString(),
+                  10
+                )}
+                %
+              </Typography>
+            </ProgressBar>
+          )}
         </FormControl>
       </main>
+      {/* TODO */}
+      {/* Waiting for material-ui/lab */}
+      <CustomSnackbar
+        open={snackbarState.openErrorSnackbar}
+        message={snackbarState.snackbarErrorText}
+        onClose={onCloseErrorSnackbar}
+        variant="error"
+      />
     </div>
   );
 };

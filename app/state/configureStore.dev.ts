@@ -7,6 +7,8 @@ import { createLogger } from 'redux-logger';
 import { IApplicationState, createRootReducer, rootSaga } from './ducks';
 import sagaMiddleware from './middlewares/sagas';
 import * as counterActions from './ducks/counter/actions';
+import * as cloneActions from './ducks/clone/actions';
+import * as snackbarActions from './ducks/snackbar/actions';
 // import * as postActions from './ducks/post/actions';
 // import * as drawerActions from './ducks/drawer/action';
 
@@ -38,7 +40,9 @@ const configureStore = (
   // Logging Middleware
   const logger = createLogger({
     level: 'info',
-    collapsed: true
+    collapsed: true,
+    // Removing progress from logger
+    predicate: (_getState, action) => !action.type.includes('@@progress')
   });
 
   // Skip redux logs in console during the tests
@@ -53,7 +57,9 @@ const configureStore = (
   // Redux DevTools Configuration
   const actionCreators = {
     ...counterActions,
-    ...routerActions
+    ...routerActions,
+    ...cloneActions,
+    ...snackbarActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */

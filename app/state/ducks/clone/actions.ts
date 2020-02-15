@@ -15,3 +15,6 @@ export const fetchAllProjectsError = (message: string) =>
     undefined,
     message
   );
+
+export const toggleCloneProgress = () =>
+  action(CloneActionTypes.TOGGLE_CLONE_PROGRESS);

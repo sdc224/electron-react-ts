@@ -15,7 +15,6 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Profile from '@components/Profile';
 import SidebarNav from '@components/SidebarNav';
 import styles from '@tsStyles/styles/components/sidebarStyles';
-import { IOperationState } from '@ducks/operation/types';
 
 const useStyles = makeStyles(styles);
 
@@ -26,7 +25,7 @@ interface IProps {
   variant?: 'permanent' | 'persistent' | 'temporary';
 }
 
-const operations: IOperationState[] = [
+const operations: IOperation[] = [
   {
     title: 'Dashboard',
     href: '/',

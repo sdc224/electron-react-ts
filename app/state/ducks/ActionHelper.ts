@@ -25,6 +25,7 @@ interface IErrorAction<TType extends TypeConstant, TError extends string> {
   error: TError;
 }
 
+// TODO : Change ErrorAction from string to more generic
 export type ErrorAction = IErrorAction<TypeConstant, string>;
 
 /**

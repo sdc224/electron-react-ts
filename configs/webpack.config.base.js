@@ -52,6 +52,7 @@ export default {
   resolve: {
     alias: {
       '@app': getAppPath(),
+      '@types': getAppFoldersPath('@types'),
       '@assets': getAppFoldersPath('assets'),
       '@css': getAppFoldersPath('assets/css'),
       '@images': getAppFoldersPath('assets/images'),

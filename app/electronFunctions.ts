@@ -6,40 +6,36 @@ const initialize = () => {
   browserWindow = remote.getCurrentWindow();
 };
 
-const minimizeWindow = () => {
+export const minimizeWindow = () => {
   if (!browserWindow) initialize();
 
   browserWindow?.minimize();
 };
 
-const maximizeWindow = () => {
+export const maximizeWindow = () => {
   if (!browserWindow) initialize();
 
   browserWindow?.maximize();
 };
 
-const unMaximizeWindow = () => {
+export const unMaximizeWindow = () => {
   if (!browserWindow) initialize();
 
   browserWindow?.unmaximize();
 };
 
-const closeWindow = () => {
+export const closeWindow = () => {
   if (!browserWindow) initialize();
 
   browserWindow?.close();
 };
 
-const isMaximized = (): boolean => {
+export const isMaximized = (): boolean => {
   if (!browserWindow) initialize();
 
   return !!browserWindow?.isMaximized();
 };
 
-export {
-  minimizeWindow,
-  maximizeWindow,
-  unMaximizeWindow,
-  closeWindow,
-  isMaximized
+export const openFolderSystemDialog = () => {
+  return remote.dialog.showOpenDialog({ properties: ['openDirectory'] });
 };

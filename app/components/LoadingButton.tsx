@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from '@tsStyles/styles/components/loadingButtonStyles';
+// import makeStyles from '@material-ui/core/styles/makeStyles';
+// import styles from '@tsStyles/styles/components/loadingButtonStyles';
 import { isObjectEmpty } from '@utils/objectHelper';
 
 interface IReducer {
@@ -23,7 +23,7 @@ interface ILoadingButtonProps extends IButtonContentProps {
   onClick(): void;
 }
 
-const useStyles = makeStyles(styles);
+// const useStyles = makeStyles(styles);
 
 const ButtonContent: React.FC<IButtonContentProps> = ({
   content,
@@ -31,7 +31,8 @@ const ButtonContent: React.FC<IButtonContentProps> = ({
   errorContent,
   reducer
 }: IButtonContentProps): JSX.Element => {
-  const classes = useStyles();
+  // TODO : to be used for styling in future
+  // const classes = useStyles();
 
   if (reducer.loading) {
     return (loadingContent || <CircularProgress />) as JSX.Element;
@@ -50,7 +51,8 @@ const LoadingButton: React.FC<ILoadingButtonProps> = ({
   onClick,
   ...rest
 }: ILoadingButtonProps) => {
-  const classes = useStyles();
+  // TODO to be used in future for styling
+  // const classes = useStyles();
   return (
     <Button onClick={onClick}>{children || <ButtonContent {...rest} />}</Button>
   );

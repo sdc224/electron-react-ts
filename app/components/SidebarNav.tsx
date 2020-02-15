@@ -6,17 +6,16 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, Button, ListProps } from '@material-ui/core';
 import styles from '@tsStyles/styles/components/sidebarNavStyles';
-import { IOperationState } from '@ducks/operation/types';
 
 const useStyles = makeStyles(styles);
 
 interface IHybridButtonProps {
-  operation: IOperationState;
+  operation: IOperation;
 }
 
 interface IProps {
   className?: string;
-  operations: Array<IOperationState>;
+  operations: Array<IOperation>;
 }
 
 const CustomRouterLink = forwardRef<HTMLDivElement, NavLinkProps>(
@@ -30,20 +29,13 @@ const CustomRouterLink = forwardRef<HTMLDivElement, NavLinkProps>(
 const HybridButton = ({ operation }: IHybridButtonProps) => {
   const classes = useStyles();
 
-  if (operation.href)
-    return (
-      <Button
-        activeClassName={classes.active}
-        className={classes.button}
-        component={CustomRouterLink}
-        to={operation.href}
-      >
-        <div className={classes.icon}>{operation.icon}</div>
-        {operation.title}
-      </Button>
-    );
   return (
-    <Button className={classes.button} onClick={operation.click}>
+    <Button
+      activeClassName={classes.active}
+      className={classes.button}
+      component={CustomRouterLink}
+      to={operation.href}
+    >
       <div className={classes.icon}>{operation.icon}</div>
       {operation.title}
     </Button>

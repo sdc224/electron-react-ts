@@ -51,3 +51,6 @@ npm-debug.log.*
 
 # Private Folder
 private/
+
+# Git Folder for package
+git/

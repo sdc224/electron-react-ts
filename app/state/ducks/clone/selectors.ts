@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllProjects } from './actions';
+import { fetchAllProjects, toggleCloneProgress } from './actions';
 import { ICloneAwareState } from './types';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -10,6 +10,13 @@ export const useClone = () => {
   const getProjects = useCallback(() => dispatch(fetchAllProjects()), [
     dispatch
   ]);
+  const showCloneProgress = useCallback(() => dispatch(toggleCloneProgress()), [
+    dispatch
+  ]);
 
-  return { cloneState, getProjects };
+  return {
+    cloneState,
+    getProjects,
+    showCloneProgress
+  };
 };
