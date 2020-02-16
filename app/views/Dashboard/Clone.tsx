@@ -77,7 +77,11 @@ interface IProps {
 const Clone: React.FC<IProps> = () => {
   const classes = useStyles();
   const { cloneState, getProjects, showCloneProgress } = useClone();
-  const { snackbarState, handleErrorSnackbar } = useSnackbar();
+  const {
+    snackbarState,
+    handleSuccessSnackbar,
+    handleErrorSnackbar
+  } = useSnackbar();
   const progressState = useProgress();
   const [clonedRepo, setClonedRepo] = React.useState<number[]>([]);
 
@@ -88,7 +92,6 @@ const Clone: React.FC<IProps> = () => {
     color: 'primary',
     variant: 'determinate'
   };
-  // const progress = new Progress(useProgress(), progressBarProps.variant);
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current!.offsetWidth);
@@ -116,12 +119,14 @@ const Clone: React.FC<IProps> = () => {
         folder.filePaths[0],
         {}
       );
-      if (val)
+      if (val) {
         progressState.handleProgress({
           title: 'Cloning Completed',
           value: 1
         });
-      else progressState.handleProgress({ title: 'Cloning Failed', value: 0 });
+        handleSuccessSnackbar('Cloning Successfully Completed');
+      } else
+        progressState.handleProgress({ title: 'Cloning Failed', value: 0 });
     } catch (error) {
       // TODO : change progress bar color to red
       handleErrorSnackbar(error.message.toString());
@@ -131,6 +136,8 @@ const Clone: React.FC<IProps> = () => {
       }, 2000);
     }
   };
+
+  const onCloseSuccessSnackbar = () => handleSuccessSnackbar('');
 
   const onCloseErrorSnackbar = () => handleErrorSnackbar('');
 
@@ -192,7 +199,6 @@ const Clone: React.FC<IProps> = () => {
             /> */}
           </Select>
           <Button onClick={handleClick}>Test</Button>
-          {/* <LoadingButton content="Clone" reducer={} onClick={} /> */}
           {cloneState!.showProgress && (
             <ProgressBar
               {...progressBarProps}
@@ -213,6 +219,12 @@ const Clone: React.FC<IProps> = () => {
       </main>
       {/* TODO */}
       {/* Waiting for material-ui/lab */}
+      <CustomSnackbar
+        open={snackbarState.openSuccessSnackbar}
+        message={snackbarState.snackbarSuccessText}
+        onClose={onCloseSuccessSnackbar}
+        variant="success"
+      />
       <CustomSnackbar
         open={snackbarState.openErrorSnackbar}
         message={snackbarState.snackbarErrorText}
