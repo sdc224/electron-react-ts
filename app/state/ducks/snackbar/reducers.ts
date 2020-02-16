@@ -2,31 +2,28 @@ import { Action, PayloadAction, TypeConstant } from 'typesafe-actions';
 import { ISnackbarState, SnackbarActionTypes } from './types';
 
 const initialState: ISnackbarState = {
-  openSuccessSnackbar: false,
-  snackbarSuccessText: '',
-  openErrorSnackbar: false,
-  snackbarErrorText: ''
+  kind: undefined,
+  text: undefined,
+  variant: undefined
 };
 
 // eslint-disable-next-line import/prefer-default-export
 export const snackbarReducer = (
   state = initialState,
-  action: Action<TypeConstant> & PayloadAction<TypeConstant, string>
+  action: Action<TypeConstant> & PayloadAction<TypeConstant, ISnackbarState>
 ): ISnackbarState => {
   switch (action.type) {
-    case SnackbarActionTypes.TOGGLE_SUCCESS_SNACKBAR:
+    case SnackbarActionTypes.OPEN_SNACKBAR:
       return {
         ...state,
-        openSuccessSnackbar: !state.openSuccessSnackbar,
-        snackbarSuccessText: action.payload
+        kind: action.payload.kind,
+        text: action.payload.text,
+        variant: action.payload.variant
       };
 
-    case SnackbarActionTypes.TOGGLE_ERROR_SNACKBAR:
-      return {
-        ...state,
-        openErrorSnackbar: !state.openErrorSnackbar,
-        snackbarErrorText: action.payload
-      };
+    case SnackbarActionTypes.CLOSE_SNACKBAR:
+      // Not mutating the previous state
+      return { ...initialState };
 
     default:
       return state;

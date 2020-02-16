@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -14,6 +14,7 @@ import {
   snackbarStyles,
   snackbarContentStyles
 } from '@componentsTSStyles/customSnackbarStyles';
+import { useSnackbar } from '@ducks/snackbar/selectors';
 
 // TODO material-ui/lab
 
@@ -26,37 +27,47 @@ const variantIcon = {
 
 const useStyles1 = makeStyles(snackbarContentStyles);
 
-interface ISnackbarContentProps {
-  className?: string;
+interface IContent {
+  kind?: string;
   message?: string;
-  onClose: () => void;
-  variant: keyof typeof variantIcon;
+  variant?: keyof typeof variantIcon;
+}
+
+interface ISnackbarProps {
+  className?: string;
+}
+
+interface ISnackbarContentProps extends IContent, ISnackbarProps {
+  onClose(_event: React.SyntheticEvent | MouseEvent, reason?: string): void;
   muiSnackbarContentVariant?: 'elevation' | 'outlined';
 }
 
-interface ISnackbarProps extends ISnackbarContentProps {
-  open: boolean;
-}
+const textOnVariant = {
+  success: 'This is a success message',
+  warning: 'This is a warning message',
+  error: 'This is an Error message',
+  info: 'This is an information message'
+};
 
 const MySnackbarContentWrapper = React.forwardRef(
   (props: ISnackbarContentProps, ref) => {
     const classes = useStyles1();
     const {
       className,
-      message,
       onClose,
-      variant,
+      variant = 'info',
       muiSnackbarContentVariant = 'elevation',
+      message = textOnVariant[variant!],
       ...other
     } = props;
-    const Icon = variantIcon[variant];
+    const Icon = variantIcon[variant!];
 
     return (
       <SnackbarContent
         ref={ref}
         variant={muiSnackbarContentVariant}
         classes={{ root: classes.contentRoot }}
-        className={clsx(classes[variant], className)}
+        className={clsx(classes[variant!], className)}
         aria-describedby="client-snackbar"
         message={
           // eslint-disable-next-line react/jsx-wrap-multilines
@@ -70,7 +81,7 @@ const MySnackbarContentWrapper = React.forwardRef(
             key="close"
             aria-label="Close"
             color="inherit"
-            onClick={onClose}
+            onClick={onClose!}
           >
             <CloseIcon className={classes.icon} />
           </IconButton>
@@ -85,34 +96,67 @@ MySnackbarContentWrapper.displayName = 'MySnackbarContentWrapper';
 
 const useStyles2 = makeStyles(snackbarStyles);
 
-const textOnVariant = {
-  success: 'This is a success message',
-  warning: 'This is a warning message',
-  error: 'This is an Error message',
-  info: 'This is an information message'
-};
-
-export default function CustomSnackbar({
-  className,
-  variant = 'info',
-  open,
-  onClose,
-  message = textOnVariant[variant]
-}: ISnackbarProps) {
+export default function CustomSnackbar({ className }: ISnackbarProps) {
   const classes = useStyles2();
+  const { snackbarState, closeSnackbar } = useSnackbar();
+  const queueRef = React.useRef<IContent[]>([]);
+  const isFirstRun = React.useRef(true);
+  const [open, setOpen] = React.useState(false);
+  const [content, setContent] = React.useState<IContent | undefined>(undefined);
 
-  function handleClose(_event?: SyntheticEvent, reason?: string) {
+  const processQueue = () => {
+    if (queueRef.current.length > 0) {
+      setContent(queueRef.current.shift());
+      setOpen(true);
+    }
+  };
+
+  // Using as componentDidUpdate
+  React.useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    if (snackbarState && snackbarState.kind)
+      queueRef.current.push({
+        kind: `${snackbarState.kind}+${new Date().getTime()}`,
+        // kind: snackbarState.kind,
+        message: snackbarState.text,
+        variant: snackbarState.variant
+      });
+
+    if (open) {
+      // immediately begin dismissing current message
+      // to start showing new one
+      setOpen(false);
+    } else {
+      processQueue();
+    }
+  }, [snackbarState.kind]);
+
+  const handleClose = (
+    _event: React.SyntheticEvent | MouseEvent,
+    reason?: string
+  ) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    onClose();
-  }
+    setOpen(false);
+    closeSnackbar();
+  };
+
+  const handleExited = () => {
+    processQueue();
+  };
 
   // TODO : Slide Animation
   // const SlideTransition = (p: TransitionProps) => (
   //   <Slide {...p} direction="right" mountOnEnter unmountOnExit />
   // );
+
+  if (!content || !content.kind) return null;
 
   // TODO introduce another component for better modularity
   return (
@@ -123,16 +167,19 @@ export default function CustomSnackbar({
       }}
       classes={{ root: classes.snackbarRoot }}
       className={className}
+      key={content?.kind!}
       open={open}
       autoHideDuration={5000}
       onClose={handleClose}
+      onExited={handleExited}
     >
       <MySnackbarContentWrapper
-        key={message}
         className={className}
+        key={content?.message!}
+        kind={content?.kind!}
         onClose={handleClose}
-        variant={variant}
-        message={message}
+        variant={content?.variant!}
+        message={content?.message!}
       />
     </Snackbar>
   );

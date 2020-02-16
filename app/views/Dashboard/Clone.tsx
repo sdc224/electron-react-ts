@@ -77,11 +77,7 @@ interface IProps {
 const Clone: React.FC<IProps> = () => {
   const classes = useStyles();
   const { cloneState, getProjects, showCloneProgress } = useClone();
-  const {
-    snackbarState,
-    handleSuccessSnackbar,
-    handleErrorSnackbar
-  } = useSnackbar();
+  const { openSnackbar } = useSnackbar();
   const progressState = useProgress();
   const [clonedRepo, setClonedRepo] = React.useState<number[]>([]);
 
@@ -124,22 +120,26 @@ const Clone: React.FC<IProps> = () => {
           title: 'Cloning Completed',
           value: 1
         });
-        handleSuccessSnackbar('Cloning Successfully Completed');
+        openSnackbar({
+          kind: 'Clone',
+          text: 'Cloning Successfully Completed',
+          variant: 'success'
+        });
       } else
         progressState.handleProgress({ title: 'Cloning Failed', value: 0 });
     } catch (error) {
       // TODO : change progress bar color to red
-      handleErrorSnackbar(error.message.toString());
+      openSnackbar({
+        kind: 'Clone',
+        text: error.message.toString(),
+        variant: 'error'
+      });
     } finally {
       setTimeout(() => {
         showCloneProgress();
       }, 2000);
     }
   };
-
-  const onCloseSuccessSnackbar = () => handleSuccessSnackbar('');
-
-  const onCloseErrorSnackbar = () => handleErrorSnackbar('');
 
   // TODO: Create Own Component for Select
   return (
@@ -160,11 +160,17 @@ const Clone: React.FC<IProps> = () => {
             onOpen={getProjects}
             renderValue={selected => (
               <div className={classes.chips}>
-                {(selected as number[])
-                  .map(i => cloneState!.projects[i]!.name)
-                  .map(value => (
-                    <Chip key={value} label={value} className={classes.chip} />
-                  ))}
+                {selected &&
+                  (selected as number[])
+                    .filter(s => !!s)
+                    .map(i => cloneState!.projects[i]!.name)
+                    .map(value => (
+                      <Chip
+                        key={value}
+                        label={value}
+                        className={classes.chip}
+                      />
+                    ))}
               </div>
             )}
             MenuProps={MenuProps}
@@ -187,7 +193,12 @@ const Clone: React.FC<IProps> = () => {
               cloneState!.projects.map((project, index) => (
                 <MenuItem key={project.id} value={index}>
                   <Checkbox checked={clonedRepo.indexOf(index) > -1} />
-                  {project.name}
+                  <div>
+                    <div>{project.name}</div>
+                    <div>{project.repository_access_level}</div>
+                    <div>{project.description}</div>
+                    <div>{project.namespace}</div>
+                  </div>
                 </MenuItem>
               ))
             )}
@@ -219,18 +230,7 @@ const Clone: React.FC<IProps> = () => {
       </main>
       {/* TODO */}
       {/* Waiting for material-ui/lab */}
-      <CustomSnackbar
-        open={snackbarState.openSuccessSnackbar}
-        message={snackbarState.snackbarSuccessText}
-        onClose={onCloseSuccessSnackbar}
-        variant="success"
-      />
-      <CustomSnackbar
-        open={snackbarState.openErrorSnackbar}
-        message={snackbarState.snackbarErrorText}
-        onClose={onCloseErrorSnackbar}
-        variant="error"
-      />
+      <CustomSnackbar />
     </div>
   );
 };

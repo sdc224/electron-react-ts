@@ -1,7 +1,10 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSuccessSnackbar, toggleErrorSnackbar } from './actions';
-import { ISnackbarAwareState } from './types';
+import {
+  openSnackbar as handleOpenSnackbar,
+  closeSnackbar as handleCloseSnackbar
+} from './actions';
+import { ISnackbarAwareState, ISnackbarState } from './types';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useSnackbar = () => {
@@ -9,22 +12,19 @@ export const useSnackbar = () => {
   const snackbarState = useSelector(
     (state: ISnackbarAwareState) => state.snackbar
   );
-  const handleSuccessSnackbar = useCallback(
-    (text: string) => {
-      dispatch(toggleSuccessSnackbar(text));
+  const openSnackbar = useCallback(
+    (actionObj: ISnackbarState) => {
+      dispatch(handleOpenSnackbar(actionObj));
     },
     [dispatch]
   );
-  const handleErrorSnackbar = useCallback(
-    (text: string) => {
-      dispatch(toggleErrorSnackbar(text));
-    },
-    [dispatch]
-  );
+  const closeSnackbar = useCallback(() => {
+    dispatch(handleCloseSnackbar());
+  }, [dispatch]);
 
   return {
     snackbarState,
-    handleSuccessSnackbar,
-    handleErrorSnackbar
+    openSnackbar,
+    closeSnackbar
   };
 };

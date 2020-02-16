@@ -1,19 +1,26 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { ProjectSchema } from 'gitlab';
-import { getAllProjects } from '@stateUtils/gitlabHelper';
+import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
 import { fetchAllProjectsError, fetchAllProjectsSuccess } from './actions';
 import { CloneActionTypes } from './types';
+import { openSnackbar } from '../snackbar/actions';
 
 /**
  * @desc Business logic of effect.
  */
 function* handleFetch(): Generator {
   try {
-    const res: ProjectSchema[] | any = yield call(getAllProjects);
+    // TODO Introduce Design Pattern
+    const gitlab = new GitlabEnterprise();
+    yield call(gitlab.init);
+    const res: ProjectSchema[] | any = yield call(gitlab.getAllProjects);
     yield put(fetchAllProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {
       yield put(fetchAllProjectsError(err.stack!));
+      yield put(
+        openSnackbar({ kind: 'Gitlab', text: err.message!, variant: 'error' })
+      );
     } else {
       yield put(fetchAllProjectsError('An unknown error occured.'));
     }

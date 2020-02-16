@@ -1,13 +1,12 @@
 export const SnackbarActionTypes = {
-  TOGGLE_SUCCESS_SNACKBAR: '@@snackbar/TOGGLE_SUCCESS_SNACKBAR',
-  TOGGLE_ERROR_SNACKBAR: '@@snackbar/TOGGLE_ERROR_SNACKBAR'
+  OPEN_SNACKBAR: '@@snackbar/OPEN_SNACKBAR',
+  CLOSE_SNACKBAR: '@@snackbar/CLOSE_SNACKBAR'
 };
 
 export interface ISnackbarState {
-  openSuccessSnackbar: boolean;
-  snackbarSuccessText: string;
-  openErrorSnackbar: boolean;
-  snackbarErrorText: string;
+  kind?: string;
+  text?: string;
+  variant?: 'error' | 'warning' | 'info' | 'success';
 }
 
 export interface ISnackbarAwareState {
