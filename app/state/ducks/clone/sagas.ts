@@ -13,7 +13,8 @@ function* handleFetch(): Generator {
     // TODO Introduce Design Pattern
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
-    const res: ProjectSchema[] | any = yield call(gitlab.getAllProjects);
+    const res: ProjectSchema[] | any = yield call(gitlab.getClonableProjects);
+    // const res: ProjectSchema[] | any = yield call(gitlab.getAllProjects);
     yield put(fetchAllProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {

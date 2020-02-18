@@ -7,7 +7,8 @@ import {
   Checkbox,
   Chip,
   Button,
-  Typography
+  Typography,
+  Backdrop
 } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularLoading from '@components/CircularLoading';
@@ -41,38 +42,71 @@ interface IProps {
   error?: {};
 }
 
-/* interface IRepoProps {
-  loading: boolean;
-  projects: Array<ProjectSchema>;
-  error?: {};
-} */
+// interface IRepoProps {
+//   loading: boolean;
+//   projects: Array<ProjectSchema>;
+//   error?: {};
+// }
 
 // TODO: Need to use this component, refer comments below
-/* const RepoList = ({ loading, projects, error }: IRepoProps) => {
-  if (loading) {
-    return (
-      <CircularLoading height="10vh" style={{ flexDirection: 'column' }}>
-        <div>Please wait while we are fetching repositories</div>
-      </CircularLoading>
-    );
-  }
+// const RepoList = ({ loading, projects, error }: IRepoProps) => {
+//   const classes = useStyles();
+//   if (loading) {
+//     return (
+//       // <CircularLoading height="10vh" style={{ flexDirection: 'column' }}>
+//       //   <div>Please wait while we are fetching repositories</div>
+//       // </CircularLoading>
+//       <div className={classes.selectRightArea}>
+//         <CircularProgress size={20} />
+//       </div>
+//     );
+//   }
 
-  if (error) {
-    return <div>Unexpected Error</div>;
-  }
+//   if (error) {
+//     return (
+//       <div className={classes.selectRightArea}>
+//         <ErrorIcon color="error" />
+//       </div>
+//     );
+//   }
 
-  return [
-    <MenuItem key="none" value="">
-      <em>None</em>
-    </MenuItem>,
-    projects.map((project, index) => (
-      <MenuItem key={project.id} value={index}>
-        <Checkbox />
-        {project.name}
-      </MenuItem>
-    ))
-  ];
-}; */
+//   return (
+//     <Popover open id="select" style={{ height: 400 }}>
+//       {projects.map((project, index) => (
+//         // <MenuItem key={project.id} value={index}>
+//         <div key={project.id} style={{ display: 'flex' }}>
+//           {/* <Checkbox /> */}
+//           <div>
+//             <div>{project.name}</div>
+//             <div>{project.description}</div>
+//             <div>{project.namespace.name}</div>
+//             {/* <div>{project.repository_access_level}</div>
+//             <div>{project.description}</div>
+//             <div>{project.namespace}</div> */}
+//           </div>
+//         </div>
+//         // </MenuItem>
+//       ))}
+//     </Popover>
+//   );
+// };
+
+// TODO : New Select Component(In Progress)
+// TODO : Add Refresh Button
+/* <div
+  className={classes.selectDiv}
+  id="select"
+  onClick={getProjects}
+  onKeyPress={getProjects}
+  role="button"
+  tabIndex={0}
+>
+  <RepoList
+    loading={cloneState!.loading}
+    projects={cloneState!.projects}
+    error={cloneState!.error}
+  />
+</div>; */
 
 const Clone: React.FC<IProps> = () => {
   const classes = useStyles();
@@ -91,14 +125,24 @@ const Clone: React.FC<IProps> = () => {
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current!.offsetWidth);
+    getProjects();
   }, []);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setClonedRepo(event.target.value as number[]);
   };
 
-  // TODO Delete
+  // TODO Multiple
+  // Sorry right now we support cloning of only the first selected Repo
   const handleClick = async () => {
+    // Error Handling
+    if (
+      clonedRepo.length === 0 ||
+      !cloneState.projects ||
+      cloneState.projects.length === 0
+    )
+      return;
+
     const folder = await openFolderSystemDialog();
 
     if (folder.canceled) return;
@@ -111,7 +155,7 @@ const Clone: React.FC<IProps> = () => {
       showCloneProgress();
       const cloneProgress = new CloningRepositoriesStore(test, progressState);
       const val = await cloneProgress.clone(
-        'https://github.com/sdc224/SouroRepo.git',
+        cloneState.projects[clonedRepo[0]].ssh_url_to_repo,
         folder.filePaths[0],
         {}
       );
@@ -141,11 +185,17 @@ const Clone: React.FC<IProps> = () => {
     }
   };
 
-  // TODO: Create Own Component for Select
+  // TODO : Autocomplete Material UI Lab, New Select Component(See above)
+  // TODO : use LabelValue component
   return (
     <div className={classes.root}>
-      <header>Select the repository you want to Clone</header>
-      <main>
+      <header>
+        <Typography variant="h5" className={classes.headerText}>
+          Select the repository you want to Clone
+        </Typography>
+        <hr />
+      </header>
+      <main className={classes.main}>
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel ref={inputLabel} id="repo-select-label">
             Please select any project from the list
@@ -157,20 +207,14 @@ const Clone: React.FC<IProps> = () => {
             value={clonedRepo}
             onChange={handleChange}
             labelWidth={labelWidth}
-            onOpen={getProjects}
+            // TODO : Deletable Chip
             renderValue={selected => (
               <div className={classes.chips}>
-                {selected &&
-                  (selected as number[])
-                    .filter(s => !!s)
-                    .map(i => cloneState!.projects[i]!.name)
-                    .map(value => (
-                      <Chip
-                        key={value}
-                        label={value}
-                        className={classes.chip}
-                      />
-                    ))}
+                {(selected as number[])
+                  .map(i => cloneState!.projects[i]!.name)
+                  .map(value => (
+                    <Chip key={value} label={value} className={classes.chip} />
+                  ))}
               </div>
             )}
             MenuProps={MenuProps}
@@ -191,45 +235,70 @@ const Clone: React.FC<IProps> = () => {
               <div>Unexpected Error</div>
             ) : (
               cloneState!.projects.map((project, index) => (
-                <MenuItem key={project.id} value={index}>
+                <MenuItem
+                  key={project.id}
+                  value={index}
+                  style={{ width: '100%' }}
+                >
                   <Checkbox checked={clonedRepo.indexOf(index) > -1} />
-                  <div>
-                    <div>{project.name}</div>
-                    <div>{project.repository_access_level}</div>
-                    <div>{project.description}</div>
-                    <div>{project.namespace}</div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: `calc(100% - 50px)`
+                    }}
+                  >
+                    <div style={{ width: '85%' }}>
+                      <Typography noWrap variant="subtitle2">
+                        {project.name}
+                      </Typography>
+                      <Typography noWrap variant="caption">
+                        {project.description}
+                      </Typography>
+                    </div>
+                    <Typography
+                      noWrap
+                      variant="overline"
+                      style={{ width: '15%', textAlign: 'right' }}
+                    >
+                      {project.id}
+                    </Typography>
                   </div>
                 </MenuItem>
               ))
             )}
-            {/*
-            <RepoList
-              loading={cloneState!.loading}
-              projects={cloneState!.projects}
-              error={cloneState!.error}
-            /> */}
           </Select>
-          <Button onClick={handleClick}>Test</Button>
-          {cloneState!.showProgress && (
-            <ProgressBar
-              {...progressBarProps}
-              value={progressState.progressState.value * 100}
-            >
-              <Typography style={{ textAlign: 'right', fontSize: '0.8rem' }}>
-                {progressState.progressState.title}
-                {`... `}
-                {parseInt(
-                  (progressState.progressState.value * 100).toString(),
-                  10
-                )}
-                %
-              </Typography>
-            </ProgressBar>
-          )}
+          <Button
+            className={classes.cloneButton}
+            variant="contained"
+            color="secondary"
+            onClick={handleClick}
+            disabled={clonedRepo.length === 0}
+          >
+            Clone
+          </Button>
         </FormControl>
       </main>
       {/* TODO */}
       {/* Waiting for material-ui/lab */}
+      <Backdrop
+        className={classes.progressBackdrop}
+        open={cloneState!.showProgress}
+      >
+        <ProgressBar
+          open={cloneState!.showProgress}
+          {...progressBarProps}
+          value={progressState.progressState.value * 100}
+        >
+          <Typography className={classes.progressText} variant="caption">
+            {progressState.progressState.title}
+            {`... `}
+            {parseInt((progressState.progressState.value * 100).toString(), 10)}
+            %
+          </Typography>
+        </ProgressBar>
+      </Backdrop>
       <CustomSnackbar />
     </div>
   );

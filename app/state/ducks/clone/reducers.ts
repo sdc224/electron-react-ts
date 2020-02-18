@@ -25,6 +25,7 @@ export const cloneReducer = (
       return {
         ...state,
         loading: false,
+        error: '',
         projects: action.payload as ProjectSchema[]
       };
 

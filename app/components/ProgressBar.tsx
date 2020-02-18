@@ -11,15 +11,20 @@ interface IProgressProps extends ProgressBarProps {
   divClassName?: string;
   progressClassName?: string;
   children?: React.ReactNode;
+  open: boolean;
 }
 
 const ProgressBar: React.FC<IProgressProps> = ({
   children,
   divClassName,
   progressClassName,
+  open,
   ...props
 }: IProgressProps) => {
   const classes = useStyles();
+
+  if (!open) return null;
+
   return (
     <div className={clsx(classes.div, divClassName)}>
       <LinearProgress
