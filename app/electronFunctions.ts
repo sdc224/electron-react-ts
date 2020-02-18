@@ -37,5 +37,8 @@ export const isMaximized = (): boolean => {
 };
 
 export const openFolderSystemDialog = () => {
-  return remote.dialog.showOpenDialog({ properties: ['openDirectory'] });
+  if (!browserWindow) initialize();
+  return remote.dialog.showOpenDialog(browserWindow!, {
+    properties: ['openDirectory']
+  });
 };
