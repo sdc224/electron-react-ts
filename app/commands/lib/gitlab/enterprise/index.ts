@@ -30,14 +30,18 @@ export default class GitlabEnterprise extends GitlabOperations implements IGit {
           throw new Error(
             'Sorry guys...server down. Please try after some time'
           );
-        } else if (!response.ok) {
-          throw new Error('No Internet Connection');
-        } else {
-          throw new Error('Maybe some other Internet Issue');
         }
+      } else if (!response.ok) {
+        throw new Error('No Internet Connection');
+      } else {
+        throw new Error('Maybe some other Internet Issue');
       }
     } catch (error) {
-      throw new Error('No Internet Connection');
+      if (/^Failed to fetch/.test(error.message))
+        throw new Error(
+          'Maybe some network issue(Not connected, DNS Resolve Failure)'
+        );
+      throw error;
     }
   }
 }

@@ -14,7 +14,6 @@ function* handleFetch(): Generator {
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
     const res: ProjectSchema[] | any = yield call(gitlab.getClonableProjects);
-    // const res: ProjectSchema[] | any = yield call(gitlab.getAllProjects);
     yield put(fetchAllProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {

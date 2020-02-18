@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router';
+import { Switch, Redirect } from 'react-router';
 import App from '@containers/App';
 import RouteWithLayout from '@components/RouteWithLayout';
 import routes from './Routes';
@@ -8,6 +8,7 @@ export default function Routes() {
   return (
     <App>
       <Switch>
+        <Redirect exact from="/" to="/dashboard" />
         {routes.map(route => (
           <RouteWithLayout
             key={route.key}
