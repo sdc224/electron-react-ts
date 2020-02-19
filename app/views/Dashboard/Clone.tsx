@@ -36,12 +36,6 @@ const MenuProps = {
   }
 };
 
-interface IProps {
-  loading: boolean;
-  projects: [];
-  error?: {};
-}
-
 // interface IRepoProps {
 //   loading: boolean;
 //   projects: Array<ProjectSchema>;
@@ -108,7 +102,7 @@ interface IProps {
   />
 </div>; */
 
-const Clone: React.FC<IProps> = () => {
+const Clone: React.FC = () => {
   const classes = useStyles();
   const { cloneState, getProjects, showCloneProgress } = useClone();
   const { openSnackbar } = useSnackbar();

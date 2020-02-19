@@ -2,8 +2,7 @@ import { RouteProps } from 'react-router';
 // import HomePage from '@containers/HomePage';
 // import CounterModel from '@containers/CounterModel';
 import Main from '@layouts/Main';
-import { Dashboard } from '@views/';
-import Clone from '@views/Dashboard/Clone';
+import { Dashboard, Clone } from '@views/';
 import jsonRoutes from './jsonRoutes.json';
 
 interface IRouteWithLayout {
