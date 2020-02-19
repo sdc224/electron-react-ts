@@ -3,7 +3,7 @@ import Loading from '@components/Loading';
 
 const HomeComponent = React.lazy(() => import('./Home'));
 const DashboardComponent = React.lazy(() => import('./Dashboard'));
-const CloneComponent = React.lazy(() => import('./Dashboard/Clone'));
+const CloneComponent = React.lazy(() => import('./Clone'));
 
 const Home = () => (
   <Suspense fallback={<Loading />}>
