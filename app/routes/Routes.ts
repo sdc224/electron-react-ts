@@ -2,7 +2,7 @@ import { RouteProps } from 'react-router';
 // import HomePage from '@containers/HomePage';
 // import CounterModel from '@containers/CounterModel';
 import Main from '@layouts/Main';
-import { Dashboard, Clone } from '@views/';
+import { Dashboard, Clone, Operations } from '@views/';
 import jsonRoutes from './jsonRoutes.json';
 
 interface IRouteWithLayout {
@@ -15,7 +15,7 @@ type RoutePropsWithLayout = RouteProps & IRouteWithLayout;
 const routes: RoutePropsWithLayout[] = [
   {
     key: '1',
-    path: jsonRoutes.HOME,
+    path: jsonRoutes.DASHBOARD,
     exact: true,
     // component: HomePage,
     component: Dashboard,
@@ -37,9 +37,9 @@ const routes: RoutePropsWithLayout[] = [
   // },
   {
     key: '3',
-    path: jsonRoutes.DASHBOARD,
+    path: jsonRoutes.OPERATIONS,
     exact: true,
-    component: Dashboard,
+    component: Operations,
     layout: Main
   }
 ];

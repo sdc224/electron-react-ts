@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import CloneIcon from '@material-ui/icons/FileCopy';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import WorkIcon from '@material-ui/icons/Work';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
@@ -37,9 +37,9 @@ const operations: IOperation[] = [
     icon: <CloneIcon />
   },
   {
-    title: 'Products',
-    href: '/products',
-    icon: <ShoppingBasketIcon />
+    title: 'Operations',
+    href: '/operations',
+    icon: <WorkIcon />
   },
   {
     title: 'Authentication',

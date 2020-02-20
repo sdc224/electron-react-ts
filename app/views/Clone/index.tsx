@@ -13,7 +13,6 @@ import {
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularLoading from '@components/CircularLoading';
 import ProgressBar from '@components/ProgressBar';
-import CustomSnackbar from '@components/CustomSnackbar';
 import styles from '@viewsTSStyles/cloneStyles';
 import { useClone } from '@ducks/clone/selectors';
 import { openFolderSystemDialog } from '@app/electronFunctions';
@@ -293,7 +292,6 @@ const Clone: React.FC = () => {
           </Typography>
         </ProgressBar>
       </Backdrop>
-      <CustomSnackbar />
     </div>
   );
 };
