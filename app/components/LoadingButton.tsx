@@ -112,18 +112,12 @@ export default function LoadingButton({
           variant="contained"
           color="primary"
           className={clsx(classes.button, buttonClassName, buttonStyles)}
-          disabled={
-            disabled ||
-            (progressState.value === 0 &&
-              progressState.init &&
-              progressState.value < 1)
-          }
+          disabled={disabled || progressState.init}
           onClick={onClick}
         >
           {buttonText}
         </Button>
-        {progressState.value !== 0 &&
-          progressState.value < 1 &&
+        {progressState.init &&
           (progressState.progressType === 'circular' ? (
             <CircularProgress
               size={24}

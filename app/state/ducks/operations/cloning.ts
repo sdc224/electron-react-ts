@@ -44,8 +44,6 @@ export default class CloningRepositoriesStore {
     // TODO : Detailed Cloning
     this.progressState.handleProgress({
       kind: 'clone',
-      progressType: 'linear',
-      variant: 'determinate',
       title,
       value: 0
     });

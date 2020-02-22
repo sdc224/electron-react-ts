@@ -143,9 +143,7 @@ export default class Git implements IGit {
             kind,
             title,
             description,
-            value,
-            progressType: 'linear',
-            variant: 'determinate'
+            value
           });
         }
       );
@@ -155,9 +153,7 @@ export default class Git implements IGit {
       progressCallback({
         kind,
         title,
-        value: 0,
-        progressType: 'linear',
-        variant: 'determinate'
+        value: 0
       });
     }
 

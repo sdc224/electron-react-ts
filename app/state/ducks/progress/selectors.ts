@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   IProgressBarAwareState,
   IProgressBarSelector,
-  IProgressBarState
+  IProgressBarState,
+  IProgressStartAction
 } from './types';
 import { start, report, complete } from './actions';
 
@@ -15,7 +16,10 @@ export const useProgress = (): IProgressBarSelector => {
 
   const dispatch = useDispatch();
 
-  const progressStart = useCallback(() => dispatch(start()), [dispatch]);
+  const progressStart = useCallback(
+    (progress: IProgressStartAction) => dispatch(start(progress)),
+    [dispatch]
+  );
   const handleProgress = useCallback(
     (progress: IProgressBarState) => dispatch(report(progress)),
     [dispatch]

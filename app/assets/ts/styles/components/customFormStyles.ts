@@ -17,7 +17,7 @@ export default (theme: Theme) =>
     },
     formButton: {
       width: 150,
-      alignSelf: 'flex-end',
+      alignSelf: 'center',
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2)
     }

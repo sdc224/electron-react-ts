@@ -23,10 +23,6 @@ export interface IProgress {
    * will usually be the last raw line of output from git.
    */
   readonly description?: string;
-
-  // TODO
-  readonly progressType?: 'linear' | 'circular';
-  readonly variant?: LinearProgressVariant | CircularProgressVariant;
 }
 
 /**

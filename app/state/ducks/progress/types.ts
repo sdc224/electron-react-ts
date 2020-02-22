@@ -16,7 +16,12 @@ export type ProgressBarProps = {
   valueBuffer?: number;
 };
 
-export interface IProgressBarState extends IProgress {
+export interface IProgressStartAction {
+  readonly progressType?: 'linear' | 'circular';
+  readonly variant?: LinearProgressVariant | CircularProgressVariant;
+}
+
+export interface IProgressBarState extends IProgress, IProgressStartAction {
   // TODO : Change this context to some selected strings...clone, fork, fetch etc
   kind?: string;
   error?: string;
@@ -27,7 +32,9 @@ export interface IProgressBarState extends IProgress {
 
 export interface IProgressBarSelector {
   progressState: IProgressBarState;
-  progressStart: () => { type: string };
+  progressStart: (
+    progressStart: IProgressStartAction
+  ) => { type: string; payload?: IProgressStartAction };
   handleProgress: (
     progress: IProgressBarState
   ) => {

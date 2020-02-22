@@ -41,3 +41,8 @@ export const fetchForkableProjectsError = (message: string) =>
 
 export const toggleForkProgress = () =>
   action(ForkActionTypes.TOGGLE_FORK_PROGRESS);
+
+export const startForking = (
+  projects: ProjectSchema[],
+  progressState: IProgressBarSelector
+) => action(ForkActionTypes.START_FORKING, { projects, progressState });

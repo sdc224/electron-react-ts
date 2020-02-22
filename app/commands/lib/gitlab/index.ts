@@ -46,7 +46,7 @@ export default class GitlabOperations {
   public fork = async (
     project: ProjectSchema,
     progressCallback: (progress: IForkProgress) => void
-  ) => {
+  ): Promise<object> => {
     const title = 'Forking';
     const description = 'Forking into your namespace';
     const kind = 'fork';
@@ -68,7 +68,7 @@ export default class GitlabOperations {
         description: error,
         value: 0
       });
-      return null;
+      throw new Error(error);
     }
   };
 }

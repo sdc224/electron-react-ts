@@ -6,7 +6,8 @@ import {
   toggleCloneProgress,
   fetchForkableProjects,
   toggleForkProgress,
-  startCloning as clone
+  startCloning as clone,
+  startForking as fork
 } from './actions';
 import { IOperationAwareState } from './types';
 import { IProgressBarSelector } from '../progress/types';
@@ -39,16 +40,25 @@ export const useClone = () => {
 export const useFork = () => {
   const dispatch = useDispatch();
   const forkState = useSelector((state: IOperationAwareState) => state.fork);
+
   const getProjects = useCallback(() => dispatch(fetchForkableProjects()), [
     dispatch
   ]);
+
   const showForkProgress = useCallback(() => dispatch(toggleForkProgress()), [
     dispatch
   ]);
 
+  const startForking = useCallback(
+    (projects: ProjectSchema[], progressState: IProgressBarSelector) =>
+      dispatch(fork(projects, progressState)),
+    [dispatch]
+  );
+
   return {
     forkState,
     getProjects,
-    showForkProgress
+    showForkProgress,
+    startForking
   };
 };

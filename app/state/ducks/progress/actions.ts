@@ -1,7 +1,12 @@
 import { action } from 'typesafe-actions';
-import { ProgressActionTypes, IProgressBarState } from './types';
+import {
+  ProgressActionTypes,
+  IProgressBarState,
+  IProgressStartAction
+} from './types';
 
-export const start = () => action(ProgressActionTypes.PROGRESS_START);
+export const start = (progressStart: IProgressStartAction) =>
+  action(ProgressActionTypes.PROGRESS_START, progressStart);
 
 export const report = (progress: IProgressBarState) =>
   action(ProgressActionTypes.PROGRESS_REPORT, progress);

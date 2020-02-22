@@ -1,6 +1,10 @@
 import { Action } from 'redux';
 import { TypeConstant, PayloadAction } from 'typesafe-actions';
-import { ProgressActionTypes, IProgressBarState } from './types';
+import {
+  ProgressActionTypes,
+  IProgressBarState,
+  IProgressStartAction
+} from './types';
 import { ErrorAction } from '../ActionHelper';
 
 const initialState: IProgressBarState = {
@@ -20,29 +24,30 @@ const initialState: IProgressBarState = {
 export const progressReducer = (
   state: IProgressBarState = initialState,
   action: Action<TypeConstant> &
-    PayloadAction<TypeConstant, IProgressBarState> &
+    PayloadAction<TypeConstant, IProgressBarState & IProgressStartAction> &
     ErrorAction
 ): IProgressBarState => {
   switch (action.type) {
     case ProgressActionTypes.PROGRESS_START:
       return {
         ...state,
-        init: true
+        init: true,
+        value: 0,
+        progressType: action.payload.progressType,
+        variant: action.payload.variant
       };
 
     case ProgressActionTypes.PROGRESS_REPORT:
       return {
         ...state,
         kind: action.payload.kind,
-        progressType: action.payload.progressType,
-        variant: action.payload.variant,
         value: action.payload.value,
         title: action.payload.title,
         description: action.payload.description
       };
 
     case ProgressActionTypes.PROGRESS_COMPLETE:
-      return { ...state, init: false };
+      return { ...state, init: false, value: 0 };
 
     case ProgressActionTypes.PROGRESS_ERROR:
       return { ...state, kind: action.payload.kind, error: action.error };

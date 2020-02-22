@@ -5,17 +5,14 @@ import {
   Select,
   Checkbox,
   Chip,
-  Typography,
-  Backdrop
+  Typography
 } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularLoading from '@components/CircularLoading';
 import CustomForm from '@components/CustomForm';
-import ProgressBar from '@components/ProgressBar';
 import styles from '@viewsTSStyles/cloneStyles';
 import { useClone } from '@ducks/operations/selectors';
 import { useProgress } from '@ducks/progress/selectors';
-import { ProgressBarProps } from '@ducks/progress/types';
 import { selectArrayOnIndices } from '@app/utils/objectHelper';
 import { ProjectSchema } from 'gitlab';
 
@@ -106,11 +103,6 @@ const Clone: React.FC = () => {
 
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
-
-  const progressBarProps: ProgressBarProps = {
-    color: 'primary',
-    variant: 'determinate'
-  };
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current!.offsetWidth);

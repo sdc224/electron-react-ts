@@ -21,11 +21,11 @@ export default class ForkingRepositoriesStore {
    *
    * @returns {Promise<boolean>} which resolves to whether the clone was successful.
    */
-  public async fork(
+  public fork = async (
     project: ProjectSchema,
     options: {}
     // options: CloneOptions
-  ): Promise<boolean> {
+  ): Promise<boolean> => {
     if (!this.gitlabObject) {
       throw new Error('Gitlab object is not defined');
     }
@@ -85,7 +85,7 @@ export default class ForkingRepositoriesStore {
     // this.remove(repository);
 
     return success;
-  }
+  };
 
   // TODO : For multiple repository Forking
   /** Get the repositories currently being cloned. */

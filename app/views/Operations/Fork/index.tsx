@@ -1,24 +1,20 @@
 import React from 'react';
+import { ProjectSchema } from 'gitlab';
 import {
   InputLabel,
   MenuItem,
   Select,
   Checkbox,
   Chip,
-  Typography,
-  Backdrop
+  Typography
 } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularLoading from '@components/CircularLoading';
 import CustomForm from '@components/CustomForm';
-import ProgressBar from '@components/ProgressBar';
 import styles from '@viewsTSStyles/cloneStyles';
 import { useProgress } from '@ducks/progress/selectors';
-import { ProgressBarProps } from '@ducks/progress/types';
-import { useSnackbar } from '@ducks/snackbar/selectors';
 import { useFork } from '@ducks/operations/selectors';
-import ForkingRepositoriesStore from '@app/state/ducks/operations/forking';
-import LoadingButton from '@app/components/LoadingButton';
+import { selectArrayOnIndices } from '@utils/objectHelper';
 
 const useStyles = makeStyles(styles);
 
@@ -35,9 +31,9 @@ const MenuProps = {
 
 const Fork: React.FC = () => {
   const classes = useStyles();
-  const { forkState, getProjects, showForkProgress } = useFork();
-  const { openSnackbar } = useSnackbar();
+  const { forkState, getProjects, startForking } = useFork();
   const [forkedRepo, setForkedRepo] = React.useState<number[]>([]);
+  const progressState = useProgress();
 
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -55,13 +51,17 @@ const Fork: React.FC = () => {
   // Sorry right now we support cloning of only the first selected Repo
   const handleClick = async () => {
     // Error Handling
-    // if (
-    //   forkedRepo.length === 0 ||
-    //   !forkState.projects ||
-    //   forkState.projects.length === 0
-    // )
-    //   return;
-    // const forkRepoStore = new ForkingRepositoriesStore()
+    if (
+      forkedRepo.length === 0 ||
+      !forkState.projects ||
+      forkState.projects.length === 0
+    )
+      return;
+
+    startForking(
+      selectArrayOnIndices<ProjectSchema>(forkState.projects, forkedRepo),
+      progressState
+    );
   };
 
   // TODO : Autocomplete Material UI Lab, New Select Component(See above)
@@ -74,6 +74,7 @@ const Fork: React.FC = () => {
         buttonText="Fork"
         onSubmit={handleClick}
         disableButton={forkedRepo.length === 0}
+        isLoadingButton
       >
         <InputLabel ref={inputLabel} id="repo-select-label-fork">
           Please select any project from the list
@@ -145,15 +146,6 @@ const Fork: React.FC = () => {
           )}
         </Select>
       </CustomForm>
-      <LoadingButton
-        buttonText="Hello"
-        progressType="linear"
-        progressVariant="determinate"
-        onClick={() => {}}
-        reducer={{ loading: true, error: {}, success: {} }}
-      />
-      {/* TODO */}
-      {/* Waiting for material-ui/lab */}
     </div>
   );
 };

@@ -4,17 +4,20 @@ import { PayloadAction, TypeConstant } from 'typesafe-actions';
 import Git from '@commands/lib/git';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
 import { openFolderSystemDialog } from '@app/electronFunctions';
+import { isObjectEmpty } from '@utils/objectHelper';
 import {
   fetchClonableProjectsError,
   fetchClonableProjectsSuccess,
   fetchForkableProjectsSuccess,
   fetchForkableProjectsError,
-  toggleCloneProgress
+  toggleCloneProgress,
+  toggleForkProgress
 } from './actions';
 import { CloneActionTypes, ForkActionTypes } from './types';
 import { openSnackbar } from '../snackbar/actions';
 import CloningRepositoriesStore from './cloning';
 import { IProgressBarSelector } from '../progress/types';
+import ForkingRepositoriesStore from './forking';
 
 /**
  * @desc Business logic of effect.
@@ -73,7 +76,12 @@ function* handleCloning(
       const test = new Git(folder.filePaths[0]);
       // TODO : Uncomment whenever Dugite works without Git
       // await test.init();
-      yield put(action.payload.progressState.progressStart());
+      yield put(
+        action.payload.progressState.progressStart({
+          progressType: 'linear',
+          variant: 'determinate'
+        })
+      );
       yield put(toggleCloneProgress());
       const cloneProgress = new CloningRepositoriesStore(
         test,
@@ -178,30 +186,28 @@ function* handleForking(
     )
       return;
 
-    const folder = (yield call(
-      openFolderSystemDialog
-    )) as Electron.OpenDialogReturnValue;
-
-    if (folder.canceled) return;
-
     try {
-      // TODO : Repo Path Delete
-      const test = new Git(folder.filePaths[0]);
-      // TODO : Uncomment whenever Dugite works without Git
-      // await test.init();
-      yield put(toggleCloneProgress());
-      yield put(action.payload.progressState.progressStart());
-      const cloneProgress = new CloningRepositoriesStore(
-        test,
+      yield put(toggleForkProgress());
+      yield put(
+        action.payload.progressState.progressStart({
+          progressType: 'circular',
+          variant: 'indeterminate'
+        })
+      );
+
+      const gitlab = new GitlabEnterprise();
+      yield call(gitlab.init);
+
+      const forkProgress = new ForkingRepositoriesStore(
+        gitlab,
         action.payload.progressState
       );
       const val = (yield call(
-        cloneProgress.clone,
-        action.payload.projects[0].ssh_url_to_repo,
-        folder.filePaths[0],
+        forkProgress.fork,
+        action.payload.projects[0],
         {}
-      )) as boolean;
-      if (val) {
+      )) as object;
+      if (!isObjectEmpty(val)) {
         yield put(
           action.payload.progressState.handleProgress({
             title: 'Forking Completed',
@@ -215,29 +221,23 @@ function* handleForking(
             variant: 'success'
           })
         );
-      } else
-        yield put(
-          action.payload.progressState.handleProgress({
-            title: 'Forking Failed',
-            value: 0
-          })
-        );
+      }
     } catch (error) {
       // TODO : change progress bar color to red
       yield put(
         openSnackbar({
           kind: 'Fork',
-          text: error.message.toString(),
+          text: `Forking Failed: ${error.message.toString()}`,
           variant: 'error'
         })
       );
     } finally {
       yield put(action.payload.progressState.progressComplete());
       yield delay(2000);
-      yield put(toggleCloneProgress());
+      yield put(toggleForkProgress());
     }
   } catch (err) {
-    throw new Error(`Cloning failed${err}`);
+    throw new Error(`Forking failed${err}`);
   }
 }
 
@@ -245,7 +245,7 @@ function* handleForking(
  * @desc Watches every specified action and runs effect method and passes action args to it
  */
 function* watchForking(): Generator {
-  yield takeEvery(ForkActionTypes.START_FORKING, handleCloning);
+  yield takeEvery(ForkActionTypes.START_FORKING, handleForking);
 }
 
 /**
@@ -255,6 +255,7 @@ export default function* postSaga() {
   yield all([
     fork(watchFetchCloneProjectsRequest),
     fork(watchFetchForkProjectsRequest),
-    fork(watchCloning)
+    fork(watchCloning),
+    fork(watchForking)
   ]);
 }
