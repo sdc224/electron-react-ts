@@ -1,8 +1,9 @@
 import { action } from 'typesafe-actions';
-import { IProgress } from '@app/commands/lib/progress/definitions';
-import { ProgressActionTypes } from './types';
+import { ProgressActionTypes, IProgressBarState } from './types';
 
-export const report = (progress: IProgress) =>
+export const start = () => action(ProgressActionTypes.PROGRESS_START);
+
+export const report = (progress: IProgressBarState) =>
   action(ProgressActionTypes.PROGRESS_REPORT, progress);
 
 // TODO

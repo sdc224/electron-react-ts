@@ -1,9 +1,8 @@
 import { Gitlab } from 'gitlab';
 import credentials from '@private/credentials';
-import { IGit } from '../../git';
 import GitlabOperations from '..';
 
-export default class GitlabEnterprise extends GitlabOperations implements IGit {
+export default class GitlabEnterprise extends GitlabOperations {
   // TODO : Convert to Auth -- checkURL and auth object intro
   constructor() {
     // TODO : Validate URL using regex
@@ -30,11 +29,11 @@ export default class GitlabEnterprise extends GitlabOperations implements IGit {
           throw new Error(
             'Sorry guys...server down. Please try after some time'
           );
+        } else if (!response.ok) {
+          throw new Error('No Internet Connection');
+        } else {
+          throw new Error('Maybe some other Internet Issue');
         }
-      } else if (!response.ok) {
-        throw new Error('No Internet Connection');
-      } else {
-        throw new Error('Maybe some other Internet Issue');
       }
     } catch (error) {
       if (/^Failed to fetch/.test(error.message))

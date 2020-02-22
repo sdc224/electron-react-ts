@@ -2,7 +2,7 @@ import { RouteProps } from 'react-router';
 // import HomePage from '@containers/HomePage';
 // import CounterModel from '@containers/CounterModel';
 import Main from '@layouts/Main';
-import { Dashboard, Clone, Operations } from '@views/';
+import { Dashboard, Operations } from '@views/';
 import jsonRoutes from './jsonRoutes.json';
 
 interface IRouteWithLayout {
@@ -23,20 +23,6 @@ const routes: RoutePropsWithLayout[] = [
   },
   {
     key: '2',
-    path: jsonRoutes.CLONE,
-    exact: true,
-    component: Clone,
-    layout: Main
-  },
-  // {
-  //   key: '2',
-  //   path: jsonRoutes.COUNTER,
-  //   exact: true,
-  //   component: CounterModel,
-  //   layout: Main
-  // },
-  {
-    key: '3',
     path: jsonRoutes.OPERATIONS,
     exact: true,
     component: Operations,

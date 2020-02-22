@@ -1,61 +1,150 @@
 import React from 'react';
+import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-// import makeStyles from '@material-ui/core/styles/makeStyles';
-// import styles from '@tsStyles/styles/components/loadingButtonStyles';
-import { isObjectEmpty } from '@utils/objectHelper';
-
-interface IReducer {
-  loading: boolean;
-  data: object;
-  error: object;
-}
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Fab from '@material-ui/core/Fab';
+import CheckIcon from '@material-ui/icons/Check';
+import SaveIcon from '@material-ui/icons/Save';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import styles from '@componentsTSStyles/loadingButtonStyles';
+import { ProgressBarProps } from '@ducks/progress/types';
+import { useProgress } from '@app/state/ducks/progress/selectors';
 
 interface IButtonContentProps {
-  content: string | React.ReactNode;
+  content?: string | React.ReactNode;
   loadingContent?: string | React.ReactNode;
   errorContent?: string | React.ReactNode;
-  reducer: IReducer;
+  buttonStyles?: string;
 }
 
 interface ILoadingButtonProps extends IButtonContentProps {
+  className?: string;
   children?: React.ReactNode;
   onClick(): void;
+  buttonType?: 'normal' | 'fab';
+  buttonText: string;
+  disabled?: boolean;
 }
 
-// const useStyles = makeStyles(styles);
+interface IFabButtonProps extends ProgressBarProps {
+  buttonClassName?: string;
+  onClick(): void;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+}
 
-const ButtonContent: React.FC<IButtonContentProps> = ({
-  content,
-  loadingContent,
-  errorContent,
-  reducer
-}: IButtonContentProps): JSX.Element => {
-  // TODO : to be used for styling in future
-  // const classes = useStyles();
+const useStyles = makeStyles(styles);
 
-  if (reducer.loading) {
-    return (loadingContent || <CircularProgress />) as JSX.Element;
-  }
-
-  if (reducer.error) {
-    return (errorContent || <div>Error</div>) as JSX.Element;
-  }
-
-  if (!isObjectEmpty(reducer!.data)) return content as JSX.Element;
-
-  return <div>Something went wrong</div>;
-};
-const LoadingButton: React.FC<ILoadingButtonProps> = ({
-  children,
+// TODO : Error Fab
+const FabButton = ({
   onClick,
-  ...rest
-}: ILoadingButtonProps) => {
-  // TODO to be used in future for styling
-  // const classes = useStyles();
+  buttonClassName,
+  icon = <SaveIcon />,
+  disabled,
+  ...props
+}: IFabButtonProps) => {
+  const classes = useStyles();
   return (
-    <Button onClick={onClick}>{children || <ButtonContent {...rest} />}</Button>
+    <>
+      <Fab
+        aria-label="Save"
+        color="primary"
+        className={buttonClassName}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        {/* TODO */}
+        {/* {reducer.success ? <CheckIcon /> : icon} */}
+      </Fab>
+      {/* TODO */}
+      {/* {reducer.loading && (
+        <CircularProgress
+          size={68}
+          className={classes.fabProgress}
+          {...props}
+        />
+      )} */}
+    </>
   );
 };
 
-export default LoadingButton;
+export default function LoadingButton({
+  className,
+  content,
+  onClick,
+  children,
+  loadingContent,
+  errorContent,
+  buttonType = 'normal',
+  buttonText,
+  buttonStyles,
+  disabled
+}: ILoadingButtonProps) {
+  const classes = useStyles();
+
+  const { progressState } = useProgress();
+
+  const buttonClassName = clsx({
+    [classes.buttonSuccess]: progressState.value === 100
+  });
+
+  let buttonContent: React.ReactNode;
+
+  let newVariant = progressState.variant;
+
+  if (progressState.progressType === 'circular') {
+    if (progressState.variant === 'buffer' || progressState.variant === 'query')
+      newVariant = 'indeterminate';
+  } else if (progressState.progressType === 'linear') {
+    if (progressState.variant === 'static') newVariant = 'indeterminate';
+  }
+
+  // TODO : Apply custom styling using props
+  if (buttonType === 'fab')
+    buttonContent = (
+      <FabButton onClick={onClick} buttonClassName={buttonClassName} />
+    );
+  else
+    buttonContent = (
+      <>
+        <Button
+          variant="contained"
+          color="primary"
+          className={clsx(classes.button, buttonClassName, buttonStyles)}
+          disabled={
+            disabled ||
+            (progressState.value === 0 &&
+              progressState.init &&
+              progressState.value < 1)
+          }
+          onClick={onClick}
+        >
+          {buttonText}
+        </Button>
+        {progressState.value !== 0 &&
+          progressState.value < 1 &&
+          (progressState.progressType === 'circular' ? (
+            <CircularProgress
+              size={24}
+              className={classes.buttonProgress}
+              variant={newVariant as CircularProgressVariant}
+              id={progressState.kind}
+              value={progressState.value * 100}
+            />
+          ) : (
+            <LinearProgress
+              color="secondary"
+              className={classes.linearProgress}
+              variant={newVariant as LinearProgressVariant}
+              value={progressState.value * 100}
+              id={progressState.kind}
+            />
+          ))}
+      </>
+    );
+
+  return (
+    <div className={clsx(classes.wrapper, className)}>{buttonContent}</div>
+  );
+}

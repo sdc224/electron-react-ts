@@ -23,6 +23,10 @@ export interface IProgress {
    * will usually be the last raw line of output from git.
    */
   readonly description?: string;
+
+  // TODO
+  readonly progressType?: 'linear' | 'circular';
+  readonly variant?: LinearProgressVariant | CircularProgressVariant;
 }
 
 /**
@@ -92,6 +96,15 @@ export interface IPushProgress extends IProgress {
  */
 export interface ICloneProgress extends IProgress {
   kind: 'clone';
+}
+
+/**
+ * An object describing the progression of a fork operation
+ */
+export interface IForkProgress extends IProgress {
+  kind: 'fork';
+
+  readonly error?: string;
 }
 
 /** An object describing the progression of a revert operation. */

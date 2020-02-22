@@ -32,11 +32,6 @@ const operations: IOperation[] = [
     icon: <DashboardIcon />
   },
   {
-    title: 'Clone',
-    href: '/clone',
-    icon: <CloneIcon />
-  },
-  {
     title: 'Operations',
     href: '/operations',
     icon: <WorkIcon />

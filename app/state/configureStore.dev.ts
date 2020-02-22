@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger';
 import { IApplicationState, createRootReducer, rootSaga } from './ducks';
 import sagaMiddleware from './middlewares/sagas';
 import * as counterActions from './ducks/counter/actions';
-import * as cloneActions from './ducks/clone/actions';
+import * as operationsActions from './ducks/operations/actions';
 import * as snackbarActions from './ducks/snackbar/actions';
 // import * as postActions from './ducks/post/actions';
 // import * as drawerActions from './ducks/drawer/action';
@@ -58,7 +58,7 @@ const configureStore = (
   const actionCreators = {
     ...counterActions,
     ...routerActions,
-    ...cloneActions,
+    ...operationsActions,
     ...snackbarActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose

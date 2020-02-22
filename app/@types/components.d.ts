@@ -17,3 +17,33 @@ interface IOperation {
    */
   icon: React.ReactElement;
 }
+
+/**
+ * Reducer Interface
+ * Useful for getting a normal reducer props
+ *
+ * @author Sourodeep Chatterjee <sourodeep224@outlook.com>
+ */
+interface IReducer {
+  /**
+   * For getting whether the reducer is in load state
+   */
+  loading: boolean;
+  /**
+   * For finding the success state
+   */
+  success: object;
+  /**
+   * Catch any kind of errors
+   */
+  error: object;
+}
+
+// TODO DESCRIPTION
+type CircularProgressVariant = 'determinate' | 'indeterminate' | 'static';
+
+type LinearProgressVariant =
+  | 'determinate'
+  | 'indeterminate'
+  | 'buffer'
+  | 'query';

@@ -169,7 +169,7 @@ export default function CustomSnackbar({ className }: ISnackbarProps) {
       className={className}
       key={content?.kind!}
       open={open}
-      autoHideDuration={5000}
+      autoHideDuration={4000}
       onClose={handleClose}
       onExited={handleExited}
     >

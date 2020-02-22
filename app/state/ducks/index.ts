@@ -6,9 +6,9 @@ import { postReducer } from './post/reducers';
 import postSaga from './post/sagas';
 import { IPostState } from './post/types';
 import { counterReducer } from './counter/reducers';
-import { ICloneState } from './clone/types';
-import { cloneReducer } from './clone/reducers';
-import cloneSaga from './clone/sagas';
+import { IOperationState } from './operations/types';
+import { cloneReducer, forkReducer } from './operations/reducers';
+import operationsSaga from './operations/sagas';
 import { IProgressBarState } from './progress/types';
 import { progressReducer } from './progress/reducers';
 import { ISnackbarState } from './snackbar/types';
@@ -18,7 +18,8 @@ import { snackbarReducer } from './snackbar/reducers';
 export interface IApplicationState {
   post: IPostState;
   counter: number;
-  clone: ICloneState;
+  clone: IOperationState;
+  fork: IOperationState;
   router: RouterState;
   progress: IProgressBarState;
   snackbar: ISnackbarState;
@@ -29,6 +30,7 @@ export const createRootReducer = (history: History) =>
     post: postReducer,
     counter: counterReducer,
     clone: cloneReducer,
+    fork: forkReducer,
     progress: progressReducer,
     snackbar: snackbarReducer,
     router: connectRouter(history)
@@ -39,5 +41,5 @@ export function* rootSaga(): Generator<
   void,
   unknown
 > {
-  yield all([fork(postSaga), fork(cloneSaga)]);
+  yield all([fork(postSaga), fork(operationsSaga)]);
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {
   Tabs,
@@ -19,8 +19,23 @@ import {
   ThumbDown as ThumbDownIcon,
   ThumbUp as ThumbUpIcon
 } from '@material-ui/icons';
+import Loading from '@components/Loading';
 import styles from '@viewsTSStyles/operationsStyles';
-import Clone from '../Clone';
+
+const CloneComponent = React.lazy(() => import('./Clone'));
+const ForkComponent = React.lazy(() => import('./Fork'));
+
+const Clone = () => (
+  <Suspense fallback={<Loading />}>
+    <CloneComponent />
+  </Suspense>
+);
+
+const Fork = () => (
+  <Suspense fallback={<Loading />}>
+    <ForkComponent />
+  </Suspense>
+);
 
 interface ITabPanelProps {
   children?: React.ReactNode;
@@ -40,7 +55,7 @@ function TabPanel(props: ITabPanelProps) {
       aria-labelledby={`scrollable-force-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box>{children}</Box>}
     </Typography>
   );
 }
@@ -70,7 +85,7 @@ const getTabDetails = (
 
 const getOperationTabs: OperationTabs[] = [
   getTabDetails('Clone', 0, <CloneIcon />),
-  getTabDetails('Item Two', 1, <FavoriteIcon />),
+  getTabDetails('Fork', 1, <FavoriteIcon />),
   getTabDetails('Item Three', 2, <PersonPinIcon />),
   getTabDetails('Item Four', 3, <HelpIcon />),
   getTabDetails('Item Five', 4, <ShoppingBasketIcon />),
@@ -87,7 +102,7 @@ const getOperations: ITabPanelProps[] = [
   {
     index: 1,
     value: 1,
-    children: `Item Two`
+    children: <Fork />
   },
   {
     index: 2,

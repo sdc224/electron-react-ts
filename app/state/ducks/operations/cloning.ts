@@ -1,7 +1,7 @@
-import Git from '@commands/git';
+import Git from '@commands/lib/git';
 // import CloningRepository from '@commands/models/cloningRepository';
 // import { ICloneProgress } from '@commands/lib/progress/definitions';
-import { IProgressBarSelector } from './types';
+import { IProgressBarSelector } from '../progress/types';
 
 /** The store in charge of repository currently being cloned. */
 export default class CloningRepositoriesStore {
@@ -9,22 +9,23 @@ export default class CloningRepositoriesStore {
   //  private readonly _repositories = new Array<CloningRepository>();
   // private readonly stateByID = new Map<number, ICloneProgress>();
 
+  // TODO : interface for Clone and Progress, to separate out logic from Progress and Clone
   constructor(
     private readonly gitObject: Git,
-    private progressState: IProgressBarSelector
+    private readonly progressState: IProgressBarSelector
   ) {}
 
   /**
    * Clone the repository at the URL to the path.
    *
-   * Returns a {Promise} which resolves to whether the clone was successful.
+   * @returns {Promise<boolean>} which resolves to whether the clone was successful.
    */
-  public async clone(
+  public clone = async (
     url: string,
     path: string,
     options: {}
     // options: CloneOptions
-  ): Promise<boolean> {
+  ): Promise<boolean> => {
     if (!this.gitObject) {
       throw new Error('Git object is not defined');
     }
@@ -43,6 +44,8 @@ export default class CloningRepositoriesStore {
     // TODO : Detailed Cloning
     this.progressState.handleProgress({
       kind: 'clone',
+      progressType: 'linear',
+      variant: 'determinate',
       title,
       value: 0
     });
@@ -80,7 +83,7 @@ export default class CloningRepositoriesStore {
     // this.remove(repository);
 
     return success;
-  }
+  };
 
   // TODO : For multiple repository cloning
   /** Get the repositories currently being cloned. */
