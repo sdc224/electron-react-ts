@@ -5,7 +5,6 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import CloneIcon from '@material-ui/icons/FileCopy';
 import WorkIcon from '@material-ui/icons/Work';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';

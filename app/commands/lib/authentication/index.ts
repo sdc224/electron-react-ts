@@ -1,5 +1,15 @@
 export interface IAuth {
-  authenticate(): void;
+  authenticate(): Promise<void>;
 }
 
-// export function gitlabAuth() {}
+export abstract class Auth implements IAuth {
+  protected auth: IAuth;
+
+  constructor(auth: IAuth) {
+    this.auth = auth;
+  }
+
+  authenticate = async (): Promise<void> => {
+    await this.auth.authenticate();
+  };
+}

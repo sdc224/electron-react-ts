@@ -4,8 +4,8 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
+// import CheckIcon from '@material-ui/icons/Check';
+// import SaveIcon from '@material-ui/icons/Save';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from '@componentsTSStyles/loadingButtonStyles';
 import { ProgressBarProps } from '@ducks/progress/types';
@@ -40,11 +40,10 @@ const useStyles = makeStyles(styles);
 const FabButton = ({
   onClick,
   buttonClassName,
-  icon = <SaveIcon />,
-  disabled,
-  ...props
+  // icon = <SaveIcon />,
+  disabled
 }: IFabButtonProps) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <>
       <Fab
@@ -71,11 +70,7 @@ const FabButton = ({
 
 export default function LoadingButton({
   className,
-  content,
   onClick,
-  children,
-  loadingContent,
-  errorContent,
   buttonType = 'normal',
   buttonText,
   buttonStyles,

@@ -1,11 +1,8 @@
 import { GitProcess, GitError as DugiteError } from 'dugite';
-import { isObjectEmpty } from '@utils/objectHelper';
-import { convertArrayBufferToString } from '@utils/typeConverters';
-import { ITerminal, Terminal, ISpawnOptions } from './terminal';
 import { IGitResultMessage, GitError } from './lib/progress/gitError';
 import { IGitExecutionOptions } from './lib/execution';
 import isErrnoException from './lib/exception';
-import getDescriptionForError from './lib/error';
+import getDescriptionForError from './lib/error/error-desc';
 
 /**
  * Shell out to git with the given arguments, at the given path.
@@ -26,6 +23,7 @@ import getDescriptionForError from './lib/error';
  * `successExitCodes` or an error not in `expectedErrors`, a `GitError` will be
  * thrown.
  */
+// eslint-disable-next-line import/prefer-default-export
 export async function git(
   args: string[],
   path: string,
@@ -130,30 +128,4 @@ export async function git(
   // log.error(errorMessage.join('\n'));
 
   throw new GitError(gitResult, args);
-}
-
-export class GitTerminal implements ITerminal {
-  private terminal: Terminal;
-
-  constructor(currentWorkingDirectory: string) {
-    this.terminal = new Terminal(currentWorkingDirectory);
-  }
-
-  public async execute(
-    command: string,
-    args?: string[],
-    options?: ISpawnOptions
-  ): Promise<string> {
-    if (isObjectEmpty(this.terminal))
-      throw new Error('Terminal is not defined');
-
-    const newCommand = `git ${command}`;
-
-    try {
-      const res = await this.terminal.execute(newCommand, args, options);
-      return convertArrayBufferToString(res);
-    } catch (error) {
-      throw new Error('Git Execute failed, conversion unsuccessful');
-    }
-  }
 }

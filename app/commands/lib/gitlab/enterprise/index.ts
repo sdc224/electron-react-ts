@@ -1,46 +1,21 @@
 import { Gitlab } from 'gitlab';
 import credentials from '@private/credentials';
 import GitlabOperations from '..';
+import { IAuth } from '../../authentication';
+import GitlabAuth from '../../authentication/gitlabAuth';
+import GitlabEnterpriseAuth from '../../authentication/gitlabEntAuth';
 
 export default class GitlabEnterprise extends GitlabOperations {
-  // TODO : Convert to Auth -- checkURL and auth object intro
+  private auth: IAuth;
+
   constructor() {
     // TODO : Validate URL using regex
     super(new Gitlab(credentials));
+    // Decorator Pattern
+    this.auth = new GitlabAuth(new GitlabEnterpriseAuth(credentials));
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public async init(): Promise<void> {
-    // TODO : Convert to Auth -- checkURL and auth object intro
-    // fetch(this.checkUrl).catch((error: Error) => {
-    // fetch(credentials.host!)
-    //   .then(r => console.log(r))
-    //   .catch((error: Error) => {
-    //     this.handleError(error);
-    //     throw error;
-    //   });
-    try {
-      const response: Response = await fetch(credentials.host!);
-      if (!response) throw new Error('Something went wrong!');
-      if (response.status >= 400) {
-        if (response!.status === 403) {
-          throw new Error('Please connect VPN first!');
-        } else if (response!.status >= 500) {
-          throw new Error(
-            'Sorry guys...server down. Please try after some time'
-          );
-        } else if (!response.ok) {
-          throw new Error('No Internet Connection');
-        } else {
-          throw new Error('Maybe some other Internet Issue');
-        }
-      }
-    } catch (error) {
-      if (/^Failed to fetch/.test(error.message))
-        throw new Error(
-          'Maybe some network issue(Not connected, DNS Resolve Failure)'
-        );
-      throw error;
-    }
+    await this.auth.authenticate();
   }
 }

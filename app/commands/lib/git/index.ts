@@ -1,8 +1,6 @@
 import * as path from 'path';
 // import gitUrlParse from 'git-url-parse';
-import { RegularExpressions } from '@constants/commandConstants';
-import { isObjectEmpty } from '@utils/objectHelper';
-import { GitTerminal, git } from '../../gitTerminal';
+import { git } from '../../gitTerminal';
 import { safeCheckEmptyDirectory } from '../../utils';
 import { ICloneProgress } from '../progress/definitions';
 import { IGitExecutionOptions } from '../execution';
@@ -24,40 +22,32 @@ export default class Git implements IGit {
   // private readonly performance: IPerformance;
   // private readonly execution: IExecution;
 
-  private gitVersion = '';
+  // private gitVersion = '';
 
-  private gitTerminal: GitTerminal;
+  // private async checkGitExists() {
+  //   if (isObjectEmpty(this.gitTerminal))
+  //     throw new Error('Git Terminal not defined');
 
-  constructor(
-    private repositoryPath: string // , private urlType: 'https' | 'ssh' = 'https'
-  ) {
-    this.gitTerminal = new GitTerminal(this.repositoryPath);
-  }
+  //   try {
+  //     const res = await this.gitTerminal.execute('', ['--version']);
+  //     this.gitVersion = res
+  //       .trim()
+  //       .split('\n')
+  //       .filter((line: string) => !!line)
+  //       .map(this.setGitVersion)
+  //       .join();
+  //   } catch (error) {
+  //     throw new Error('Git is not installed');
+  //   }
+  // }
 
-  private async checkGitExists() {
-    if (isObjectEmpty(this.gitTerminal))
-      throw new Error('Git Terminal not defined');
+  // private setGitVersion = (line: string) => {
+  //   if (RegularExpressions.GitVersion.test(line)) {
+  //     return line.match(/(\w+\.)+\w+/g)![0];
+  //   }
 
-    try {
-      const res = await this.gitTerminal.execute('', ['--version']);
-      this.gitVersion = res
-        .trim()
-        .split('\n')
-        .filter((line: string) => !!line)
-        .map(this.setGitVersion)
-        .join();
-    } catch (error) {
-      throw new Error('Git is not installed');
-    }
-  }
-
-  private setGitVersion = (line: string) => {
-    if (RegularExpressions.GitVersion.test(line)) {
-      return line.match(/(\w+\.)+\w+/g)![0];
-    }
-
-    return null;
-  };
+  //   return null;
+  // };
 
   // TODO : to be used in future
   // private parseUrl = (url: string) => {
@@ -70,10 +60,10 @@ export default class Git implements IGit {
   // };
 
   public init = async () => {
-    await this.checkGitExists();
+    // await this.checkGitExists();
   };
 
-  public getGitVersion = () => !!this.gitVersion;
+  // public getGitVersion = () => !!this.gitVersion;
 
   /**
    * Clones a repository from a given url into to the specified path.

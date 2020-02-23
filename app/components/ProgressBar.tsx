@@ -19,6 +19,7 @@ const ProgressBar: React.FC<IProgressProps> = ({
   divClassName,
   progressClassName,
   open,
+  variant,
   ...props
 }: IProgressProps) => {
   const classes = useStyles();
@@ -30,6 +31,7 @@ const ProgressBar: React.FC<IProgressProps> = ({
       <LinearProgress
         className={(classes.progressBar, progressClassName)}
         classes={{ root: classes.root, bar: classes.bar }}
+        variant={variant as LinearProgressVariant}
         {...props}
       />
       {children}

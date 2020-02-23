@@ -73,7 +73,7 @@ function* handleCloning(
 
     try {
       // TODO : Repo Path Delete
-      const test = new Git(folder.filePaths[0]);
+      const test = new Git();
       // TODO : Uncomment whenever Dugite works without Git
       // await test.init();
       yield put(
@@ -204,8 +204,7 @@ function* handleForking(
       );
       const val = (yield call(
         forkProgress.fork,
-        action.payload.projects[0],
-        {}
+        action.payload.projects[0]
       )) as object;
       if (!isObjectEmpty(val)) {
         yield put(
