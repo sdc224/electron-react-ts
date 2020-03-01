@@ -2077,10 +2077,18 @@
   dependencies:
     "@types/enzyme" "*"
 
-"@types/enzyme@*", "@types/enzyme@^3.10.4":
+"@types/enzyme@*":
   version "3.10.4"
   resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.10.4.tgz#dd4961042381a7c0f6637ce25fec3f773ce489dd"
   integrity sha512-P5XpxcIt9KK8QUH4al4ttfJfIHg6xmN9ZjyUzRSzAsmDYwRXLI05ng/flZOPXrEXmp8ZYiN8/tEXYK5KSOQk3w==
+  dependencies:
+    "@types/cheerio" "*"
+    "@types/react" "*"
+
+"@types/enzyme@^3.10.5":
+  version "3.10.5"
+  resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.10.5.tgz#fe7eeba3550369eed20e7fb565bfb74eec44f1f0"
+  integrity sha512-R+phe509UuUYy9Tk0YlSbipRpfVtIzb/9BHn5pTEtjJTF5LXvUjrIQcZvNyANNEyFrd2YGs196PniNT1fgvOQA==
   dependencies:
     "@types/cheerio" "*"
     "@types/react" "*"
@@ -13275,11 +13283,6 @@ redux-dynamic-modules-react@^5.2.0:
     redux-devtools-extension "^2.13.7"
     redux-dynamic-middlewares "^1.0.0"
     redux-dynamic-modules-core "^5.2.0"
-
-redux-dynamic-modules-saga@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/redux-dynamic-modules-saga/-/redux-dynamic-modules-saga-5.2.0.tgz#1f488706ce424de413ebb85628c1c05c7e50791f"
-  integrity sha512-37wwlGI/29ncS050G+dp/JklZXB7EzQZkwv6vBB/B75CM4i6Peet4PuOf3GpFLQLXydw5N5wLN0meTtCC0q9UQ==
 
 redux-dynamic-modules@^5.2.0:
   version "5.2.0"
