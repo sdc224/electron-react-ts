@@ -15,7 +15,7 @@ export default class GitlabEnterprise extends GitlabOperations {
     this.auth = new GitlabAuth(new GitlabEnterpriseAuth(credentials));
   }
 
-  public async init(): Promise<void> {
+  public init = async (): Promise<void> => {
     await this.auth.authenticate();
-  }
+  };
 }

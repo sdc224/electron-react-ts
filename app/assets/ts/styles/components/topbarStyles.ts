@@ -5,9 +5,6 @@ export default (theme: Theme) =>
     flexGrow: {
       flexGrow: 1
     },
-    signOutButton: {
-      marginLeft: theme.spacing(1)
-    },
     widthAdder: {
       width: theme.spacing(2)
     },
@@ -30,6 +27,7 @@ export default (theme: Theme) =>
     },
     toolbar: {
       width: '100%',
+      height: '100%',
       minHeight: 'auto',
       padding: 0
     },

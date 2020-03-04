@@ -1,19 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import {
-  AppBar,
-  Toolbar,
-  Badge,
-  Hidden,
-  IconButton,
-  AppBarProps,
-  Typography
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import InputIcon from '@material-ui/icons/Input';
+import { AppBar, Toolbar, AppBarProps, Typography } from '@material-ui/core';
 import GitIcon from '@tsStyles/icons/GitIcon';
 import styles from '@componentsCSSStyles/Topbar.css';
 import muiStyles from '@componentsTSStyles/topbarStyles';
@@ -23,32 +12,27 @@ const useStyles = makeStyles(muiStyles);
 
 interface IProps {
   className?: string;
-  onSidebarOpen?: () => any;
+  leftSection?: React.ReactNode;
+  rightSection?: React.ReactNode;
+  onSidebarOpen?: () => void;
 }
 
 const Topbar = (props: IProps & AppBarProps) => {
-  const { className, onSidebarOpen, ...rest } = props;
+  const {
+    className,
+    onSidebarOpen,
+    leftSection,
+    rightSection,
+    ...rest
+  } = props;
 
   const classes = useStyles();
-
-  const [notifications] = useState([]);
 
   return (
     <AppBar {...rest}>
       <div className={classes.toolbarArea}>
         <Toolbar className={clsx(classes.toolbar, styles.titlebar)}>
-          <Hidden lgUp>
-            <IconButton
-              className={clsx(classes.iconButtons, styles.titlebarButtons)}
-              color="inherit"
-              onClick={onSidebarOpen}
-              disableRipple
-              disableFocusRipple
-              disableTouchRipple
-            >
-              <MenuIcon />
-            </IconButton>
-          </Hidden>
+          {leftSection}
           <RouterLink to="/">
             <div className={clsx(classes.headerText, styles.titlebarButtons)}>
               <GitIcon iconColor="white" width={24} height={24} />
@@ -58,30 +42,7 @@ const Topbar = (props: IProps & AppBarProps) => {
             </div>
           </RouterLink>
           <div className={classes.flexGrow} />
-          <Hidden mdDown>
-            <IconButton
-              color="inherit"
-              className={clsx(classes.iconButtons, styles.titlebarButtons)}
-            >
-              <Badge
-                badgeContent={notifications.length}
-                color="primary"
-                variant="dot"
-              >
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              className={clsx(
-                classes.iconButtons,
-                classes.signOutButton,
-                styles.titlebarButtons
-              )}
-              color="inherit"
-            >
-              <InputIcon />
-            </IconButton>
-          </Hidden>
+          {rightSection}
         </Toolbar>
       </div>
       {/* Custom Titlebar */}

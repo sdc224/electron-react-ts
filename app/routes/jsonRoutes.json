@@ -1,5 +1,7 @@
 {
   "HOME": "/",
   "DASHBOARD": "/dashboard",
-  "OPERATIONS": "/operations"
+  "OPERATIONS": "/operations",
+  "WELCOME": "/welcome",
+  "NOTFOUND": "/not-found"
 }

@@ -5,7 +5,8 @@ type ClassKey = 'root' | 'main' | 'header' | 'footer';
 const dashboardStyles = (theme: Theme): StyleRules<ClassKey> =>
   createStyles({
     root: {
-      padding: theme.spacing(4)
+      padding: theme.spacing(4),
+      overflowY: 'auto'
     },
     header: {},
     main: {

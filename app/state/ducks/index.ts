@@ -13,6 +13,9 @@ import { IProgressBarState } from './progress/types';
 import { progressReducer } from './progress/reducers';
 import { ISnackbarState } from './snackbar/types';
 import { snackbarReducer } from './snackbar/reducers';
+import { IProjectState } from './projects/types';
+import { projectsReducer } from './projects/reducers';
+import projectsSaga from './projects/sagas';
 
 // The top-level state object
 export interface IApplicationState {
@@ -23,6 +26,7 @@ export interface IApplicationState {
   router: RouterState;
   progress: IProgressBarState;
   snackbar: ISnackbarState;
+  projects: IProjectState;
 }
 
 export const createRootReducer = (history: History) =>
@@ -33,6 +37,7 @@ export const createRootReducer = (history: History) =>
     fork: forkReducer,
     progress: progressReducer,
     snackbar: snackbarReducer,
+    projects: projectsReducer,
     router: connectRouter(history)
   });
 
@@ -41,5 +46,5 @@ export function* rootSaga(): Generator<
   void,
   unknown
 > {
-  yield all([fork(postSaga), fork(operationsSaga)]);
+  yield all([fork(postSaga), fork(operationsSaga), fork(projectsSaga)]);
 }

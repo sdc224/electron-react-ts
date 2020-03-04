@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import {
   FileCopy as CloneIcon,
-  Favorite as FavoriteIcon,
+  Share as ForkIcon,
   PersonPin as PersonPinIcon,
   Help as HelpIcon,
   ShoppingBasket as ShoppingBasketIcon,
@@ -85,8 +85,8 @@ const getTabDetails = (
 
 const getOperationTabs: OperationTabs[] = [
   getTabDetails('Clone', 0, <CloneIcon />),
-  getTabDetails('Fork', 1, <FavoriteIcon />),
-  getTabDetails('Item Three', 2, <PersonPinIcon />),
+  getTabDetails('Fork', 1, <ForkIcon />),
+  getTabDetails('Merge Request', 2, <PersonPinIcon />),
   getTabDetails('Item Four', 3, <HelpIcon />),
   getTabDetails('Item Five', 4, <ShoppingBasketIcon />),
   getTabDetails('Item Six', 5, <ThumbDownIcon />),

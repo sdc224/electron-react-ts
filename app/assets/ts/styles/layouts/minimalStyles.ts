@@ -6,11 +6,7 @@ export default () =>
       paddingTop: 38,
       height: '100%'
     },
-    shiftContent: {
-      paddingLeft: 240
-    },
     content: {
-      height: '100%',
-      overflowY: 'auto'
+      height: '100%'
     }
   });

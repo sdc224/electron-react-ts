@@ -1,8 +1,7 @@
 import { RouteProps } from 'react-router';
-// import HomePage from '@containers/HomePage';
-// import CounterModel from '@containers/CounterModel';
 import Main from '@layouts/Main';
-import { Dashboard, Operations } from '@views/';
+import Minimal from '@layouts/Minimal/';
+import { Welcome, Dashboard, Operations, NotFound } from '@views/';
 import jsonRoutes from './jsonRoutes.json';
 
 interface IRouteWithLayout {
@@ -17,7 +16,6 @@ const routes: RoutePropsWithLayout[] = [
     key: '1',
     path: jsonRoutes.DASHBOARD,
     exact: true,
-    // component: HomePage,
     component: Dashboard,
     layout: Main
   },
@@ -27,6 +25,20 @@ const routes: RoutePropsWithLayout[] = [
     exact: true,
     component: Operations,
     layout: Main
+  },
+  {
+    key: '3',
+    path: jsonRoutes.WELCOME,
+    exact: true,
+    component: Welcome,
+    layout: Minimal
+  },
+  {
+    key: '99',
+    path: jsonRoutes.NOTFOUND,
+    exact: true,
+    component: NotFound,
+    layout: Minimal
   }
 ];
 

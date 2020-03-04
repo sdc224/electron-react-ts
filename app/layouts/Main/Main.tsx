@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery, Theme } from '@material-ui/core';
-import Topbar from '@components/Topbar';
 import Sidebar from '@components/Sidebar';
 import Footer from '@components/Footer';
 import styles from '@layoutsTSStyles/mainStyles';
+import TopbarMain from './components/Topbar';
 
 const useStyles = makeStyles(styles);
 
@@ -42,7 +42,7 @@ const Main = ({ children }: IProps) => {
         [classes.shiftContent]: isDesktop
       })}
     >
-      <Topbar onSidebarOpen={handleSidebarOpen} />
+      <TopbarMain onSidebarOpen={handleSidebarOpen} />
       <Sidebar
         onClose={handleSidebarClose}
         open={shouldOpenSidebar}
