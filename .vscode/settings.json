@@ -15,6 +15,15 @@
   "typescript.validate.enable": true,
   "typescript.format.enable": true,
 
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    ".eslintcache": true
+  },
+
   "search.exclude": {
     ".git": true,
     ".eslintcache": true,
