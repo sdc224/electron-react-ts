@@ -10,7 +10,7 @@ export default function Routes() {
     <App>
       <CustomSnackbar />
       <Switch>
-        <Redirect exact from="/" to="/welcomde" />
+        <Redirect exact from="/" to="/dashboard" />
         {routes.map(route => (
           <RouteWithLayout
             key={route.key}

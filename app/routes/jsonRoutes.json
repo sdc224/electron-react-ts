@@ -3,5 +3,6 @@
   "DASHBOARD": "/dashboard",
   "OPERATIONS": "/operations",
   "WELCOME": "/welcome",
+  "SIGNIN": "/sign-in",
   "NOTFOUND": "/not-found"
 }

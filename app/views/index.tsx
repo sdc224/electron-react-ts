@@ -5,6 +5,7 @@ const HomeView = React.lazy(() => import('./Home'));
 const DashboardView = React.lazy(() => import('./Dashboard'));
 const OperationsView = React.lazy(() => import('./Operations'));
 const WelcomeView = React.lazy(() => import('./Welcome'));
+const SignInView = React.lazy(() => import('./SignIn'));
 const NotFoundView = React.lazy(() => import('./NotFound'));
 
 const Welcome = () => (
@@ -31,10 +32,16 @@ const Operations = () => (
   </Suspense>
 );
 
+const SignIn = () => (
+  <Suspense fallback={<Loading />}>
+    <SignInView />
+  </Suspense>
+);
+
 const NotFound = () => (
   <Suspense fallback={<Loading />}>
     <NotFoundView />
   </Suspense>
 );
 
-export { Welcome, Home, Dashboard, Operations, NotFound };
+export { Welcome, Home, Dashboard, Operations, SignIn, NotFound };

@@ -13276,11 +13276,6 @@ redux-dynamic-modules-react@^5.2.0:
     redux-dynamic-middlewares "^1.0.0"
     redux-dynamic-modules-core "^5.2.0"
 
-redux-dynamic-modules-saga@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/redux-dynamic-modules-saga/-/redux-dynamic-modules-saga-5.2.0.tgz#1f488706ce424de413ebb85628c1c05c7e50791f"
-  integrity sha512-37wwlGI/29ncS050G+dp/JklZXB7EzQZkwv6vBB/B75CM4i6Peet4PuOf3GpFLQLXydw5N5wLN0meTtCC0q9UQ==
-
 redux-dynamic-modules@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/redux-dynamic-modules/-/redux-dynamic-modules-5.2.0.tgz#379f51aeba12d2687de2d922de8ca9f2a6c326a6"
@@ -16055,6 +16050,11 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+validate.js@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/validate.js/-/validate.js-0.13.1.tgz#b58bfac04a0f600a340f62e5227e70d95971e92a"
+  integrity sha512-PnFM3xiZ+kYmLyTiMgTYmU7ZHkjBZz2/+F0DaALc/uUtVzdCt1wAosvYJ5hFQi/hz8O4zb52FQhHZRC+uVkJ+g==
 
 value-equal@^1.0.1:
   version "1.0.1"

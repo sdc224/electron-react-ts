@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Topbar from '@app/components/Topbar';
+import Topbar from '@components/Topbar';
 import styles from '@layoutsTSStyles/minimalTopbarStyles';
 
 const useStyles = makeStyles(styles);
