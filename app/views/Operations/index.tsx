@@ -24,6 +24,7 @@ import styles from '@viewsTSStyles/operationsStyles';
 
 const CloneComponent = React.lazy(() => import('./Clone'));
 const ForkComponent = React.lazy(() => import('./Fork'));
+const MergeRequestComponent = React.lazy(() => import('./MergeRequest'));
 
 const Clone = () => (
   <Suspense fallback={<Loading />}>
@@ -34,6 +35,12 @@ const Clone = () => (
 const Fork = () => (
   <Suspense fallback={<Loading />}>
     <ForkComponent />
+  </Suspense>
+);
+
+const MergeRequest = () => (
+  <Suspense fallback={<Loading />}>
+    <MergeRequestComponent />
   </Suspense>
 );
 
@@ -107,7 +114,7 @@ const getOperations: ITabPanelProps[] = [
   {
     index: 2,
     value: 2,
-    children: `Item Three`
+    children: <MergeRequest />
   },
   {
     index: 3,
