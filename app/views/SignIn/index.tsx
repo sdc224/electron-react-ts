@@ -73,7 +73,7 @@ const SignIn = () => {
     history.goBack();
   };
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     event.persist();
 
     setFormState((prevFormState: IFormState) => ({
@@ -92,7 +92,7 @@ const SignIn = () => {
     }));
   };
 
-  const handleSignIn = event => {
+  const handleSignIn = (event: any) => {
     event.preventDefault();
     history.push('/');
   };

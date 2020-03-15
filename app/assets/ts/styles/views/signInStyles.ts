@@ -16,7 +16,7 @@ export default (theme: Theme) =>
       }
     },
     quote: {
-      backgroundColor: theme.palette.neutral,
+      // backgroundColor: theme.palette.neutral,
       height: '100%',
       display: 'flex',
       justifyContent: 'center',
