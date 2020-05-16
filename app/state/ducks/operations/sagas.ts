@@ -26,9 +26,9 @@ import { openSnackbar } from '../snackbar/actions';
 import CloningRepositoriesStore from './cloning';
 import { IProgressBarSelector } from '../progress/types';
 import ForkingRepositoriesStore from './forking';
-import { ISettingsState } from '../settings/types';
+import { ISettingsState, ISettingsAwareState } from '../settings/types';
 
-const getSettings = state => state.settings;
+const getSettings = (state: ISettingsAwareState) => state.settings;
 
 /**
  * @desc Business logic of effect.
