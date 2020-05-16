@@ -1,8 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { ProjectSchema } from 'gitlab';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
 import { getAllProjectsSuccess, getAllProjectsError } from './actions';
-import { ProjectActionTypes } from './types';
+import { ProjectActionTypes, GitlabProjectSchema } from './types';
 import { openSnackbar } from '../snackbar/actions';
 
 /**
@@ -13,7 +12,7 @@ function* handleAllProjectsFetch(): Generator {
     // TODO Introduce Design Pattern
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
-    const res: ProjectSchema[] | any = yield call(gitlab.getAllProjects);
+    const res: GitlabProjectSchema[] | any = yield call(gitlab.getAllProjects);
     yield put(getAllProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {

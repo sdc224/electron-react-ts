@@ -6,9 +6,13 @@ export const ProjectActionTypes = {
   FETCH_ALL_PROJECTS_FAIL: '@@projects/FETCH_ALL_PROJECTS_FAIL'
 };
 
+export type GitlabProjectSchema = ProjectSchema & {
+  isCurrentUserProject: string;
+};
+
 export interface IProjectState {
   loading: boolean;
-  projects: ProjectSchema[];
+  projects: GitlabProjectSchema[];
   error: string;
 }
 

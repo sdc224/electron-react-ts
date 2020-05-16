@@ -25,7 +25,7 @@ const dashboardStyles = () =>
       overflowY: 'auto',
       overflowX: 'hidden',
       // TODO : Set with clientWidth
-      height: 492
+      height: 490
     }
   });
 

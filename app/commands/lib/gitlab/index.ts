@@ -11,18 +11,22 @@ export default class GitlabOperations {
   };
 
   public getAllProjects = async () => {
+    const user = await this.getCurrentUser();
     const res = await this.gitlab.Projects.all();
-    return res;
+    const responseWithUser = res.map(p => ({
+      ...p,
+      isCurrentUserProject: !!p && !!p.owner && p.owner!.id === user.id
+    }));
+    return responseWithUser;
   };
 
   /**
    * getClonableProjects
    */
   public getClonableProjects = async () => {
-    const user = await this.getCurrentUser();
     // TODO : Waiting for gitlab API method without filter
     const res = (await this.getAllProjects()).filter(
-      p => !!p && !!p.owner && p.owner!.id === user.id
+      p => p.isCurrentUserProject
     );
     return res;
   };
@@ -31,10 +35,9 @@ export default class GitlabOperations {
    * getForkableProjects
    */
   public getForkableProjects = async () => {
-    const user = await this.getCurrentUser();
     // TODO : Waiting for gitlab API method without filter
     const res = (await this.getAllProjects()).filter(
-      p => !!p && (!p.owner || p.owner!.id !== user.id)
+      p => !p.isCurrentUserProject
     );
     return res;
   };
