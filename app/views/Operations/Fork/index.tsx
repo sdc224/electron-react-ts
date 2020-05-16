@@ -1,5 +1,4 @@
 import React from 'react';
-import { ProjectSchema } from 'gitlab';
 import {
   InputLabel,
   MenuItem,
@@ -59,7 +58,7 @@ const Fork: React.FC = () => {
       return;
 
     startForking(
-      selectArrayOnIndices<ProjectSchema>(forkState.projects, forkedRepo),
+      selectArrayOnIndices<GitlabProjectSchema>(forkState.projects, forkedRepo),
       progressState
     );
   };

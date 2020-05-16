@@ -1,5 +1,3 @@
-import { ProjectSchema } from 'gitlab';
-
 export const CloneActionTypes = {
   FETCH_ALL_PROJECTS: '@@clone/FETCH_ALL_PROJECTS',
   FETCH_ALL_PROJECTS_SUCCESS: '@@clone/FETCH_ALL_PROJECTS_SUCCESS',
@@ -12,7 +10,7 @@ export interface IProject extends Response {
 
 export interface ICloneState {
   loading: boolean;
-  projects: Array<ProjectSchema>;
+  projects: Array<GitlabProjectSchema>;
   error: string;
 }
 

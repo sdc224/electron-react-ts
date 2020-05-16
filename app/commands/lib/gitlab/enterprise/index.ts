@@ -1,4 +1,4 @@
-import { Gitlab } from 'gitlab';
+import { Gitlab } from '@gitbeaker/browser';
 import credentials from '@private/credentials';
 import GitlabOperations from '..';
 import { IAuth } from '../../authentication';

@@ -1,4 +1,3 @@
-import { ProjectSchema } from 'gitlab';
 import { Action, PayloadAction, TypeConstant } from 'typesafe-actions';
 import { IOperationState, CloneActionTypes, ForkActionTypes } from './types';
 import { ErrorAction } from '../ActionHelper';
@@ -13,7 +12,7 @@ const initialState: IOperationState = {
 export const cloneReducer = (
   state = initialState,
   action: Action<TypeConstant> &
-    PayloadAction<TypeConstant, ProjectSchema[]> &
+    PayloadAction<TypeConstant, GitlabProjectSchema[]> &
     ErrorAction
 ): IOperationState => {
   switch (action.type) {
@@ -25,7 +24,7 @@ export const cloneReducer = (
         ...state,
         loading: false,
         error: '',
-        projects: action.payload as ProjectSchema[]
+        projects: action.payload as GitlabProjectSchema[]
       };
 
     case CloneActionTypes.FETCH_CLONABLE_PROJECTS_ERROR:
@@ -42,7 +41,7 @@ export const cloneReducer = (
 export const forkReducer = (
   state = initialState,
   action: Action<TypeConstant> &
-    PayloadAction<TypeConstant, ProjectSchema[]> &
+    PayloadAction<TypeConstant, GitlabProjectSchema[]> &
     ErrorAction
 ): IOperationState => {
   switch (action.type) {
@@ -54,7 +53,7 @@ export const forkReducer = (
         ...state,
         loading: false,
         error: '',
-        projects: action.payload as ProjectSchema[]
+        projects: action.payload as GitlabProjectSchema[]
       };
 
     case ForkActionTypes.FETCH_FORKABLE_PROJECTS_ERROR:

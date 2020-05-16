@@ -1,4 +1,3 @@
-import { ProjectSchema } from 'gitlab';
 import { Action, PayloadAction, TypeConstant } from 'typesafe-actions';
 import { ICloneState, CloneActionTypes } from './types';
 import { ErrorAction } from '../ActionHelper';
@@ -13,7 +12,7 @@ const initialState: ICloneState = {
 export const cloneReducer = (
   state = initialState,
   action: Action<TypeConstant> &
-    PayloadAction<TypeConstant, ProjectSchema[]> &
+    PayloadAction<TypeConstant, GitlabProjectSchema[]> &
     ErrorAction
 ): ICloneState => {
   switch (action.type) {

@@ -7,7 +7,6 @@ import {
   select,
   takeEvery
 } from 'redux-saga/effects';
-import { ProjectSchema } from 'gitlab';
 import { PayloadAction, TypeConstant } from 'typesafe-actions';
 import Git from '@commands/lib/git';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
@@ -38,7 +37,9 @@ function* handleCloneProjectsFetch(): Generator {
     // TODO Introduce Design Pattern
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
-    const res: ProjectSchema[] | any = yield call(gitlab.getClonableProjects);
+    const res: GitlabProjectSchema[] | any = yield call(
+      gitlab.getClonableProjects
+    );
     yield put(fetchClonableProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {
@@ -65,7 +66,7 @@ function* watchFetchCloneProjectsRequest(): Generator {
 function* handleCloning(
   action: PayloadAction<
     TypeConstant,
-    { projects: ProjectSchema[]; progressState: IProgressBarSelector }
+    { projects: GitlabProjectSchema[]; progressState: IProgressBarSelector }
   >
 ): Generator {
   try {
@@ -104,7 +105,7 @@ function* handleCloning(
       );
       const val = (yield call(
         cloneProgress.clone,
-        action.payload.projects[0].ssh_url_to_repo,
+        action.payload.projects[0].sshUrlToRepo,
         folder.filePaths[0],
         {}
       )) as boolean;
@@ -163,7 +164,9 @@ function* handleForkProjectsFetch(): Generator {
     // TODO Introduce Design Pattern
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
-    const res: ProjectSchema[] | any = yield call(gitlab.getForkableProjects);
+    const res: GitlabProjectSchema[] | any = yield call(
+      gitlab.getForkableProjects
+    );
     yield put(fetchForkableProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {
@@ -190,7 +193,7 @@ function* watchFetchForkProjectsRequest(): Generator {
 function* handleForking(
   action: PayloadAction<
     TypeConstant,
-    { projects: ProjectSchema[]; progressState: IProgressBarSelector }
+    { projects: GitlabProjectSchema[]; progressState: IProgressBarSelector }
   >
 ): Generator {
   try {

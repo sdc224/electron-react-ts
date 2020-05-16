@@ -1,5 +1,4 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { ProjectSchema } from 'gitlab';
 import { getAllProjects } from '@stateUtils/gitlabHelper';
 import { fetchAllProjectsError, fetchAllProjectsSuccess } from './actions';
 import { CloneActionTypes } from './types';
@@ -9,7 +8,7 @@ import { CloneActionTypes } from './types';
  */
 function* handleFetch(): Generator {
   try {
-    const res: ProjectSchema[] | any = yield call(getAllProjects);
+    const res: GitlabProjectSchema[] | any = yield call(getAllProjects);
     yield put(fetchAllProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {

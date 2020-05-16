@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ProjectSchema } from 'gitlab';
 import {
   fetchClonableProjects,
   toggleCloneProgress,
@@ -24,7 +23,7 @@ export const useClone = () => {
   ]);
 
   const startCloning = useCallback(
-    (projects: ProjectSchema[], progressState: IProgressBarSelector) =>
+    (projects: GitlabProjectSchema[], progressState: IProgressBarSelector) =>
       dispatch(clone(projects, progressState)),
     [dispatch]
   );
@@ -50,7 +49,7 @@ export const useFork = () => {
   ]);
 
   const startForking = useCallback(
-    (projects: ProjectSchema[], progressState: IProgressBarSelector) =>
+    (projects: GitlabProjectSchema[], progressState: IProgressBarSelector) =>
       dispatch(fork(projects, progressState)),
     [dispatch]
   );

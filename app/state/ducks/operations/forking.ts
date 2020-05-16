@@ -1,6 +1,5 @@
 // import ForkingRepository from '@commands/models/cloningRepository';
 // import { ICloneProgress } from '@commands/lib/progress/definitions';
-import { ProjectSchema } from 'gitlab';
 import GitlabOperations from '@commands/lib/gitlab';
 import { IProgressBarSelector } from '../progress/types';
 
@@ -22,7 +21,7 @@ export default class ForkingRepositoriesStore {
    * @returns {Promise<boolean>} which resolves to whether the clone was successful.
    */
   public fork = async (
-    project: ProjectSchema
+    project: GitlabProjectSchema
     // options: {}
     // options: CloneOptions
   ): Promise<boolean> => {

@@ -34,7 +34,7 @@ interface IProps {
 
 /* interface IRepoProps {
   loading: boolean;
-  projects: Array<ProjectSchema>;
+  projects: Array<GitlabProjectSchema>;
   error?: {};
 } */
 

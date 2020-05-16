@@ -14,7 +14,6 @@ import styles from '@viewsTSStyles/cloneStyles';
 import { useClone } from '@ducks/operations/selectors';
 import { useProgress } from '@ducks/progress/selectors';
 import { selectArrayOnIndices } from '@app/utils/objectHelper';
-import { ProjectSchema } from 'gitlab';
 
 const useStyles = makeStyles(styles);
 
@@ -31,7 +30,7 @@ const MenuProps = {
 
 // interface IRepoProps {
 //   loading: boolean;
-//   projects: Array<ProjectSchema>;
+//   projects: Array<GitlabProjectSchema>;
 //   error?: {};
 // }
 
@@ -125,7 +124,10 @@ const Clone: React.FC = () => {
       return;
 
     startCloning(
-      selectArrayOnIndices<ProjectSchema>(cloneState.projects, clonedRepo),
+      selectArrayOnIndices<GitlabProjectSchema>(
+        cloneState.projects,
+        clonedRepo
+      ),
       progressState
     );
   };

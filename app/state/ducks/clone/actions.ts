@@ -1,11 +1,10 @@
 import { action } from 'typesafe-actions';
-import { ProjectSchema } from 'gitlab';
 import { CloneActionTypes } from './types';
 
 export const fetchAllProjects = () =>
   action(CloneActionTypes.FETCH_ALL_PROJECTS);
 
-export const fetchAllProjectsSuccess = (data: ProjectSchema[]) =>
+export const fetchAllProjectsSuccess = (data: GitlabProjectSchema[]) =>
   action(CloneActionTypes.FETCH_ALL_PROJECTS_SUCCESS, data);
 
 export const fetchAllProjectsError = (message: string) =>
