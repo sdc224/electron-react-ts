@@ -6,6 +6,8 @@ const initialize = () => {
   browserWindow = remote.getCurrentWindow();
 };
 
+export const getAppPath = () => remote.app.getAppPath();
+
 export const minimizeWindow = () => {
   if (!browserWindow) initialize();
 
@@ -36,9 +38,14 @@ export const isMaximized = (): boolean => {
   return !!browserWindow?.isMaximized();
 };
 
-export const openFolderSystemDialog = () => {
+export const openFolderSystemDialog = (
+  title?: string,
+  defaultPath?: string
+) => {
   if (!browserWindow) initialize();
   return remote.dialog.showOpenDialog(browserWindow!, {
+    title,
+    defaultPath,
     properties: ['openDirectory']
   });
 };

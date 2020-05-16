@@ -16,6 +16,8 @@ import { snackbarReducer } from './snackbar/reducers';
 import { IProjectState } from './projects/types';
 import { projectsReducer } from './projects/reducers';
 import projectsSaga from './projects/sagas';
+import { ISettingsState } from './settings/types';
+import { settingsReducer } from './settings/reducers';
 
 // The top-level state object
 export interface IApplicationState {
@@ -27,6 +29,7 @@ export interface IApplicationState {
   progress: IProgressBarState;
   snackbar: ISnackbarState;
   projects: IProjectState;
+  settings: ISettingsState;
 }
 
 export const createRootReducer = (history: History) =>
@@ -38,6 +41,7 @@ export const createRootReducer = (history: History) =>
     progress: progressReducer,
     snackbar: snackbarReducer,
     projects: projectsReducer,
+    settings: settingsReducer,
     router: connectRouter(history)
   });
 

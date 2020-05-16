@@ -1,19 +1,32 @@
-import { createStyles, Theme, StyleRules } from '@material-ui/core';
+import { createStyles } from '@material-ui/core';
 
-type ClassKey = 'root' | 'main' | 'header' | 'footer';
-
-const dashboardStyles = (theme: Theme): StyleRules<ClassKey> =>
+const dashboardStyles = () =>
   createStyles({
-    root: {
-      padding: theme.spacing(4),
-      overflowY: 'auto'
+    root: {},
+    appbar: {
+      // As top AppBar has 38px height
+      top: 38,
+      right: 'auto',
+      background: '#FBF2D4',
+      height: 48,
+      display: 'flex',
+      alignItems: 'center'
     },
-    header: {},
+    header: {
+      width: '100%',
+      boxSizing: 'border-box',
+      padding: '0px 10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    },
     main: {
-      flexGrow: 1,
-      padding: theme.spacing(3)
-    },
-    footer: {}
+      marginTop: 48,
+      overflowY: 'auto',
+      overflowX: 'hidden',
+      // TODO : Set with clientWidth
+      height: 492
+    }
   });
 
 export default dashboardStyles;

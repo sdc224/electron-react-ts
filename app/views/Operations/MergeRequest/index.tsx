@@ -18,8 +18,8 @@ const MergeRequest = () => {
       <main>
         <RadioComponent
           radioProps={[
-            { label: 'Female', value: 'female' },
-            { label: 'Male', value: 'male' }
+            { id: 'female', label: 'Female', value: 'female' },
+            { id: 'male', label: 'Male', value: 'male' }
           ]}
           ariaLabel="gender"
           groupName="gender"

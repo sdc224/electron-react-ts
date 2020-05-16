@@ -4,6 +4,7 @@ import { Grid, Typography } from '@material-ui/core';
 import { useProjects } from '@ducks/projects/selectors';
 import Loading from '@components/Loading';
 import { checkStringEmpty } from '@utils/stringHelper';
+import { randomColor } from '@utils/cssHelper';
 
 interface IRepositoryGridProps {
   key?: string;
@@ -30,6 +31,8 @@ const RepositoryGrid: React.FC<IRepositoryGridProps> = () => {
           <CustomCard
             id={project.id}
             key={project.id}
+            avatarColor={randomColor()}
+            avatarText={project.name[0].toUpperCase()}
             title={project.namespace.name}
             info={project.name}
             body={checkStringEmpty(project.description)}

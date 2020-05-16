@@ -1,4 +1,12 @@
-import { all, call, fork, put, takeEvery, delay } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  delay,
+  fork,
+  put,
+  select,
+  takeEvery
+} from 'redux-saga/effects';
 import { ProjectSchema } from 'gitlab';
 import { PayloadAction, TypeConstant } from 'typesafe-actions';
 import Git from '@commands/lib/git';
@@ -18,6 +26,9 @@ import { openSnackbar } from '../snackbar/actions';
 import CloningRepositoriesStore from './cloning';
 import { IProgressBarSelector } from '../progress/types';
 import ForkingRepositoriesStore from './forking';
+import { ISettingsState } from '../settings/types';
+
+const getSettings = state => state.settings;
 
 /**
  * @desc Business logic of effect.
@@ -65,8 +76,12 @@ function* handleCloning(
     )
       return;
 
+    const { path } = (yield select(getSettings)) as ISettingsState;
+
     const folder = (yield call(
-      openFolderSystemDialog
+      openFolderSystemDialog,
+      undefined,
+      path
     )) as Electron.OpenDialogReturnValue;
 
     if (folder.canceled) return;
