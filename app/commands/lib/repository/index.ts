@@ -1,5 +1,5 @@
 export default class Repository {
-  constructor(private repository?: IRepository) {}
+  constructor(private repository: IRepository) {}
 
-  public isValidRepo = () => this.repository && this.repository.hasDotGitFolder;
+  public isValidRepo = () => this.repository.hasDotGitFolder;
 }

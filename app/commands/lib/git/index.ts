@@ -1,11 +1,18 @@
-import * as path from 'path';
+// TODO : URL Parser
 // import gitUrlParse from 'git-url-parse';
-import { git } from '../../gitTerminal';
-import { safeCheckEmptyDirectory } from '../../utils';
-import { ICloneProgress } from '../progress/definitions';
-import { IGitExecutionOptions } from '../execution';
-import CloneProgressParser from '../progress/clone';
-import executionOptionsWithProgress from '../progress/readSTD';
+import {
+  ICloneProgress,
+  IFetchProgress,
+  IPushProgress
+} from '../progress/definitions';
+import { clone } from './clone';
+import { fetch, fetchRefspec } from './fetch';
+import { setRemoteURL, removeRemote, addRemote, getRemotes } from './remote';
+import { checkoutBranch, ProgressCallback, checkoutPaths } from './checkout';
+import { Branch } from '../../models/branch';
+import { merge, getMergeBase, abortMerge, isMergeHeadSet } from './merge';
+import { PushOptions, push } from './push';
+// TODO : auth
 // import { IAuth } from '../authentication';
 
 // TODO Error Handling
@@ -85,149 +92,114 @@ export default class Git implements IGit {
    *                           'git clone'.
    *
    */
-  public clone = async (
+  public clone = (
     url: string,
     repoPath: string,
     options: {},
     // options: CloneOptions,
     progressCallback?: (progress: ICloneProgress) => void
-  ): Promise<void> => {
-    // TODO : For Github Enterprise
-    // const networkArguments = await gitNetworkArguments(null, options.account);
-    // const env = envForAuthentication(options.account);
-    // const args = [...networkArguments, 'clone', '--recursive'];
-    // let opts: IGitExecutionOptions = { env };
-    const baseFolderName =
-      decodeURI(url)
-        // eslint-disable-next-line no-useless-escape
-        .replace(/[\/]+$/, '')
-        // eslint-disable-next-line no-useless-escape
-        .replace(/^.*[\/\\]/, '')
-        .replace(/\.git$/, '') || 'repository';
-    const folderName = baseFolderName;
-    const folderPath = path.join(repoPath, folderName);
+  ): Promise<void> => clone(url, repoPath, options, progressCallback);
 
-    await safeCheckEmptyDirectory(folderPath);
+  /**
+   * Fetch from the given remote.
+   *
+   * @param repository - The repository to fetch into
+   *
+   * @param account    - The account to use when authenticating with the remote
+   *
+   * @param remote     - The remote to fetch from
+   *
+   * @param progressCallback - An optional function which will be invoked
+   *                           with information about the current progress
+   *                           of the fetch operation. When provided this enables
+   *                           the '--progress' command line flag for
+   *                           'git fetch'.
+   */
+  public fetch = (
+    repository: IRepository,
+    // account: IGitAccount | null,
+    remote: string,
+    progressCallback?: (progress: IFetchProgress) => void
+  ): Promise<void> => fetch(repository, remote, progressCallback);
 
-    const args = ['clone', '--recursive'];
-    let opts: IGitExecutionOptions = options;
+  /** Fetch a given refspec from the given remote. */
+  public fetchRefspec = (
+    repository: IRepository,
+    // account: IGitAccount | null,
+    remote: string,
+    refspec: string
+  ): Promise<void> => fetchRefspec(repository, remote, refspec);
 
-    if (progressCallback) {
-      args.push('--progress');
+  /**
+   * List the remotes, sorted alphabetically by `name`, for a repository.
+   */
+  public getRemotes = (
+    repository: IRepository
+  ): Promise<ReadonlyArray<IRemote>> => getRemotes(repository);
 
-      const title = `Cloning into ${folderName}`;
-      const kind = 'clone';
+  /** Add a new remote with the given URL. */
+  public addRemote = (
+    repository: IRepository,
+    name: string,
+    url: string
+  ): Promise<IRemote> => addRemote(repository, name, url);
 
-      opts = await executionOptionsWithProgress(
-        opts,
-        // { ...opts, trackLFSProgress: true },
-        new CloneProgressParser(),
-        progress => {
-          const description =
-            progress.kind === 'progress'
-              ? progress.details.text
-              : progress.text;
-          const value = progress.percent;
+  /** Removes an existing remote, or silently errors if it doesn't exist */
+  public removeRemote = (
+    repository: IRepository,
+    name: string
+  ): Promise<void> => removeRemote(repository, name);
 
-          progressCallback({
-            kind,
-            title,
-            description,
-            value
-          });
-        }
-      );
+  /** Changes the URL for the remote that matches the given name  */
+  public setRemoteURL = (
+    repository: IRepository,
+    name: string,
+    url: string
+  ): Promise<true> => setRemoteURL(repository, name, url);
 
-      // TODO : increase initial progress a bit... 0.1
-      // Initial progress
-      progressCallback({
-        kind,
-        title,
-        value: 0
-      });
-    }
+  public checkoutBranch = (
+    repository: IRepository,
+    // account: IGitAccount | null,
+    branch: Branch,
+    progressCallback?: ProgressCallback
+  ): Promise<true> => checkoutBranch(repository, branch, progressCallback);
 
-    // TODO : Switch to a branch after clone
-    // if (options.branch) {
-    //   args.push('-b', options.branch);
-    // }
+  public checkoutPaths = (
+    repository: IRepository,
+    paths: ReadonlyArray<string>
+  ): Promise<void> => checkoutPaths(repository, paths);
 
-    args.push('--', url, folderPath);
+  public merge = (repository: IRepository, branch: string): Promise<boolean> =>
+    merge(repository, branch);
 
-    await git(args, '', 'clone', opts);
-  };
+  public getMergeBase = (
+    repository: IRepository,
+    firstCommitish: string,
+    secondCommitish: string
+  ): Promise<string | null> =>
+    getMergeBase(repository, firstCommitish, secondCommitish);
 
-  /* public clone = async (
-    url: string,
-    currentWorkingDirectory: string = this.repositoryPath,
-    progress: Progress = new Progress()
-  ) => {
-    try {
-      const gitUrl = this.parseUrl(url);
-      const baseFolderName =
-        decodeURI(url)
-          // eslint-disable-next-line no-useless-escape
-          .replace(/[\/]+$/, '')
-          // eslint-disable-next-line no-useless-escape
-          .replace(/^.*[\/\\]/, '')
-          .replace(/\.git$/, '') || 'repository';
+  public abortMerge = (repository: IRepository): Promise<void> =>
+    abortMerge(repository);
 
-      const folderName = baseFolderName;
-      const folderPath = path.join(currentWorkingDirectory, folderName);
+  public isMergeHeadSet = (repository: IRepository): Promise<boolean> =>
+    isMergeHeadSet(repository);
 
-      await mkdirp(folderName);
-
-      let totalProgress = 0;
-      let previousProgress = 0;
-
-      progress.report(0);
-
-      const onSpawn = (data: Buffer) => {
-        const line = convertArrayBufferToString(data);
-        let match: RegExpMatchArray | null = null;
-
-        if (RegularExpressions.GitCloneCountObjects.test(line)) {
-          console.log('1');
-          match = RegularExpressions.GitCloneCountObjects.exec(line);
-          totalProgress = Math.floor(parseInt(match![1], 10) * 0.1);
-        } else if (RegularExpressions.GitCloneCompressObjects.test(line)) {
-          console.log('2');
-          match = RegularExpressions.GitCloneCompressObjects.exec(line);
-          totalProgress = 10 + Math.floor(parseInt(match![1], 10) * 0.1);
-        } else if (RegularExpressions.GitCloneReceiveObjects.test(line)) {
-          console.log('3');
-          match = RegularExpressions.GitCloneReceiveObjects.exec(line);
-          totalProgress = 20 + Math.floor(parseInt(match![1], 10) * 0.4);
-        } else if (RegularExpressions.GitCloneReceiveDeltas.test(line)) {
-          console.log('4');
-          match = RegularExpressions.GitCloneReceiveDeltas.exec(line);
-          totalProgress = 60 + Math.floor(parseInt(match![1], 10) * 0.4);
-        }
-
-        // console.log('progress', line, totalProgress, previousProgress);
-
-        if (totalProgress !== previousProgress) {
-          progress.report(totalProgress - previousProgress);
-          previousProgress = totalProgress;
-        }
-      };
-
-      await this.gitTerminal.execute(`clone ${gitUrl}`, ['--progress'], {
-        cwd: currentWorkingDirectory,
-        onSpawnStdout: onSpawn,
-        onSpawnStderr: onSpawn
-      });
-
-      return folderPath;
-    } catch (error) {
-      if (error.stderr) {
-        error.stderr = error.stderr.replace(/^Cloning.+$/m, '').trim();
-        error.stderr = error.stderr.replace(/^ERROR:\s+/, '').trim();
-      }
-
-      throw error;
-    }
-  }; */
-
-  // public fetch = async () =>
+  public push = (
+    repository: IRepository,
+    // account: IGitAccount | null,
+    remote: string,
+    localBranch: string,
+    remoteBranch: string | null,
+    options?: PushOptions,
+    progressCallback?: (progress: IPushProgress) => void
+  ): Promise<void> =>
+    push(
+      repository,
+      remote,
+      localBranch,
+      remoteBranch,
+      options,
+      progressCallback
+    );
 }

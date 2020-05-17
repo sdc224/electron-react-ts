@@ -36,8 +36,16 @@ export default class RepositoryHelper {
           this.repositories.push({
             ...project,
             repoPath,
-            hasDotGitFolder: isCloned,
-            isCurrentUserProject: isForkable
+            // TODO : better logic so that we can clone cloud repo also
+            hasDotGitFolder: isForkable && isCloned,
+            isCurrentUserProject: isForkable,
+            remote: {
+              origin: { name: 'origin', url: project.ssh_url_to_repo },
+              central: {
+                name: 'central',
+                url: project.forked_from_project?.ssh_url_to_repo!
+              }
+            }
           });
         })
       );

@@ -13,6 +13,7 @@ import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
 import RepositoryHelper from '@commands/lib/repository/repositories';
 import { openFolderSystemDialog } from '@app/electronFunctions';
 import { isObjectEmpty } from '@utils/objectHelper';
+import CloningRepositoriesStore from '@stateUtils/classes/cloning';
 import {
   fetchClonableProjectsError,
   fetchClonableProjectsSuccess,
@@ -23,7 +24,6 @@ import {
 } from './actions';
 import { CloneActionTypes, ForkActionTypes } from './types';
 import { openSnackbar } from '../snackbar/actions';
-import CloningRepositoriesStore from './cloning';
 import { IProgressBarSelector } from '../progress/types';
 import ForkingRepositoriesStore from './forking';
 import { ISettingsState, ISettingsAwareState } from '../settings/types';
@@ -92,9 +92,9 @@ function* handleCloning(
 
     try {
       // TODO : Repo Path Delete
-      const test = new Git();
+      const git = new Git();
       // TODO : Uncomment whenever Dugite works without Git
-      // await test.init();
+      // await git.init();
       yield put(
         action.payload.progressState.progressStart({
           progressType: 'linear',
@@ -106,7 +106,7 @@ function* handleCloning(
       // }
       yield put(toggleCloneProgress());
       const cloneProgress = new CloningRepositoriesStore(
-        test,
+        git,
         action.payload.progressState
       );
       const val = (yield call(
@@ -119,9 +119,25 @@ function* handleCloning(
         yield put(
           action.payload.progressState.handleProgress({
             title: 'Cloning Completed',
+            value: 0.8
+          })
+        );
+
+        // Adding necessary Remotes
+        yield call(
+          git.addRemote,
+          action.payload.projects[0],
+          action.payload.projects[0].remote.central!.name,
+          action.payload.projects[0].remote.central!.url
+        );
+
+        yield put(
+          action.payload.progressState.handleProgress({
+            title: 'Remotes Added',
             value: 1
           })
         );
+
         yield put(
           openSnackbar({
             kind: 'Clone',

@@ -1,16 +1,39 @@
 import React from 'react';
 import CustomCard from '@components/CustomCard';
-import { Grid, Typography, IconButton } from '@material-ui/core';
+import {
+  Grid,
+  Typography,
+  IconButton,
+  Toolbar,
+  makeStyles,
+  ToolbarProps
+} from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import StarIcon from '@material-ui/icons/Star';
+import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import { useProjects } from '@ducks/projects/selectors';
+import styles from '@viewsTSStyles/repositoryGridStyles';
 import Loading from '@components/Loading';
 import { checkStringEmpty } from '@utils/stringHelper';
 import { randomColor } from '@utils/cssHelper';
 
+const useStyles = makeStyles(styles);
+
 interface IRepositoryGridProps {
   key?: string;
 }
+
+const ModifiedToolbar: React.FC<ToolbarProps> = ({
+  children,
+  ...props
+}: ToolbarProps) => {
+  const classes = useStyles();
+  return (
+    <Toolbar className={classes.toolbar} {...props}>
+      {children}
+    </Toolbar>
+  );
+};
 
 const RepositoryGrid: React.FC<IRepositoryGridProps> = () => {
   const { projectState, getAllProjects } = useProjects();
@@ -40,12 +63,23 @@ const RepositoryGrid: React.FC<IRepositoryGridProps> = () => {
             body={checkStringEmpty(project.description)}
             cardActionButtons={
               <>
-                <IconButton size="small">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton size="small">
-                  <StarIcon />
-                </IconButton>
+                <ModifiedToolbar title="Mark as Favorite">
+                  <IconButton size="small">
+                    <FavoriteIcon />
+                  </IconButton>
+                </ModifiedToolbar>
+                <ModifiedToolbar title="Star this project">
+                  <IconButton size="small">
+                    <StarIcon />
+                  </IconButton>
+                </ModifiedToolbar>
+                {project.hasDotGitFolder && (
+                  <ModifiedToolbar title="Fork Update">
+                    <IconButton size="small">
+                      <DynamicFeedIcon />
+                    </IconButton>
+                  </ModifiedToolbar>
+                )}
               </>
             }
           />

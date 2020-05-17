@@ -1,7 +1,7 @@
 import Git from '@commands/lib/git';
 // import CloningRepository from '@commands/models/cloningRepository';
 // import { ICloneProgress } from '@commands/lib/progress/definitions';
-import { IProgressBarSelector } from '../progress/types';
+import { IProgressBarSelector } from '../../ducks/progress/types';
 
 /** The store in charge of repository currently being cloned. */
 export default class CloningRepositoriesStore {

@@ -23,8 +23,25 @@ interface IGitlabCredentials {
 type GitlabProjectSchema = import('@gitbeaker/core/dist/types/services/Projects').ProjectSchemaCamelized &
   IDefaultProjectSchema;
 
+/** A remote as defined in Git. */
+interface IRemote {
+  readonly name: string;
+  readonly url: string;
+}
+
+interface IExtraRemote {
+  [key: string]: IRemote;
+}
+
+interface IHRCRemote {
+  origin: IRemote;
+  central?: IRemote;
+}
+
 interface IRepository extends GitlabProjectSchema {
-  repoPath?: string;
+  repoPath: string;
   hasDotGitFolder: boolean;
   isCurrentUserProject: boolean;
+  remote: IHRCRemote;
+  extraRemotes?: IExtraRemote[];
 }
