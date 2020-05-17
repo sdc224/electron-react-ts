@@ -20,7 +20,11 @@ interface IGitlabCredentials {
 //   UnwrapPromise<ReturnType<InstanceType<typeof Projects>['all']>>
 // >
 
-type GitlabProjectSchema = (import('@gitbeaker/core/dist/types/services/Projects').ProjectSchemaCamelized &
-  IDefaultProjectSchema) & {
-  isCurrentUserProject?: string;
-};
+type GitlabProjectSchema = import('@gitbeaker/core/dist/types/services/Projects').ProjectSchemaCamelized &
+  IDefaultProjectSchema;
+
+interface IRepository extends GitlabProjectSchema {
+  repoPath?: string;
+  hasDotGitFolder: boolean;
+  isCurrentUserProject: boolean;
+}

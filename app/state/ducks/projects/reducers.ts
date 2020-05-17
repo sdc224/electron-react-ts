@@ -1,9 +1,5 @@
 import { PayloadAction, Action, TypeConstant } from 'typesafe-actions';
-import {
-  IProjectState,
-  ProjectActionTypes,
-  GitlabProjectSchema
-} from './types';
+import { IProjectState, ProjectActionTypes } from './types';
 import { ErrorAction } from '../ActionHelper';
 
 const initialState: IProjectState = {
@@ -16,7 +12,7 @@ const initialState: IProjectState = {
 export const projectsReducer = (
   state = initialState,
   action: Action<TypeConstant> &
-    PayloadAction<TypeConstant, GitlabProjectSchema[]> &
+    PayloadAction<TypeConstant, IRepository[]> &
     ErrorAction
 ): IProjectState => {
   switch (action.type) {

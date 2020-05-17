@@ -10,6 +10,7 @@ import {
 import { PayloadAction, TypeConstant } from 'typesafe-actions';
 import Git from '@commands/lib/git';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
+import RepositoryHelper from '@commands/lib/repository/repositories';
 import { openFolderSystemDialog } from '@app/electronFunctions';
 import { isObjectEmpty } from '@utils/objectHelper';
 import {
@@ -34,12 +35,14 @@ const getSettings = (state: ISettingsAwareState) => state.settings;
  */
 function* handleCloneProjectsFetch(): Generator {
   try {
+    const { path } = (yield select(getSettings)) as ISettingsState;
     // TODO Introduce Design Pattern
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
-    const res: GitlabProjectSchema[] | any = yield call(
-      gitlab.getClonableProjects
-    );
+    const res = (yield call(
+      new RepositoryHelper(gitlab, path).getCloneableProjects
+    )) as IRepository[];
+
     yield put(fetchClonableProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {
@@ -66,7 +69,7 @@ function* watchFetchCloneProjectsRequest(): Generator {
 function* handleCloning(
   action: PayloadAction<
     TypeConstant,
-    { projects: GitlabProjectSchema[]; progressState: IProgressBarSelector }
+    { projects: IRepository[]; progressState: IProgressBarSelector }
   >
 ): Generator {
   try {
@@ -98,6 +101,9 @@ function* handleCloning(
           variant: 'determinate'
         })
       );
+      // if (action.payload.projects[0].hasDotGitFolder) {
+      //   TODO Dialog
+      // }
       yield put(toggleCloneProgress());
       const cloneProgress = new CloningRepositoriesStore(
         test,
@@ -105,7 +111,7 @@ function* handleCloning(
       );
       const val = (yield call(
         cloneProgress.clone,
-        action.payload.projects[0].sshUrlToRepo,
+        action.payload.projects[0].ssh_url_to_repo,
         folder.filePaths[0],
         {}
       )) as boolean;
@@ -161,12 +167,13 @@ function* watchCloning(): Generator {
  */
 function* handleForkProjectsFetch(): Generator {
   try {
+    const { path } = (yield select(getSettings)) as ISettingsState;
     // TODO Introduce Design Pattern
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
-    const res: GitlabProjectSchema[] | any = yield call(
-      gitlab.getForkableProjects
-    );
+    const res = (yield call(
+      new RepositoryHelper(gitlab, path).getForkableProjects
+    )) as IRepository[];
     yield put(fetchForkableProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {
@@ -193,7 +200,7 @@ function* watchFetchForkProjectsRequest(): Generator {
 function* handleForking(
   action: PayloadAction<
     TypeConstant,
-    { projects: GitlabProjectSchema[]; progressState: IProgressBarSelector }
+    { projects: IRepository[]; progressState: IProgressBarSelector }
   >
 ): Generator {
   try {

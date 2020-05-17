@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-wrap-multilines */
 import React from 'react';
 import clsx from 'clsx';
 import Topbar from '@components/Topbar';

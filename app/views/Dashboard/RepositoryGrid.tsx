@@ -1,6 +1,8 @@
 import React from 'react';
 import CustomCard from '@components/CustomCard';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, IconButton } from '@material-ui/core';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import StarIcon from '@material-ui/icons/Star';
 import { useProjects } from '@ducks/projects/selectors';
 import Loading from '@components/Loading';
 import { checkStringEmpty } from '@utils/stringHelper';
@@ -36,7 +38,16 @@ const RepositoryGrid: React.FC<IRepositoryGridProps> = () => {
             title={project.namespace.name}
             info={project.name}
             body={checkStringEmpty(project.description)}
-            buttonContent="hello"
+            cardActionButtons={
+              <>
+                <IconButton size="small">
+                  <FavoriteIcon />
+                </IconButton>
+                <IconButton size="small">
+                  <StarIcon />
+                </IconButton>
+              </>
+            }
           />
         </Grid>
       ))}

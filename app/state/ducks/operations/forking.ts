@@ -21,7 +21,7 @@ export default class ForkingRepositoriesStore {
    * @returns {Promise<boolean>} which resolves to whether the clone was successful.
    */
   public fork = async (
-    project: GitlabProjectSchema
+    project: IRepository
     // options: {}
     // options: CloneOptions
   ): Promise<boolean> => {

@@ -157,75 +157,77 @@ export default class Git implements IGit {
     await git(args, '', 'clone', opts);
   };
 
-  // public clone = async (
-  //   url: string,
-  //   currentWorkingDirectory: string = this.repositoryPath,
-  //   progress: Progress = new Progress()
-  // ) => {
-  //   try {
-  //     const gitUrl = this.parseUrl(url);
-  //     const baseFolderName =
-  //       decodeURI(url)
-  //         // eslint-disable-next-line no-useless-escape
-  //         .replace(/[\/]+$/, '')
-  //         // eslint-disable-next-line no-useless-escape
-  //         .replace(/^.*[\/\\]/, '')
-  //         .replace(/\.git$/, '') || 'repository';
+  /* public clone = async (
+    url: string,
+    currentWorkingDirectory: string = this.repositoryPath,
+    progress: Progress = new Progress()
+  ) => {
+    try {
+      const gitUrl = this.parseUrl(url);
+      const baseFolderName =
+        decodeURI(url)
+          // eslint-disable-next-line no-useless-escape
+          .replace(/[\/]+$/, '')
+          // eslint-disable-next-line no-useless-escape
+          .replace(/^.*[\/\\]/, '')
+          .replace(/\.git$/, '') || 'repository';
 
-  //     const folderName = baseFolderName;
-  //     const folderPath = path.join(currentWorkingDirectory, folderName);
+      const folderName = baseFolderName;
+      const folderPath = path.join(currentWorkingDirectory, folderName);
 
-  //     await mkdirp(folderName);
+      await mkdirp(folderName);
 
-  //     let totalProgress = 0;
-  //     let previousProgress = 0;
+      let totalProgress = 0;
+      let previousProgress = 0;
 
-  //     progress.report(0);
+      progress.report(0);
 
-  //     const onSpawn = (data: Buffer) => {
-  //       const line = convertArrayBufferToString(data);
-  //       let match: RegExpMatchArray | null = null;
+      const onSpawn = (data: Buffer) => {
+        const line = convertArrayBufferToString(data);
+        let match: RegExpMatchArray | null = null;
 
-  //       if (RegularExpressions.GitCloneCountObjects.test(line)) {
-  //         console.log('1');
-  //         match = RegularExpressions.GitCloneCountObjects.exec(line);
-  //         totalProgress = Math.floor(parseInt(match![1], 10) * 0.1);
-  //       } else if (RegularExpressions.GitCloneCompressObjects.test(line)) {
-  //         console.log('2');
-  //         match = RegularExpressions.GitCloneCompressObjects.exec(line);
-  //         totalProgress = 10 + Math.floor(parseInt(match![1], 10) * 0.1);
-  //       } else if (RegularExpressions.GitCloneReceiveObjects.test(line)) {
-  //         console.log('3');
-  //         match = RegularExpressions.GitCloneReceiveObjects.exec(line);
-  //         totalProgress = 20 + Math.floor(parseInt(match![1], 10) * 0.4);
-  //       } else if (RegularExpressions.GitCloneReceiveDeltas.test(line)) {
-  //         console.log('4');
-  //         match = RegularExpressions.GitCloneReceiveDeltas.exec(line);
-  //         totalProgress = 60 + Math.floor(parseInt(match![1], 10) * 0.4);
-  //       }
+        if (RegularExpressions.GitCloneCountObjects.test(line)) {
+          console.log('1');
+          match = RegularExpressions.GitCloneCountObjects.exec(line);
+          totalProgress = Math.floor(parseInt(match![1], 10) * 0.1);
+        } else if (RegularExpressions.GitCloneCompressObjects.test(line)) {
+          console.log('2');
+          match = RegularExpressions.GitCloneCompressObjects.exec(line);
+          totalProgress = 10 + Math.floor(parseInt(match![1], 10) * 0.1);
+        } else if (RegularExpressions.GitCloneReceiveObjects.test(line)) {
+          console.log('3');
+          match = RegularExpressions.GitCloneReceiveObjects.exec(line);
+          totalProgress = 20 + Math.floor(parseInt(match![1], 10) * 0.4);
+        } else if (RegularExpressions.GitCloneReceiveDeltas.test(line)) {
+          console.log('4');
+          match = RegularExpressions.GitCloneReceiveDeltas.exec(line);
+          totalProgress = 60 + Math.floor(parseInt(match![1], 10) * 0.4);
+        }
 
-  //       // console.log('progress', line, totalProgress, previousProgress);
+        // console.log('progress', line, totalProgress, previousProgress);
 
-  //       if (totalProgress !== previousProgress) {
-  //         progress.report(totalProgress - previousProgress);
-  //         previousProgress = totalProgress;
-  //       }
-  //     };
+        if (totalProgress !== previousProgress) {
+          progress.report(totalProgress - previousProgress);
+          previousProgress = totalProgress;
+        }
+      };
 
-  //     await this.gitTerminal.execute(`clone ${gitUrl}`, ['--progress'], {
-  //       cwd: currentWorkingDirectory,
-  //       onSpawnStdout: onSpawn,
-  //       onSpawnStderr: onSpawn
-  //     });
+      await this.gitTerminal.execute(`clone ${gitUrl}`, ['--progress'], {
+        cwd: currentWorkingDirectory,
+        onSpawnStdout: onSpawn,
+        onSpawnStderr: onSpawn
+      });
 
-  //     return folderPath;
-  //   } catch (error) {
-  //     if (error.stderr) {
-  //       error.stderr = error.stderr.replace(/^Cloning.+$/m, '').trim();
-  //       error.stderr = error.stderr.replace(/^ERROR:\s+/, '').trim();
-  //     }
+      return folderPath;
+    } catch (error) {
+      if (error.stderr) {
+        error.stderr = error.stderr.replace(/^Cloning.+$/m, '').trim();
+        error.stderr = error.stderr.replace(/^ERROR:\s+/, '').trim();
+      }
 
-  //     throw error;
-  //   }
-  // };
+      throw error;
+    }
+  }; */
+
+  // public fetch = async () =>
 }

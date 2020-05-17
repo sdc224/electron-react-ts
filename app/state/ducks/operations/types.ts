@@ -20,7 +20,7 @@ export interface IProject extends Response {
 
 export interface IOperationState {
   loading: boolean;
-  projects: Array<GitlabProjectSchema>;
+  projects: Array<IRepository>;
   error: string;
   showProgress: boolean;
 }

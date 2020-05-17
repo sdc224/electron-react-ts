@@ -30,7 +30,7 @@ const MenuProps = {
 
 // interface IRepoProps {
 //   loading: boolean;
-//   projects: Array<GitlabProjectSchema>;
+//   projects: Array<IRepository>;
 //   error?: {};
 // }
 
@@ -124,10 +124,7 @@ const Clone: React.FC = () => {
       return;
 
     startCloning(
-      selectArrayOnIndices<GitlabProjectSchema>(
-        cloneState.projects,
-        clonedRepo
-      ),
+      selectArrayOnIndices<IRepository>(cloneState.projects, clonedRepo),
       progressState
     );
   };

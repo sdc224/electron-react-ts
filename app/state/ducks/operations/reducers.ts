@@ -12,7 +12,7 @@ const initialState: IOperationState = {
 export const cloneReducer = (
   state = initialState,
   action: Action<TypeConstant> &
-    PayloadAction<TypeConstant, GitlabProjectSchema[]> &
+    PayloadAction<TypeConstant, IRepository[]> &
     ErrorAction
 ): IOperationState => {
   switch (action.type) {
@@ -24,7 +24,7 @@ export const cloneReducer = (
         ...state,
         loading: false,
         error: '',
-        projects: action.payload as GitlabProjectSchema[]
+        projects: action.payload as IRepository[]
       };
 
     case CloneActionTypes.FETCH_CLONABLE_PROJECTS_ERROR:
@@ -41,7 +41,7 @@ export const cloneReducer = (
 export const forkReducer = (
   state = initialState,
   action: Action<TypeConstant> &
-    PayloadAction<TypeConstant, GitlabProjectSchema[]> &
+    PayloadAction<TypeConstant, IRepository[]> &
     ErrorAction
 ): IOperationState => {
   switch (action.type) {
@@ -53,7 +53,7 @@ export const forkReducer = (
         ...state,
         loading: false,
         error: '',
-        projects: action.payload as GitlabProjectSchema[]
+        projects: action.payload as IRepository[]
       };
 
     case ForkActionTypes.FETCH_FORKABLE_PROJECTS_ERROR:

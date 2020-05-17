@@ -11,6 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import styles from '@componentsTSStyles/cardStyles';
+import { Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
@@ -21,7 +22,7 @@ interface ICustomCard {
   info?: string;
   id?: number | string;
   body?: React.ReactNode;
-  buttonContent?: string;
+  cardActionButtons?: React.ReactElement;
 }
 
 export default function CustomCard({
@@ -31,7 +32,7 @@ export default function CustomCard({
   info = 'No info available',
   id = 'No id available',
   body = 'No description available',
-  buttonContent = 'No Button'
+  cardActionButtons
 }: ICustomCard) {
   const classes = useStyles();
 
@@ -40,10 +41,13 @@ export default function CustomCard({
       <CardHeader
         classes={{ title: classes.cardHeaderTitle }}
         avatar={
-          <Avatar style={{ backgroundColor: avatarColor }}>{avatarText}</Avatar>
+          <Tooltip title={`Project ID: ${id}`}>
+            <Avatar style={{ backgroundColor: avatarColor }}>
+              {avatarText}
+            </Avatar>
+          </Tooltip>
         }
         action={
-          // eslint-disable-next-line react/jsx-wrap-multilines
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
@@ -56,9 +60,7 @@ export default function CustomCard({
           {body}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">{buttonContent}</Button>
-      </CardActions>
+      {cardActionButtons && <CardActions>{cardActionButtons}</CardActions>}
     </Card>
   );
 }

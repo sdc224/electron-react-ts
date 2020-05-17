@@ -23,7 +23,7 @@ export const useClone = () => {
   ]);
 
   const startCloning = useCallback(
-    (projects: GitlabProjectSchema[], progressState: IProgressBarSelector) =>
+    (projects: IRepository[], progressState: IProgressBarSelector) =>
       dispatch(clone(projects, progressState)),
     [dispatch]
   );
@@ -49,7 +49,7 @@ export const useFork = () => {
   ]);
 
   const startForking = useCallback(
-    (projects: GitlabProjectSchema[], progressState: IProgressBarSelector) =>
+    (projects: IRepository[], progressState: IProgressBarSelector) =>
       dispatch(fork(projects, progressState)),
     [dispatch]
   );

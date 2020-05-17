@@ -1,18 +1,27 @@
-import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import { all, call, fork, put, select, takeEvery } from 'redux-saga/effects';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
+import RepositoryHelper from '@commands/lib/repository/repositories';
 import { getAllProjectsSuccess, getAllProjectsError } from './actions';
-import { ProjectActionTypes, GitlabProjectSchema } from './types';
+import { ProjectActionTypes } from './types';
 import { openSnackbar } from '../snackbar/actions';
+import { ISettingsState, ISettingsAwareState } from '../settings/types';
+
+const getSettings = (state: ISettingsAwareState) => state.settings;
 
 /**
  * @desc Business logic of effect.
  */
 function* handleAllProjectsFetch(): Generator {
   try {
+    const { path } = (yield select(getSettings)) as ISettingsState;
+
+    // const clonedProjects = getDirectoryNames(path);
     // TODO Introduce Design Pattern
     const gitlab = new GitlabEnterprise();
     yield call(gitlab.init);
-    const res: GitlabProjectSchema[] | any = yield call(gitlab.getAllProjects);
+    const res = (yield call(
+      new RepositoryHelper(gitlab, path).getAllProjects
+    )) as IRepository[];
     yield put(getAllProjectsSuccess(res));
   } catch (err) {
     if (err instanceof Error) {

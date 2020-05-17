@@ -58,7 +58,7 @@ const Fork: React.FC = () => {
       return;
 
     startForking(
-      selectArrayOnIndices<GitlabProjectSchema>(forkState.projects, forkedRepo),
+      selectArrayOnIndices<IRepository>(forkState.projects, forkedRepo),
       progressState
     );
   };

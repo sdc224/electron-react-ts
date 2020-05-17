@@ -12,6 +12,7 @@ module.exports = {
     ],
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-curly-newline': 'off',
+    'react/jsx-wrap-multilines': 'off',
     'no-console': 'warn'
   },
   settings: {

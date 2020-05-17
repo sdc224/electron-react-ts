@@ -6,7 +6,7 @@ export const ProjectActionTypes = {
 
 export interface IProjectState {
   loading: boolean;
-  projects: GitlabProjectSchema[];
+  projects: IRepository[];
   error: string;
 }
 

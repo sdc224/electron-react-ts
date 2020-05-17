@@ -1,6 +1,6 @@
 interface IDefaultProjectSchema {
   id: number;
-  description?: null;
+  description?: string;
   default_branch: string;
   visibility: string;
   ssh_url_to_repo: string;
