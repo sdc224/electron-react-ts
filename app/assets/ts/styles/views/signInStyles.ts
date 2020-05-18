@@ -55,6 +55,18 @@ export default (theme: Theme) =>
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2)
     },
+    infoToolbar: {
+      padding: 0,
+      minHeight: 'auto'
+    },
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff'
+    },
+    signInWithInfo: {
+      display: 'flex',
+      alignItems: 'center'
+    },
     logoImage: {
       marginLeft: theme.spacing(4)
     },

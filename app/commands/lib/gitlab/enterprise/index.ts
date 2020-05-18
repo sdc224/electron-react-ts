@@ -8,11 +8,11 @@ import GitlabEnterpriseAuth from '../../authentication/gitlabEntAuth';
 export default class GitlabEnterprise extends GitlabOperations {
   private auth: IAuth;
 
-  constructor() {
+  constructor(providedCreds: IGitlabCredentials = credentials) {
     // TODO : Validate URL using regex
-    super(new Gitlab(credentials));
+    super(new Gitlab(providedCreds));
     // Decorator Pattern
-    this.auth = new GitlabAuth(new GitlabEnterpriseAuth(credentials));
+    this.auth = new GitlabAuth(new GitlabEnterpriseAuth(providedCreds));
   }
 
   public init = async (): Promise<void> => {

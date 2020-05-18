@@ -1,33 +1,41 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
+import CacheStore from 'electron-store';
 import validate from 'validate.js';
 import {
   Grid,
   Button,
-  IconButton,
+  // IconButton,
   TextField,
   Link,
   Typography,
-  makeStyles
+  makeStyles,
+  Toolbar,
+  Backdrop,
+  CircularProgress
 } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Facebook, Twitter } from '@material-ui/icons';
+import InfoIcon from '@material-ui/icons/Info';
+// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+// import { Facebook, Twitter } from '@material-ui/icons';
+import { encryptString } from '@commands/lib/authentication/crypto';
+import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
+import { RegularExpressions } from '@constants/commandConstants';
 import styles from '@viewsTSStyles/signInStyles';
 
 // TODO : Add validator using decorators
 const schema = {
-  email: {
+  // email: {
+  //   presence: { allowEmpty: false, message: 'is required' },
+  //   email: true,
+  //   length: {
+  //     maximum: 64
+  //   }
+  // },
+  accessToken: {
     presence: { allowEmpty: false, message: 'is required' },
-    email: true,
     length: {
-      maximum: 64
-    }
-  },
-  password: {
-    presence: { allowEmpty: false, message: 'is required' },
-    length: {
-      maximum: 128
+      maximum: 256
     }
   }
 };
@@ -37,8 +45,9 @@ const useStyles = makeStyles(styles);
 // interface ISignInProps {}
 
 interface IValue {
-  email?: string;
-  password?: string;
+  // email?: string;
+  // password?: string;
+  accessToken?: string;
 }
 
 interface IFormState {
@@ -51,6 +60,7 @@ interface IFormState {
 const SignIn = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
 
   const [formState, setFormState] = useState<IFormState>({
     isValid: false,
@@ -69,9 +79,9 @@ const SignIn = () => {
     }));
   }, [formState.values]);
 
-  const handleBack = () => {
-    history.goBack();
-  };
+  // const handleBack = () => {
+  //   history.goBack();
+  // };
 
   const handleChange = (event: any) => {
     event.persist();
@@ -91,10 +101,49 @@ const SignIn = () => {
       }
     }));
   };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-  const handleSignIn = (event: any) => {
+  const handleSignIn = async (event: any) => {
     event.preventDefault();
-    history.push('/');
+    handleOpen();
+    const token = formState.values.accessToken;
+    if (!token) return;
+    try {
+      const gitlab = new GitlabEnterprise({
+        host: 'https://git.highradius.com',
+        token
+      });
+      await gitlab.init();
+      const user = await gitlab.getCurrentUser();
+    } catch (error) {
+      handleClose();
+      if (RegularExpressions.GitlabEnterpriseJSONError.test(error.message))
+        setFormState((prevFormState: IFormState) => ({
+          ...prevFormState,
+          isValid: false,
+          errors: { accessToken: 'Invalid Access Token' }
+        }));
+      else
+        setFormState((prevFormState: IFormState) => ({
+          ...prevFormState,
+          isValid: false,
+          errors: { accessToken: error.message }
+        }));
+
+      throw error;
+    }
+
+    const secureData = encryptString(formState.values.accessToken!);
+    const store = new CacheStore();
+
+    store.set('accessToken', secureData.content);
+    store.set('author', secureData.tag);
+    history.push('/dashboard');
   };
 
   const hasError = (field: keyof IValue) =>
@@ -124,20 +173,35 @@ const SignIn = () => {
         </Grid>
         <Grid className={classes.content} item lg={7} xs={12}>
           <div className={classes.content}>
-            <div className={classes.contentHeader}>
+            {/* <div className={classes.contentHeader}>
               <IconButton onClick={handleBack}>
                 <ArrowBackIcon />
               </IconButton>
-            </div>
+            </div> */}
             <div className={classes.contentBody}>
+              {/* TODO : Introduce CustomForm */}
               <form className={classes.form} onSubmit={handleSignIn}>
+                {/* TODO : Uncomment below part */}
                 <Typography className={classes.title} variant="h2">
                   Sign in
                 </Typography>
-                <Typography color="textSecondary" gutterBottom>
-                  Sign in with social media
-                </Typography>
-                <Grid className={classes.socialButtons} container spacing={2}>
+                <div className={classes.signInWithInfo}>
+                  <Typography color="textSecondary">
+                    Sign in with personal access token
+                  </Typography>
+                  <Toolbar
+                    className={classes.infoToolbar}
+                    title="Don't have an access token? Go to gitlab, then head over to
+                settings menu by clicking on your avatar. After that, you can
+                see Personal Access Token in sidebar, click on it, and give it
+                any name. Next tick on all the checkboxes and finally, generate
+                the token. In the next page, you will get the token, copy it,
+                and paste here."
+                  >
+                    <InfoIcon fontSize="small" />
+                  </Toolbar>
+                </div>
+                {/* <Grid className={classes.socialButtons} container spacing={2}>
                   <Grid item>
                     <Button
                       color="primary"
@@ -181,19 +245,21 @@ const SignIn = () => {
                   type="text"
                   value={formState.values.email || ''}
                   variant="outlined"
-                />
+                /> */}
                 <TextField
                   className={classes.textField}
-                  error={hasError('password')}
+                  error={hasError('accessToken')}
                   fullWidth
                   helperText={
-                    hasError('password') ? formState.errors!.password![0] : null
+                    hasError('accessToken')
+                      ? formState.errors!.accessToken
+                      : null
                   }
-                  label="Password"
-                  name="password"
+                  label="Access Token"
+                  name="accessToken"
                   onChange={handleChange}
                   type="password"
-                  value={formState.values.password || ''}
+                  value={formState.values.accessToken || ''}
                   variant="outlined"
                 />
                 <Button
@@ -223,6 +289,10 @@ const SignIn = () => {
           </div>
         </Grid>
       </Grid>
+      {/* TODO : Improve by using redux */}
+      <Backdrop className={classes.backdrop} open={open}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };
