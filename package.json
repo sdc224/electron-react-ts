@@ -298,7 +298,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@gitbeaker/browser": "^19.6.0",
-    "@hot-loader/react-dom": "^16.11.0",
+    "@hot-loader/react-dom": "^16.13.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "@redux-offline/redux-offline": "^2.5.2",
