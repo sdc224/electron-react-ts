@@ -1,11 +1,16 @@
 import { IAuth } from '.';
 
 export default class GitlabEnterpriseAuth implements IAuth {
-  constructor(private readonly credentials: IGitlabCredentials) {}
+  constructor(
+    private readonly credentials:
+      | Promise<IGitlabCredentials>
+      | IGitlabCredentials
+  ) {}
 
   public authenticate = async (): Promise<void> => {
     try {
-      const response: Response = await fetch(this.credentials.host!);
+      const { host } = await this.credentials;
+      const response: Response = await fetch(host!);
       if (!response) throw new Error('Something went wrong!');
       if (response.status >= 400) {
         if (response!.status === 403) {

@@ -49,8 +49,8 @@ npm-debug.log.*
 *.sass.d.ts
 *.scss.d.ts
 
-# Private Folder
-private/
+# Private Folder/Files
+private.txt
 
 # Git Folder for package
 /git

@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
-import CacheStore from 'electron-store';
+import { setPassword } from 'keytar';
 import validate from 'validate.js';
 import {
   Grid,
@@ -18,7 +17,8 @@ import {
 import InfoIcon from '@material-ui/icons/Info';
 // import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 // import { Facebook, Twitter } from '@material-ui/icons';
-import { encryptString } from '@commands/lib/authentication/crypto';
+import credentials from '@private/credentials';
+import { Organizations } from '@commands/models/organization';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
 import { RegularExpressions } from '@constants/commandConstants';
 import styles from '@viewsTSStyles/signInStyles';
@@ -114,11 +114,8 @@ const SignIn = () => {
     const token = formState.values.accessToken;
     if (!token) return;
     try {
-      const gitlab = new GitlabEnterprise({
-        host: 'https://git.highradius.com',
-        token
-      });
-      await gitlab.init();
+      const gitlab = new GitlabEnterprise(Organizations.HighRadius);
+      await gitlab.init(credentials(Organizations.HighRadius, token));
       const user = await gitlab.getCurrentUser();
     } catch (error) {
       handleClose();
@@ -138,11 +135,12 @@ const SignIn = () => {
       throw error;
     }
 
-    const secureData = encryptString(formState.values.accessToken!);
-    const store = new CacheStore();
+    // const secureData = encryptString(formState.values.accessToken!);
+    // const store = new CacheStore();
 
-    store.set('accessToken', secureData.content);
-    store.set('author', secureData.tag);
+    // store.set('accessToken', secureData.content);
+    // store.set('author', secureData.tag);
+    await setPassword('accessToken', 'gitlab', formState.values.accessToken!);
     history.push('/dashboard');
   };
 
@@ -274,7 +272,7 @@ const SignIn = () => {
                   Sign in now
                 </Button>
                 <Typography color="textSecondary" variant="body1">
-                  Don&apos;t have an account?{' '}
+                  Don&apos;t have an account?&nbsp;
                   <Link
                     component={RouterLink}
                     to="/sign-up"

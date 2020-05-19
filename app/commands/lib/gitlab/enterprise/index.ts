@@ -1,21 +1,38 @@
-import { Gitlab } from '@gitbeaker/browser';
 import credentials from '@private/credentials';
+import { Organizations } from '@commands/models/organization';
 import GitlabOperations from '..';
 import { IAuth } from '../../authentication';
 import GitlabAuth from '../../authentication/gitlabAuth';
 import GitlabEnterpriseAuth from '../../authentication/gitlabEntAuth';
 
 export default class GitlabEnterprise extends GitlabOperations {
-  private auth: IAuth;
+  private auth: IAuth | undefined;
 
-  constructor(providedCreds: IGitlabCredentials = credentials) {
+  // Need super call here
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor(private organization: Organizations) {
     // TODO : Validate URL using regex
-    super(new Gitlab(providedCreds));
+    super();
+    // super(new Gitlab(providedCreds));
     // Decorator Pattern
-    this.auth = new GitlabAuth(new GitlabEnterpriseAuth(providedCreds));
+    // this.auth = new GitlabAuth(new GitlabEnterpriseAuth(providedCreds));
   }
 
-  public init = async (): Promise<void> => {
-    await this.auth.authenticate();
+  public init = async (
+    customCredentials: IGitlabCredentials | Promise<IGitlabCredentials>
+  ): Promise<void> => {
+    let providedCredentials:
+      | IGitlabCredentials
+      | Promise<IGitlabCredentials>
+      | null = customCredentials;
+    if (!providedCredentials)
+      providedCredentials = await credentials(this.organization);
+    if (!providedCredentials) throw new Error('First Time User');
+
+    this.setGitlab(providedCredentials);
+
+    //  Decorator Pattern
+    this.auth = new GitlabAuth(new GitlabEnterpriseAuth(providedCredentials));
+    await this.auth!.authenticate();
   };
 }

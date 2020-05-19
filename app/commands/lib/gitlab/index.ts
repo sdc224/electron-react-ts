@@ -2,16 +2,22 @@ import { Gitlab } from '@gitbeaker/browser';
 import { IForkProgress } from '../progress/definitions';
 
 export default class GitlabOperations {
-  constructor(private gitlab: InstanceType<typeof Gitlab>) {}
+  private gitlab: InstanceType<typeof Gitlab> | undefined;
+
+  public setGitlab = (
+    credential: Promise<IGitlabCredentials> | IGitlabCredentials
+  ) => {
+    this.gitlab = new Gitlab(credential);
+  };
 
   public getCurrentUser = async () => {
-    const res = await this.gitlab.Users.current();
+    const res = await this.gitlab!.Users.current();
     return res as GitlabUser;
   };
 
   public getAllProjects = async () => {
     // TODO : Add Pagination
-    const res = (await this.gitlab.Projects.all({
+    const res = (await this.gitlab!.Projects.all({
       perPage: 100
     })) as GitlabProjectSchema[];
     return res;
@@ -45,7 +51,7 @@ export default class GitlabOperations {
 
     progressCallback({ title, kind, description, value: 0 });
     try {
-      const res = await this.gitlab.Projects.fork(project.id);
+      const res = await this.gitlab!.Projects.fork(project.id);
       progressCallback({
         kind,
         title: 'Fork Complete',
