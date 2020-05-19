@@ -64,7 +64,8 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sleep 3; fi
 
 script:
-  - yarn package-ci
+  # Ignoring packaging and test in travis, to make CI/CD work fast, we are already using azure, github, appveyor
+  # - yarn package-ci
   - yarn lint
   - yarn ts
-  - yarn test
+  # - yarn test
