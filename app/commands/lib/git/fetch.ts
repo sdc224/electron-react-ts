@@ -5,7 +5,7 @@ import executionOptionsWithProgress from '../progress/readSTD';
 import FetchProgressParser from '../progress/fetch';
 
 const getFetchArgs = async (
-  repository: IRepository,
+  // repository: IRepository,
   remote: string,
   // account: IGitAccount | null,
   progressCallback?: (progress: IFetchProgress) => void
@@ -98,7 +98,7 @@ export const fetch = async (
   }
 
   const args = await getFetchArgs(
-    repository,
+    // repository,
     remote,
     // account,
     progressCallback

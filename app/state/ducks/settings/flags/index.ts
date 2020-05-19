@@ -10,9 +10,9 @@ function enableDevelopmentFeatures(): boolean {
     return false;
   }
 
-  if (__DEV__) {
-    return true;
-  }
+  // if (__DEV__) {
+  //   return true;
+  // }
 
   if (process.env.GITHUB_DESKTOP_PREVIEW_FEATURES === '1') {
     return true;
@@ -23,7 +23,8 @@ function enableDevelopmentFeatures(): boolean {
 
 /** Should the app enable beta features? */
 function enableBetaFeatures(): boolean {
-  return enableDevelopmentFeatures() || __RELEASE_CHANNEL__ === 'beta';
+  // return enableDevelopmentFeatures() || __RELEASE_CHANNEL__ === 'beta';
+  return enableDevelopmentFeatures();
 }
 
 /** Should git pass `--recurse-submodules` when performing operations? */

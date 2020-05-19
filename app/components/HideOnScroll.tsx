@@ -3,18 +3,12 @@ import Slide from '@material-ui/core/Slide';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 interface IHideOnScrollProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
   children: React.ReactElement;
   threshold?: number;
 }
 
 const HideOnScroll: React.FC<IHideOnScrollProps> = ({
   children,
-  window,
   threshold = 0
 }: IHideOnScrollProps) => {
   // Note that you normally won't need to set the window ref as useScrollTrigger

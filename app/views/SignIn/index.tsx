@@ -116,7 +116,9 @@ const SignIn = () => {
     try {
       const gitlab = new GitlabEnterprise(Organizations.HighRadius);
       await gitlab.init(credentials(Organizations.HighRadius, token));
-      const user = await gitlab.getCurrentUser();
+      // TODO : Cache User
+      // const user = await gitlab.getCurrentUser();
+      await gitlab.getCurrentUser();
     } catch (error) {
       handleClose();
       if (RegularExpressions.GitlabEnterpriseJSONError.test(error.message))

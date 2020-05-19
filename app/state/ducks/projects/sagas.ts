@@ -1,6 +1,7 @@
 import { all, call, fork, put, select, takeEvery } from 'redux-saga/effects';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
 import RepositoryHelper from '@commands/lib/repository/repositories';
+import { Organizations } from '@commands/models/organization';
 import { getAllProjectsSuccess, getAllProjectsError } from './actions';
 import { ProjectActionTypes } from './types';
 import { openSnackbar } from '../snackbar/actions';
@@ -17,7 +18,8 @@ function* handleAllProjectsFetch(): Generator {
 
     // const clonedProjects = getDirectoryNames(path);
     // TODO Introduce Design Pattern
-    const gitlab = new GitlabEnterprise();
+    // TODO : Caching
+    const gitlab = new GitlabEnterprise(Organizations.HighRadius);
     yield call(gitlab.init);
     const res = (yield call(
       new RepositoryHelper(gitlab, path).getAllProjects

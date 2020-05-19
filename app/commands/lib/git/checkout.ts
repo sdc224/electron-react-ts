@@ -9,7 +9,7 @@ import CheckoutProgressParser from '../progress/checkout';
 export type ProgressCallback = (progress: ICheckoutProgress) => void;
 
 async function getCheckoutArgs(
-  repository: IRepository,
+  // repository: IRepository,
   branch: Branch,
   // account: IGitAccount | null,
   progressCallback?: ProgressCallback
@@ -90,7 +90,7 @@ export async function checkoutBranch(
   }
 
   const args = await getCheckoutArgs(
-    repository,
+    // repository,
     branch,
     // account,
     progressCallback

@@ -1,4 +1,4 @@
-import * as Path from 'path';
+// import * as Path from 'path';
 import { GitError as DugiteError } from 'dugite';
 // import { IGitAccount } from '../../models/git-account';
 

@@ -8,10 +8,11 @@ import {
   takeEvery
 } from 'redux-saga/effects';
 import { PayloadAction, TypeConstant } from 'typesafe-actions';
+import { openFolderSystemDialog } from '@app/electronFunctions';
 import Git from '@commands/lib/git';
 import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
 import RepositoryHelper from '@commands/lib/repository/repositories';
-import { openFolderSystemDialog } from '@app/electronFunctions';
+import { Organizations } from '@commands/models/organization';
 import { isObjectEmpty } from '@utils/objectHelper';
 import CloningRepositoriesStore from '@stateUtils/classes/cloning';
 import {
@@ -37,7 +38,8 @@ function* handleCloneProjectsFetch(): Generator {
   try {
     const { path } = (yield select(getSettings)) as ISettingsState;
     // TODO Introduce Design Pattern
-    const gitlab = new GitlabEnterprise();
+    // TODO : Caching
+    const gitlab = new GitlabEnterprise(Organizations.HighRadius);
     yield call(gitlab.init);
     const res = (yield call(
       new RepositoryHelper(gitlab, path).getCloneableProjects
@@ -185,7 +187,8 @@ function* handleForkProjectsFetch(): Generator {
   try {
     const { path } = (yield select(getSettings)) as ISettingsState;
     // TODO Introduce Design Pattern
-    const gitlab = new GitlabEnterprise();
+    // TODO : Caching
+    const gitlab = new GitlabEnterprise(Organizations.HighRadius);
     yield call(gitlab.init);
     const res = (yield call(
       new RepositoryHelper(gitlab, path).getForkableProjects
@@ -236,7 +239,8 @@ function* handleForking(
         })
       );
 
-      const gitlab = new GitlabEnterprise();
+      // TODO : Caching
+      const gitlab = new GitlabEnterprise(Organizations.HighRadius);
       yield call(gitlab.init);
 
       const forkProgress = new ForkingRepositoriesStore(

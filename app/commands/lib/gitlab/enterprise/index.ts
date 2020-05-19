@@ -19,12 +19,12 @@ export default class GitlabEnterprise extends GitlabOperations {
   }
 
   public init = async (
-    customCredentials: IGitlabCredentials | Promise<IGitlabCredentials>
+    customCredentials?: IGitlabCredentials | Promise<IGitlabCredentials>
   ): Promise<void> => {
     let providedCredentials:
       | IGitlabCredentials
       | Promise<IGitlabCredentials>
-      | null = customCredentials;
+      | undefined = customCredentials;
     if (!providedCredentials)
       providedCredentials = await credentials(this.organization);
     if (!providedCredentials) throw new Error('First Time User');
