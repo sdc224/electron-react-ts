@@ -1,4 +1,18 @@
-matrix:
+language: ruby
+
+dist: xenial # Using Xenial for Linux
+
+# Note: if you switch to sudo: false, you'll need to launch chrome with --no-sandbox.
+# See https://github.com/travis-ci/travis-ci/issues/8836
+sudo: required
+
+# A list of operating systems which are used for tests
+os:
+  - linux
+  - osx
+  # - windows
+
+jobs:
   include:
     - os: osx
       language: node_js

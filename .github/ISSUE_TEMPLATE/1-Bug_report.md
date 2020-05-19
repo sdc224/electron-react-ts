@@ -14,7 +14,7 @@ labels: 'bug'
 
 - [ ] Using yarn
 - [ ] Using node 10.x
-- [ ] Using an up-to-date [`master` branch](https://github.com/electron-react-boilerplate/electron-react-boilerplate/tree/master)
+- [ ] Using an up-to-date [`master` branch](https://github.com/sdc224/electron-react-ts/tree/master)
 - [ ] Using latest version of devtools. See [wiki for howto update](https://github.com/electron-react-boilerplate/electron-react-boilerplate/wiki/DevTools)
 - [ ] Link to stacktrace in a Gist (for bugs)
 - [ ] For issue in production release, devtools output of `DEBUG_PROD=true yarn build && yarn start`
