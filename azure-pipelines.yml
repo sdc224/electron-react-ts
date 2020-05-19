@@ -24,7 +24,7 @@ steps:
   # Cache yarn deps
   - task: Cache@2
     inputs:
-      key: 'yarn | "$(Agent.OS)" | yarn.lock'
+      key: 'version2 | yarn | "$(Agent.OS)" | yarn.lock'
       restoreKeys: |
         yarn | "$(Agent.OS)"
         yarn
