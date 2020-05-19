@@ -32,7 +32,7 @@ install:
   - yarn
 
 test_script:
-  - yarn package-ci
   - yarn lint
   - yarn ts
   - yarn test
+  - yarn package-ci
