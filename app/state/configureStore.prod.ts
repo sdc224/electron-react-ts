@@ -12,8 +12,9 @@ const enhancer = applyMiddleware(sagaMiddleware, router);
 function configureStore(
   initialState?: IApplicationState
 ): Store<IApplicationState> {
+  const store = createStore(rootReducer, initialState, enhancer);
   sagaMiddleware.run(rootSaga);
-  return createStore(rootReducer, initialState, enhancer);
+  return store;
 }
 
 export default { configureStore, history };
