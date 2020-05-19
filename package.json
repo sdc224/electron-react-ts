@@ -304,7 +304,7 @@
     "@redux-offline/redux-offline": "^2.5.2",
     "byline": "^5.0.0",
     "classnames": "^2.2.6",
-    "connected-react-router": "^6.6.1",
+    "connected-react-router": "^6.8.0",
     "core-js": "^3.6.4",
     "devtron": "^1.4.0",
     "dugite": "^1.88.2",
