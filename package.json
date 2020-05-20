@@ -207,7 +207,7 @@
     "@types/byline": "^4.2.31",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/enzyme": "^3.10.5",
-    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/git-url-parse": "^9.0.0",
     "@types/history": "^4.7.5",
     "@types/jest": "^24.9.1",
