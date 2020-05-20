@@ -10,6 +10,7 @@ It also has redux, following ducks architecture
 [![Appveyor Build Status][appveyor-image]][appveyor-url]
 [![Github Tag][github-tag-image]][github-tag-url]
 [![Build Status][azure-pipelines-image]][azure-pipelines-url]
+[![CodeFactor][codefactor-image]][codefactor-url]
 
 [github-tag-image]: https://img.shields.io/github/tag/sdc224/electron-react-ts.svg?label=version
 [github-tag-url]: https://github.com/sdc224/electron-react-ts/releases/latest
@@ -19,3 +20,5 @@ It also has redux, following ducks architecture
 [appveyor-url]: https://ci.appveyor.com/project/sdc224/electron-react-ts/branch/master
 [azure-pipelines-image]: https://sdcworld.visualstudio.com/electron-react-ts/_apis/build/status/sdc224.electron-react-ts?branchName=master
 [azure-pipelines-url]: https://sdcworld.visualstudio.com/electron-react-ts/_build/latest?definitionId=2&branchName=master
+[codefactor-image]: https://www.codefactor.io/repository/github/sdc224/electron-react-ts/badge
+[codefactor-url]: https://www.codefactor.io/repository/github/sdc224/electron-react-ts

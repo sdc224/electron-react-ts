@@ -337,7 +337,7 @@
   "collective": {
     "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
-  "browserslist": "electron 7.1.10",
+  "browserslist": "electron 7.1.11",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
