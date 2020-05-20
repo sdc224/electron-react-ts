@@ -15,7 +15,6 @@ import electronDevtoolsInstaller, {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS
 } from 'electron-devtools-installer';
-import MenuBuilder from './menu';
 
 export default class AppUpdater {
   constructor() {
@@ -86,9 +85,6 @@ const createWindow = async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
