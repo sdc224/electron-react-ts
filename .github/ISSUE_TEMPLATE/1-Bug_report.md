@@ -18,7 +18,7 @@ labels: 'bug'
 - [ ] Using latest version of devtools. See [wiki for howto update](https://github.com/electron-react-boilerplate/electron-react-boilerplate/wiki/DevTools)
 - [ ] Link to stacktrace in a Gist (for bugs)
 - [ ] For issue in production release, devtools output of `DEBUG_PROD=true yarn build && yarn start`
-- [ ] Tried solutions mentioned in [#400](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)
+- [ ] Tried solutions mentioned in [#25](https://github.com/sdc224/electron-react-ts/issues/25)
 
 ## Expected Behavior
 
