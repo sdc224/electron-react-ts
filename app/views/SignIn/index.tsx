@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import clsx from 'clsx';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { setPassword } from 'keytar';
 import validate from 'validate.js';
@@ -12,7 +13,12 @@ import {
   makeStyles,
   Toolbar,
   Backdrop,
-  CircularProgress
+  CircularProgress,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+  FormHelperText
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 // import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -32,8 +38,17 @@ const schema = {
   //     maximum: 64
   //   }
   // },
+  type: {
+    presence: { allowEmpty: false, message: 'is required' },
+    type: 'string'
+  },
+  organization: {
+    presence: { allowEmpty: true, message: 'is required' },
+    type: 'string'
+  },
   accessToken: {
     presence: { allowEmpty: false, message: 'is required' },
+    type: 'string',
     length: {
       maximum: 256
     }
@@ -42,11 +57,14 @@ const schema = {
 
 const useStyles = makeStyles(styles);
 
+type GitType = 'Personal' | 'Enterprise';
 // interface ISignInProps {}
 
 interface IValue {
   // email?: string;
   // password?: string;
+  type?: GitType;
+  organization?: Organizations | '';
   accessToken?: string;
 }
 
@@ -62,14 +80,16 @@ const SignIn = () => {
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
 
-  const [formState, setFormState] = useState<IFormState>({
+  const [formState, setFormState] = React.useState<IFormState>({
     isValid: false,
-    values: {},
+    values: {
+      organization: ''
+    },
     touched: {},
     errors: {}
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     const errors = validate(formState.values, schema);
 
     setFormState((prevFormState: IFormState) => ({
@@ -83,6 +103,26 @@ const SignIn = () => {
   //   history.goBack();
   // };
 
+  const getOrganization = (targetObject: any, prevFormState: IFormState) => {
+    if (
+      (prevFormState.values.type === 'Enterprise' ||
+        targetObject.value === 'Enterprise') &&
+      prevFormState.values.organization === ''
+    ) {
+      return undefined;
+    }
+
+    if (
+      prevFormState.values.type === 'Personal' ||
+      targetObject.value === 'Personal'
+    )
+      return '';
+
+    if (targetObject.name === 'organization') return targetObject.value;
+
+    return prevFormState.values.organization;
+  };
+
   const handleChange = (event: any) => {
     event.persist();
 
@@ -93,7 +133,8 @@ const SignIn = () => {
         [event.target.name]:
           event.target.type === 'checkbox'
             ? event.target.checked
-            : event.target.value
+            : event.target.value,
+        organization: getOrganization(event.target, prevFormState)
       },
       touched: {
         ...formState.touched,
@@ -137,11 +178,6 @@ const SignIn = () => {
       throw error;
     }
 
-    // const secureData = encryptString(formState.values.accessToken!);
-    // const store = new CacheStore();
-
-    // store.set('accessToken', secureData.content);
-    // store.set('author', secureData.tag);
     await setPassword('accessToken', 'gitlab', formState.values.accessToken!);
     history.push('/dashboard');
   };
@@ -201,6 +237,7 @@ const SignIn = () => {
                     <InfoIcon fontSize="small" />
                   </Toolbar>
                 </div>
+                {/* </div> */}
                 {/* <Grid className={classes.socialButtons} container spacing={2}>
                   <Grid item>
                     <Button
@@ -246,6 +283,65 @@ const SignIn = () => {
                   value={formState.values.email || ''}
                   variant="outlined"
                 /> */}
+                <FormControl
+                  variant="outlined"
+                  className={clsx(
+                    classes.formControl,
+                    classes.formControlFirst
+                  )}
+                >
+                  <InputLabel id="select-type">Type</InputLabel>
+                  <Select
+                    labelId="select-type"
+                    id="select-type-id"
+                    error={hasError('type')}
+                    value={formState.values.type || ''}
+                    onChange={handleChange}
+                    label="Type"
+                    name="type"
+                    type="select"
+                  >
+                    <MenuItem value="Personal">Personal</MenuItem>
+                    <MenuItem value="Enterprise">Enterprise</MenuItem>
+                  </Select>
+
+                  {hasError('type') && (
+                    <FormHelperText className={classes.formHelperText}>
+                      {formState.errors!.type}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+                {formState.values.type === 'Enterprise' && (
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <InputLabel id="select-organization">
+                      Organization
+                    </InputLabel>
+                    <Select
+                      labelId="select-organization"
+                      id="select-organization-id"
+                      error={hasError('organization')}
+                      value={formState.values.organization || ''}
+                      onChange={handleChange}
+                      label="Organization"
+                      name="organization"
+                      type="select"
+                    >
+                      {Object.entries(Organizations).map(([key, value]) => (
+                        <MenuItem key={key} value={value}>
+                          {key}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {hasError('organization') && (
+                      <FormHelperText className={classes.formHelperText}>
+                        {formState.errors!.organization}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                )}
                 <TextField
                   className={classes.textField}
                   error={hasError('accessToken')}

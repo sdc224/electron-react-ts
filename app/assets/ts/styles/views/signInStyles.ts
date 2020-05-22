@@ -63,9 +63,14 @@ export default (theme: Theme) =>
       zIndex: theme.zIndex.drawer + 1,
       color: '#fff'
     },
+    tabsAndSignIn: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
     signInWithInfo: {
       display: 'flex',
-      alignItems: 'center'
+      alignSelf: 'flex-start'
     },
     logoImage: {
       marginLeft: theme.spacing(4)
@@ -90,6 +95,7 @@ export default (theme: Theme) =>
     },
     title: {
       marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(1),
       color: '#000000'
     },
     socialButtons: {
@@ -109,5 +115,16 @@ export default (theme: Theme) =>
     },
     signUpLink: {
       fontWeight: 'bold'
+    },
+    formControl: {
+      boxSizing: 'border-box',
+      marginTop: theme.spacing(2),
+      minWidth: '50%'
+    },
+    formControlFirst: {
+      paddingRight: theme.spacing(2)
+    },
+    formHelperText: {
+      color: theme.palette.error.main
     }
   });
