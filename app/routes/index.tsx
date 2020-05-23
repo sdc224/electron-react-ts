@@ -11,15 +11,15 @@ const Routes: React.FC = () => {
   const [path, setPath] = React.useState('/');
 
   const fetchCredential = React.useCallback(
-    () => credentials(Organizations.HighRadius),
+    async () => credentials(Organizations.HighRadius),
     []
   );
 
   React.useEffect(() => {
-    const creds = fetchCredential();
-    if (creds) setPath('/dashboard');
-    else setPath('/sign-in');
-  });
+    fetchCredential()
+      .then(() => setPath('/dashboard'))
+      .catch(() => setPath('/sign-in'));
+  }, [fetchCredential]);
 
   return (
     <App>
