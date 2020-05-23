@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const RegularExpressions = {
   GitVersion: /^git version ([\w.]+[\w]+)$/,
   GitCloneCountObjects: /Counting objects:\s*(\d+)%/i,
@@ -7,3 +6,5 @@ export const RegularExpressions = {
   GitCloneReceiveDeltas: /Resolving deltas:\s*(\d+)%/i,
   GitlabEnterpriseJSONError: /Unexpected token < in JSON at position 0/
 };
+
+export const GitlabDefaultURL = 'https://gitlab.com';

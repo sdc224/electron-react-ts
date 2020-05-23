@@ -1,13 +1,16 @@
 import { findPassword } from 'keytar';
-import { Organizations } from '@commands/models/organization';
+import { GitlabDefaultURL } from '@constants/commandConstants';
+import { checkStringEmpty } from '@utils/stringHelper';
 
 const credentials = async (
-  organization: Organizations,
+  organization?: string,
   token?: string
 ): Promise<IGitlabCredentials> => {
+  const host = checkStringEmpty(organization, GitlabDefaultURL)!;
+
   if (token)
     return {
-      host: organization,
+      host,
       token
     };
 
@@ -15,7 +18,7 @@ const credentials = async (
   if (!generatedToken) throw new Error('First Time User');
 
   return {
-    host: organization,
+    host,
     token: generatedToken
   };
 };
