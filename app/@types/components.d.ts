@@ -32,11 +32,11 @@ interface IReducer {
   /**
    * For finding the success state
    */
-  success: object;
+  data: any;
   /**
    * Catch any kind of errors
    */
-  error: object;
+  error: string | object;
 }
 
 // TODO DESCRIPTION
