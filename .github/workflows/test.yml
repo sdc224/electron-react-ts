@@ -27,8 +27,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+        # Commenting out packaging for socket hangup exception
+        # yarn package-ci
         run: |
-          yarn package-ci
           yarn lint
           yarn ts
 
