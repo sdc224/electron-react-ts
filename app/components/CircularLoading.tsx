@@ -6,7 +6,7 @@ import styles from '@componentsTSStyles/circularLoadingStyles';
 interface IProps {
   height: string;
   children?: React.ReactNode;
-  style: object;
+  style?: object;
 }
 
 const useStyles = makeStyles(styles);
