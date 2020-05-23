@@ -1,13 +1,17 @@
+import CacheStore from 'electron-store';
 import { folderOrFileExist } from '@app/utils/fileHelper';
 import { resolve } from 'path';
+import GitlabPersonal from '../gitlab/personal';
 import GitlabEnterprise from '../gitlab/enterprise';
 
 export default class RepositoryHelper {
   private repositories = new Array<IRepository>();
 
+  private store = new CacheStore();
+
   constructor(
     // TODO : Design pattern
-    private gitlab: GitlabEnterprise,
+    private gitlab: GitlabPersonal | GitlabEnterprise,
     private basePath: string
   ) {}
 
@@ -24,34 +28,33 @@ export default class RepositoryHelper {
   ) => !!projectSchema.owner && projectSchema.owner!.id === user.id;
 
   private fetchAllGitlabProjects = async () => {
-    try {
-      const allProjects = await this.gitlab.getAllProjects();
-      const user = await this.gitlab.getCurrentUser();
-      await Promise.all(
-        allProjects.map(async project => {
-          const repoPath = this.getRepoPath(project);
-          const isCloned = await this.isClonedRepository(repoPath);
-          const isForkable = this.isForkableRepository(project, user);
+    const allProjects = await this.gitlab.getAllProjects();
 
-          this.repositories.push({
-            ...project,
-            repoPath,
-            // TODO : better logic so that we can clone cloud repo also
-            hasDotGitFolder: isForkable && isCloned,
-            isCurrentUserProject: isForkable,
-            remote: {
-              origin: { name: 'origin', url: project.ssh_url_to_repo },
-              central: {
-                name: 'central',
-                url: project.forked_from_project?.ssh_url_to_repo!
-              }
+    const user =
+      this.store.get('userDetails') || (await this.gitlab.getCurrentUser());
+
+    await Promise.all(
+      allProjects.map(async project => {
+        const repoPath = this.getRepoPath(project);
+        const isCloned = await this.isClonedRepository(repoPath);
+        const isForkable = this.isForkableRepository(project, user);
+
+        this.repositories.push({
+          ...project,
+          repoPath,
+          // TODO : better logic so that we can clone cloud repo also
+          hasDotGitFolder: isForkable && isCloned,
+          isCurrentUserProject: isForkable,
+          remote: {
+            origin: { name: 'origin', url: project.ssh_url_to_repo },
+            central: {
+              name: 'central',
+              url: project.forked_from_project?.ssh_url_to_repo!
             }
-          });
-        })
-      );
-    } catch (error) {
-      throw new Error(`Error${error}`);
-    }
+          }
+        });
+      })
+    );
   };
 
   public getAllProjects = async () => {

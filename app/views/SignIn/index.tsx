@@ -1,12 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useHistory, Link as RouterLink } from 'react-router-dom';
+import CacheStore from 'electron-store';
 import { setPassword } from 'keytar';
 import validate from 'validate.js';
 import {
   Grid,
   Button,
-  // IconButton,
   TextField,
   Link,
   Typography,
@@ -21,23 +21,15 @@ import {
   FormHelperText
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 // import { Facebook, Twitter } from '@material-ui/icons';
 import credentials from '@private/credentials';
 import { Organizations } from '@commands/models/organization';
-import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
+import GitlabCommon from '@commands/lib/gitlab/common';
 import { RegularExpressions } from '@constants/commandConstants';
 import styles from '@viewsTSStyles/signInStyles';
 
 // TODO : Add validator using decorators
 const schema = {
-  // email: {
-  //   presence: { allowEmpty: false, message: 'is required' },
-  //   email: true,
-  //   length: {
-  //     maximum: 64
-  //   }
-  // },
   type: {
     presence: { allowEmpty: false, message: 'is required' },
     type: 'string'
@@ -50,6 +42,7 @@ const schema = {
     presence: { allowEmpty: false, message: 'is required' },
     type: 'string',
     length: {
+      minimum: 6,
       maximum: 256
     }
   }
@@ -58,11 +51,8 @@ const schema = {
 const useStyles = makeStyles(styles);
 
 type GitType = 'Personal' | 'Enterprise';
-// interface ISignInProps {}
 
 interface IValue {
-  // email?: string;
-  // password?: string;
   type?: GitType;
   organization?: Organizations | '';
   accessToken?: string;
@@ -98,10 +88,6 @@ const SignIn = () => {
       errors: errors || {}
     }));
   }, [formState.values]);
-
-  // const handleBack = () => {
-  //   history.goBack();
-  // };
 
   const getOrganization = (targetObject: any, prevFormState: IFormState) => {
     if (
@@ -154,15 +140,24 @@ const SignIn = () => {
     handleOpen();
     const token = formState.values.accessToken;
     if (!token) return;
+
+    const store = new CacheStore();
+    if (formState.values.type === 'Enterprise') {
+      store.set('isEnterprise', true);
+      store.set('organization', formState.values.organization);
+    } else store.set('isEnterprise', false);
+
     try {
-      const gitlab = new GitlabEnterprise(Organizations.HighRadius);
-      await gitlab.init(credentials(Organizations.HighRadius, token));
-      // TODO : Cache User
-      // const user = await gitlab.getCurrentUser();
-      await gitlab.getCurrentUser();
+      const { gitlab } = new GitlabCommon();
+      await gitlab.init(credentials(formState.values.organization, token));
+      const user = await gitlab.getCurrentUser();
+      store.set('userDetails', user);
     } catch (error) {
       handleClose();
-      if (RegularExpressions.GitlabEnterpriseJSONError.test(error.message))
+      if (
+        RegularExpressions.GitlabEnterpriseJSONError.test(error.message) ||
+        error.message === '401'
+      )
         setFormState((prevFormState: IFormState) => ({
           ...prevFormState,
           isValid: false,
