@@ -4,9 +4,7 @@ import { IForkProgress } from '../progress/definitions';
 export default class GitlabOperations {
   private gitlab: InstanceType<typeof Gitlab> | undefined;
 
-  public setGitlab = (
-    credential: Promise<IGitlabCredentials> | IGitlabCredentials
-  ) => {
+  public setGitlab = (credential: IGitlabCredentials) => {
     this.gitlab = new Gitlab(credential);
   };
 
