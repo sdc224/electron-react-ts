@@ -23,6 +23,11 @@ interface IGitlabCredentials {
 type GitlabProjectSchema = import('@gitbeaker/core/dist/types/services/Projects').ProjectSchemaCamelized &
   IDefaultProjectSchema;
 
+type GitlabProjectAndPagination = {
+  data: GitlabProjectSchema[];
+  pagination: import('@gitbeaker/core/dist/types/infrastructure/RequestHelper').PaginationOptions;
+};
+
 /** A remote as defined in Git. */
 interface IRemote {
   readonly name: string;
@@ -45,3 +50,8 @@ interface IRepository extends GitlabProjectSchema {
   remote: IHRCRemote;
   extraRemotes?: IExtraRemote[];
 }
+
+type RepositoryProjectAndPagination = {
+  projects: IRepository[];
+  pagination: import('@gitbeaker/core/dist/types/infrastructure/RequestHelper').PaginationOptions;
+};
