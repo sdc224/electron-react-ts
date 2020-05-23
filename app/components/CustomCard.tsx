@@ -38,7 +38,10 @@ export default function CustomCard({
   return (
     <Card className={classes.root} variant="outlined">
       <CardHeader
-        classes={{ title: classes.cardHeaderTitle }}
+        classes={{
+          content: classes.titleHeader,
+          title: classes.cardHeaderTitle
+        }}
         avatar={
           <Tooltip title={`Project ID: ${id}`}>
             <Avatar style={{ backgroundColor: avatarColor }}>
@@ -52,7 +55,9 @@ export default function CustomCard({
           </IconButton>
         }
         title={info}
+        titleTypographyProps={{ noWrap: true }}
         subheader={title}
+        subheaderTypographyProps={{ noWrap: true }}
       />
       <CardContent className={classes.cardContent}>
         <Typography variant="body2" component="p">

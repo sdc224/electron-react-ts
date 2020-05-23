@@ -14,6 +14,9 @@ export default (theme: Theme) =>
       color: theme.palette.black,
       opacity: 0.87
     },
+    titleHeader: {
+      minWidth: 0
+    },
     cardContent: {
       flexGrow: 1
     },
@@ -21,11 +24,5 @@ export default (theme: Theme) =>
       display: 'inline-block',
       margin: '0 2px',
       transform: 'scale(0.8)'
-    },
-    title: {
-      fontSize: 14
-    },
-    pos: {
-      marginBottom: 12
     }
   });
