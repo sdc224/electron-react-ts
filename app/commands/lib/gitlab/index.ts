@@ -1,4 +1,5 @@
 import { Gitlab } from '@gitbeaker/browser';
+import { PaginatedRequestOptions } from '@gitbeaker/core/dist/types/infrastructure/RequestHelper';
 import { IForkProgress } from '../progress/definitions';
 
 export default class GitlabOperations {
@@ -13,13 +14,12 @@ export default class GitlabOperations {
     return res as GitlabUser;
   };
 
-  public getAllProjects = async () => {
-    // TODO : Add Pagination
-    const res = (await this.gitlab!.Projects.all({
-      perPage: 100
-    })) as GitlabProjectSchema[];
-    return res;
-  };
+  public getAllProjects = (pagination?: PaginatedRequestOptions) =>
+    this.gitlab!.Projects.all({
+      showExpanded: true,
+      perPage: 100,
+      ...pagination
+    });
 
   /**
    * getClonableProjects

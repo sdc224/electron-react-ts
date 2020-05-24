@@ -1,5 +1,9 @@
 import CacheStore from 'electron-store';
-import { folderOrFileExist } from '@app/utils/fileHelper';
+import {
+  PaginatedRequestOptions,
+  PaginationOptions
+} from '@gitbeaker/core/dist/types/infrastructure/RequestHelper';
+import { folderOrFileExist } from '@utils/fileHelper';
 import { resolve } from 'path';
 import GitlabPersonal from '../gitlab/personal';
 import GitlabEnterprise from '../gitlab/enterprise';
@@ -7,10 +11,11 @@ import GitlabEnterprise from '../gitlab/enterprise';
 export default class RepositoryHelper {
   private repositories = new Array<IRepository>();
 
+  private pagination?: PaginationOptions;
+
   private store = new CacheStore();
 
   constructor(
-    // TODO : Design pattern
     private gitlab: GitlabPersonal | GitlabEnterprise,
     private basePath: string
   ) {}
@@ -27,14 +32,22 @@ export default class RepositoryHelper {
     user: GitlabUser
   ) => !!projectSchema.owner && projectSchema.owner!.id === user.id;
 
-  private fetchAllGitlabProjects = async () => {
-    const allProjects = await this.gitlab.getAllProjects();
+  private fetchAllGitlabProjects = async (
+    paginatedRequestOption?: PaginatedRequestOptions
+  ) => {
+    const res = ((await this.gitlab.getAllProjects(
+      paginatedRequestOption
+    )) as unknown) as GitlabProjectAndPagination;
+
+    const allProjects = res?.data!;
+
+    this.pagination = res?.pagination;
 
     const user =
       this.store.get('userDetails') || (await this.gitlab.getCurrentUser());
 
     await Promise.all(
-      allProjects.map(async project => {
+      allProjects.map(async (project: GitlabProjectSchema) => {
         const repoPath = this.getRepoPath(project);
         const isCloned = await this.isClonedRepository(repoPath);
         const isForkable = this.isForkableRepository(project, user);
@@ -57,15 +70,20 @@ export default class RepositoryHelper {
     );
   };
 
-  public getAllProjects = async () => {
+  public getAllProjects = async (
+    paginatedRequestOption?: PaginatedRequestOptions
+  ) => {
     // TODO : init method using decorator
-    await this.fetchAllGitlabProjects();
-    return this.repositories;
+    await this.fetchAllGitlabProjects(paginatedRequestOption);
+    return { projects: this.repositories, pagination: this.pagination };
   };
 
   public getCloneableProjects = async () => {
     const res = await this.getAllProjects();
-    return res.filter(r => r.isCurrentUserProject);
+    return {
+      projects: res?.projects?.filter(r => r.isCurrentUserProject),
+      pagination: this.pagination
+    };
   };
 
   public getForkableProjects = async () => {
@@ -73,18 +91,18 @@ export default class RepositoryHelper {
 
     const forkerProjectsArray: number[] = [];
 
-    res.forEach(p => {
+    res?.projects?.forEach(p => {
       if (p.isCurrentUserProject && p.forked_from_project)
         forkerProjectsArray.push(p.forked_from_project.id);
     });
 
-    const filteredCurrentUserProjects = res.filter(
+    const filteredCurrentUserProjects = res?.projects?.filter(
       p => !p.isCurrentUserProject
     );
 
     const filteredForkerProjects = filteredCurrentUserProjects.filter(
       element => !forkerProjectsArray.includes(element.id)
     );
-    return filteredForkerProjects;
+    return { projects: filteredForkerProjects, pagination: this.pagination };
   };
 }

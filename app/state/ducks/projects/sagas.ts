@@ -1,4 +1,5 @@
 import { all, call, fork, put, select, takeEvery } from 'redux-saga/effects';
+import { PayloadAction } from 'typesafe-actions';
 import GitlabCommon from '@commands/lib/gitlab/common';
 import RepositoryHelper from '@commands/lib/repository/repositories';
 import { getAllProjectsSuccess, getAllProjectsError } from './actions';
@@ -11,18 +12,20 @@ const getSettings = (state: ISettingsAwareState) => state.settings;
 /**
  * @desc Business logic of effect.
  */
-function* handleAllProjectsFetch(): Generator {
+function* handleAllProjectsFetch(
+  action: PayloadAction<string, any>
+): Generator {
   try {
     const { path } = (yield select(getSettings)) as ISettingsState;
 
     // const clonedProjects = getDirectoryNames(path);
-    // TODO Introduce Design Pattern
     const { gitlab } = new GitlabCommon();
     yield call(gitlab.init);
-    const res = (yield call(
-      new RepositoryHelper(gitlab, path).getAllProjects
-    )) as IRepository[];
-    yield put(getAllProjectsSuccess(res));
+    const { projects, pagination } = (yield call(
+      new RepositoryHelper(gitlab, path).getAllProjects,
+      action.payload
+    ) as unknown) as RepositoryProjectAndPagination;
+    yield put(getAllProjectsSuccess(projects, pagination));
   } catch (err) {
     if (err instanceof Error) {
       yield put(getAllProjectsError(err.stack!));

@@ -10,9 +10,8 @@ import {
 import { PayloadAction, TypeConstant } from 'typesafe-actions';
 import { openFolderSystemDialog } from '@app/electronFunctions';
 import Git from '@commands/lib/git';
-import GitlabEnterprise from '@commands/lib/gitlab/enterprise';
+import GitlabCommon from '@commands/lib/gitlab/common';
 import RepositoryHelper from '@commands/lib/repository/repositories';
-import { Organizations } from '@commands/models/organization';
 import { isObjectEmpty } from '@utils/objectHelper';
 import CloningRepositoriesStore from '@stateUtils/classes/cloning';
 import {
@@ -39,13 +38,13 @@ function* handleCloneProjectsFetch(): Generator {
     const { path } = (yield select(getSettings)) as ISettingsState;
     // TODO Introduce Design Pattern
     // TODO : Caching
-    const gitlab = new GitlabEnterprise(Organizations.HighRadius);
+    const { gitlab } = new GitlabCommon();
     yield call(gitlab.init);
-    const res = (yield call(
+    const { projects } = (yield call(
       new RepositoryHelper(gitlab, path).getCloneableProjects
-    )) as IRepository[];
+    ) as unknown) as RepositoryProjectAndPagination;
 
-    yield put(fetchClonableProjectsSuccess(res));
+    yield put(fetchClonableProjectsSuccess(projects));
   } catch (err) {
     if (err instanceof Error) {
       yield put(fetchClonableProjectsError(err.stack!));
@@ -188,12 +187,12 @@ function* handleForkProjectsFetch(): Generator {
     const { path } = (yield select(getSettings)) as ISettingsState;
     // TODO Introduce Design Pattern
     // TODO : Caching
-    const gitlab = new GitlabEnterprise(Organizations.HighRadius);
+    const { gitlab } = new GitlabCommon();
     yield call(gitlab.init);
-    const res = (yield call(
+    const { projects } = (yield call(
       new RepositoryHelper(gitlab, path).getForkableProjects
-    )) as IRepository[];
-    yield put(fetchForkableProjectsSuccess(res));
+    ) as unknown) as RepositoryProjectAndPagination;
+    yield put(fetchForkableProjectsSuccess(projects));
   } catch (err) {
     if (err instanceof Error) {
       yield put(fetchForkableProjectsError(err.stack!));
@@ -239,8 +238,7 @@ function* handleForking(
         })
       );
 
-      // TODO : Caching
-      const gitlab = new GitlabEnterprise(Organizations.HighRadius);
+      const { gitlab } = new GitlabCommon();
       yield call(gitlab.init);
 
       const forkProgress = new ForkingRepositoriesStore(
