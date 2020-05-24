@@ -27,12 +27,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        # Commenting out packaging for socket hangup exception
-        # yarn package-ci
         run: |
+          yarn package-ci
           yarn lint
           yarn ts
 
-# Failing beacuse virtual framebuffer not installed
+# Failing because virtual framebuffer not installed
 #          yarn build-e2e
 #          yarn test-e2e
