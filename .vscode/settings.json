@@ -38,5 +38,13 @@
     "test/**/__snapshots__": true,
     "yarn.lock": true
   },
+
+  "json.schemas": [
+    {
+      "fileMatch": ["builder-config.json"],
+      "url": "./builder-config-schema.json"
+    }
+  ],
+
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
