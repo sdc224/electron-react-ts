@@ -2,7 +2,8 @@
   "HOME": "/",
   "DASHBOARD": "/dashboard",
   "OPERATIONS": "/operations",
-  "WELCOME": "/welcome",
   "SIGNIN": "/sign-in",
+  "WELCOME": "/welcome",
+  "SETTINGS": "/settings",
   "NOTFOUND": "/not-found"
 }

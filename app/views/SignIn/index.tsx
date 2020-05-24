@@ -109,7 +109,7 @@ const SignIn = () => {
     return prevFormState.values.organization;
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<any>) => {
     event.persist();
 
     setFormState((prevFormState: IFormState) => ({
@@ -135,7 +135,7 @@ const SignIn = () => {
     setOpen(true);
   };
 
-  const handleSignIn = async (event: any) => {
+  const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleOpen();
     const token = formState.values.accessToken;

@@ -1,7 +1,14 @@
 import { RouteProps } from 'react-router';
 import Main from '@layouts/Main';
 import Minimal from '@layouts/Minimal/';
-import { Welcome, Dashboard, Operations, SignIn, NotFound } from '@views/';
+import {
+  Welcome,
+  Dashboard,
+  Operations,
+  SignIn,
+  Settings,
+  NotFound
+} from '@views/';
 import jsonRoutes from './jsonRoutes.json';
 
 interface IRouteWithLayout {
@@ -28,17 +35,24 @@ const routes: RoutePropsWithLayout[] = [
   },
   {
     key: '3',
+    path: jsonRoutes.SIGNIN,
+    exact: true,
+    component: SignIn,
+    layout: Minimal
+  },
+  {
+    key: '4',
     path: jsonRoutes.WELCOME,
     exact: true,
     component: Welcome,
     layout: Minimal
   },
   {
-    key: '4',
-    path: jsonRoutes.SIGNIN,
+    key: '7',
+    path: jsonRoutes.SETTINGS,
     exact: true,
-    component: SignIn,
-    layout: Minimal
+    component: Settings,
+    layout: Main
   },
   {
     key: '99',
