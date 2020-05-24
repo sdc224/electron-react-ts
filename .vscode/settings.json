@@ -41,8 +41,8 @@
 
   "json.schemas": [
     {
-      "fileMatch": ["builder-config.json"],
-      "url": "./builder-config-schema.json"
+      "fileMatch": ["electron-builder.json"],
+      "url": "./electron-builder-config-schema.json"
     }
   ],
 
