@@ -1,6 +1,6 @@
-import { createStyles } from '@material-ui/core';
+import { createStyles, Theme } from '@material-ui/core';
 
-const dashboardStyles = () =>
+const dashboardStyles = (theme: Theme) =>
   createStyles({
     root: {},
     appbar: {
@@ -21,7 +21,8 @@ const dashboardStyles = () =>
       justifyContent: 'space-between'
     },
     main: {
-      marginTop: 48,
+      boxSizing: 'border-box',
+      marginTop: theme.spacing(6),
       overflowY: 'auto',
       overflowX: 'hidden',
       // TODO : Set with clientWidth
