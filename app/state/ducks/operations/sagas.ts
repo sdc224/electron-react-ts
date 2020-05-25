@@ -12,20 +12,27 @@ import { openFolderSystemDialog } from '@app/electronFunctions';
 import Git from '@commands/lib/git';
 import GitlabCommon from '@commands/lib/gitlab/common';
 import RepositoryHelper from '@commands/lib/repository/repositories';
+import { IForkUpdateOptions } from '@commands/models/forkUpdate';
 import { isObjectEmpty } from '@utils/objectHelper';
 import CloningRepositoriesStore from '@stateUtils/classes/cloning';
+import ForkingRepositoriesStore from '@stateUtils/classes/forking';
+import ForkUpdateRepositoriesStore from '@stateUtils/classes/forkUpdating';
 import {
   fetchClonableProjectsError,
   fetchClonableProjectsSuccess,
   fetchForkableProjectsSuccess,
   fetchForkableProjectsError,
   toggleCloneProgress,
-  toggleForkProgress
+  toggleForkProgress,
+  toggleForkUpdateProgress
 } from './actions';
-import { CloneActionTypes, ForkActionTypes } from './types';
+import {
+  CloneActionTypes,
+  ForkActionTypes,
+  ForkUpdateActionTypes
+} from './types';
 import { openSnackbar } from '../snackbar/actions';
 import { IProgressBarSelector } from '../progress/types';
-import ForkingRepositoriesStore from './forking';
 import { ISettingsState, ISettingsAwareState } from '../settings/types';
 
 const getSettings = (state: ISettingsAwareState) => state.settings;
@@ -36,8 +43,6 @@ const getSettings = (state: ISettingsAwareState) => state.settings;
 function* handleCloneProjectsFetch(): Generator {
   try {
     const { path } = (yield select(getSettings)) as ISettingsState;
-    // TODO Introduce Design Pattern
-    // TODO : Caching
     const { gitlab } = new GitlabCommon();
     yield call(gitlab.init);
     const { projects } = (yield call(
@@ -290,6 +295,90 @@ function* watchForking(): Generator {
   yield takeEvery(ForkActionTypes.START_FORKING, handleForking);
 }
 
+function* handleForkUpdating(
+  action: PayloadAction<
+    TypeConstant,
+    {
+      projects: IRepository[];
+      options: IForkUpdateOptions;
+      progressState: IProgressBarSelector;
+    }
+  >
+): Generator {
+  try {
+    if (
+      !action.payload ||
+      action.payload.projects.length === 0 ||
+      !action.payload.progressState
+    )
+      return;
+
+    try {
+      yield put(toggleForkProgress());
+      yield put(
+        action.payload.progressState.progressStart({
+          progressType: 'linear',
+          variant: 'determinate'
+        })
+      );
+
+      const git = new Git();
+
+      const forkUpdateProgress = new ForkUpdateRepositoriesStore(
+        git,
+        action.payload.progressState
+      );
+
+      const value = (yield call(
+        forkUpdateProgress.forkUpdate,
+        action.payload.projects[0],
+        action.payload.options
+      )) as boolean;
+
+      if (value) {
+        yield put(
+          action.payload.progressState.handleProgress({
+            title: 'Fork Updating Completed',
+            value: 1
+          })
+        );
+        yield put(
+          openSnackbar({
+            kind: 'ForkUpdate',
+            text: 'Fork Updating Successfully Completed',
+            variant: 'success'
+          })
+        );
+      }
+    } catch (error) {
+      // TODO : change progress bar color to red
+      yield put(
+        openSnackbar({
+          kind: 'ForkUpdate',
+          text: `Fork Updating Failed: ${error.message.toString()}`,
+          variant: 'error'
+        })
+      );
+    } finally {
+      yield put(action.payload.progressState.progressComplete());
+      yield delay(2000);
+      yield put(toggleForkUpdateProgress());
+    }
+  } catch (err) {
+    throw new Error(`Fork Updating failed${err}`);
+  }
+}
+
+/**
+ * @desc Watches every specified action and runs effect method and passes action args to it
+ */
+function* watchForkUpdating(): Generator {
+  yield takeEvery(
+    ForkUpdateActionTypes.START_FORK_UPDATING,
+    handleForkUpdating
+  );
+}
+
 /**
  * @desc saga init, forks in effects, other sagas
  */
@@ -298,6 +387,7 @@ export default function* postSaga() {
     fork(watchFetchCloneProjectsRequest),
     fork(watchFetchForkProjectsRequest),
     fork(watchCloning),
-    fork(watchForking)
+    fork(watchForking),
+    fork(watchForkUpdating)
   ]);
 }

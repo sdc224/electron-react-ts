@@ -1,7 +1,7 @@
 // import ForkingRepository from '@commands/models/cloningRepository';
 // import { ICloneProgress } from '@commands/lib/progress/definitions';
 import GitlabOperations from '@commands/lib/gitlab';
-import { IProgressBarSelector } from '../progress/types';
+import { IProgressBarSelector } from '../../ducks/progress/types';
 
 /** The store in charge of repository currently being cloned. */
 export default class ForkingRepositoriesStore {

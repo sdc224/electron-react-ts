@@ -14,15 +14,23 @@ export const ForkActionTypes = {
   START_FORKING: '@@clone/START_FORKING'
 };
 
+export const ForkUpdateActionTypes = {
+  TOGGLE_FORK_UPDATE_PROGRESS: '@@forkUpdate/TOGGLE_FORK_UPDATE_PROGRESS',
+  START_FORK_UPDATING: '@@forkUpdate/START_FORK_UPDATING'
+};
+
 export interface IProject extends Response {
   name: string;
 }
 
-export interface IOperationState {
+interface IShowProgressState {
+  showProgress: boolean;
+}
+
+export interface IOperationState extends IShowProgressState {
   loading: boolean;
   projects: Array<IRepository>;
   error: string;
-  showProgress: boolean;
 }
 
 export interface IOperationAwareState {

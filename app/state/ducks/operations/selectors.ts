@@ -1,12 +1,15 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { IForkUpdateOptions } from '@commands/models/forkUpdate';
 import {
   fetchClonableProjects,
   toggleCloneProgress,
   fetchForkableProjects,
   toggleForkProgress,
   startCloning as clone,
-  startForking as fork
+  startForking as fork,
+  toggleForkUpdateProgress,
+  startForkUpdating as forkUpdate
 } from './actions';
 import { IOperationAwareState } from './types';
 import { IProgressBarSelector } from '../progress/types';
@@ -59,5 +62,28 @@ export const useFork = () => {
     getProjects,
     showForkProgress,
     startForking
+  };
+};
+
+export const useForkUpdate = () => {
+  const dispatch = useDispatch();
+
+  const showForkUpdateProgress = useCallback(
+    () => dispatch(toggleForkUpdateProgress()),
+    [dispatch]
+  );
+
+  const startForkUpdating = useCallback(
+    (
+      projects: IRepository[],
+      data: IForkUpdateOptions,
+      progressState: IProgressBarSelector
+    ) => dispatch(forkUpdate(projects, data, progressState)),
+    [dispatch]
+  );
+
+  return {
+    showForkUpdateProgress,
+    startForkUpdating
   };
 };

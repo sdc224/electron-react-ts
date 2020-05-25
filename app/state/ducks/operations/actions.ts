@@ -1,5 +1,10 @@
 import { action } from 'typesafe-actions';
-import { CloneActionTypes, ForkActionTypes } from './types';
+import { IForkUpdateOptions } from '@commands/models/forkUpdate';
+import {
+  CloneActionTypes,
+  ForkActionTypes,
+  ForkUpdateActionTypes
+} from './types';
 import { IProgressBarSelector } from '../progress/types';
 
 export const fetchClonableProjects = () =>
@@ -45,3 +50,17 @@ export const startForking = (
   projects: IRepository[],
   progressState: IProgressBarSelector
 ) => action(ForkActionTypes.START_FORKING, { projects, progressState });
+
+export const toggleForkUpdateProgress = () =>
+  action(ForkUpdateActionTypes.TOGGLE_FORK_UPDATE_PROGRESS);
+
+export const startForkUpdating = (
+  projects: IRepository[],
+  options: IForkUpdateOptions,
+  progressState: IProgressBarSelector
+) =>
+  action(ForkUpdateActionTypes.START_FORK_UPDATING, {
+    projects,
+    options,
+    progressState
+  });

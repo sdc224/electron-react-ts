@@ -1,11 +1,6 @@
 import Git from '@commands/lib/git';
-import { Branch } from '@commands/models/branch';
+import { IForkUpdateOptions } from '@commands/models/forkUpdate';
 import { IProgressBarSelector } from '../../ducks/progress/types';
-
-interface IForkUpdateOptions {
-  forkBranch: Branch;
-  cloudBranch: Branch;
-}
 
 /** The store in charge of repository currently being fork updated. */
 export default class ForkUpdateRepositoryStore {
