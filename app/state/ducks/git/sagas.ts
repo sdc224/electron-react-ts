@@ -14,9 +14,9 @@ function* fetchRemotes(
     const repositoryHelper = new RepositoryHelper();
     yield call(repositoryHelper.addExtraRemotes, git, action.payload.id);
 
-    yield put(successAction('remote', action.payload.id, true));
+    yield put(successAction('remote', true));
   } catch (error) {
-    yield put(errorAction('remote', action.payload.id, error));
+    yield put(errorAction('remote', error));
   }
 }
 
