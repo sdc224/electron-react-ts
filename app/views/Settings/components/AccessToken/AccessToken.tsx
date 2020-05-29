@@ -9,11 +9,11 @@ import {
   TextField
 } from '@material-ui/core';
 
-interface IPasswordProps {
+interface IAccessTokenProps {
   className?: string;
 }
 
-const Password = ({ className, ...rest }: IPasswordProps) => {
+const AccessToken = ({ className, ...rest }: IAccessTokenProps) => {
   const [values, setValues] = React.useState({
     password: '',
     confirm: ''
@@ -29,12 +29,12 @@ const Password = ({ className, ...rest }: IPasswordProps) => {
   return (
     <Card {...rest} className={className}>
       <form>
-        <CardHeader subheader="Update password" title="Password" />
+        <CardHeader subheader="Update access token" title="Access Token" />
         <Divider />
         <CardContent>
           <TextField
             fullWidth
-            label="Password"
+            label="Access Token"
             name="password"
             onChange={handleChange}
             type="password"
@@ -43,7 +43,7 @@ const Password = ({ className, ...rest }: IPasswordProps) => {
           />
           <TextField
             fullWidth
-            label="Confirm password"
+            label="Confirm Access Token"
             name="confirm"
             onChange={handleChange}
             style={{ marginTop: '1rem' }}
@@ -63,4 +63,4 @@ const Password = ({ className, ...rest }: IPasswordProps) => {
   );
 };
 
-export default Password;
+export default AccessToken;
