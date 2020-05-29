@@ -18,9 +18,12 @@ import { projectsReducer } from './projects/reducers';
 import projectsSaga from './projects/sagas';
 import { ISettingsState } from './settings/types';
 import { settingsReducer } from './settings/reducers';
+import { IGitOperationAwareState } from './git/types';
+import { gitRootReducer } from './git/reducers';
+import gitOperationSaga from './git/sagas';
 
 // The top-level state object
-export interface IApplicationState {
+export interface IApplicationState extends IGitOperationAwareState {
   post: IPostState;
   counter: number;
   clone: IOperationState;
@@ -42,6 +45,7 @@ export const createRootReducer = (history: History) =>
     snackbar: snackbarReducer,
     projects: projectsReducer,
     settings: settingsReducer,
+    gitOperation: gitRootReducer,
     router: connectRouter(history)
   });
 
@@ -50,5 +54,10 @@ export function* rootSaga(): Generator<
   void,
   unknown
 > {
-  yield all([fork(postSaga), fork(operationsSaga), fork(projectsSaga)]);
+  yield all([
+    fork(postSaga),
+    fork(operationsSaga),
+    fork(projectsSaga),
+    fork(gitOperationSaga)
+  ]);
 }
