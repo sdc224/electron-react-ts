@@ -8,15 +8,17 @@ interface IButtonProps {
   buttonStyles?: string;
   buttonType?: 'fab' | 'normal';
   buttonVariant?: 'text' | 'outlined' | 'contained';
+  hasButtons?: boolean;
   isLoadingButton?: boolean;
-  onSubmit(): void;
+  onSubmit?(): void;
   disableButton?: boolean;
-  buttonText: string;
+  buttonText?: string;
 }
 
 interface ICustomFormProps extends IButtonProps {
   className?: string;
   childrenHeader?: React.ReactNode;
+  formVariant?: 'filled' | 'outlined' | 'standard';
   hasHeader?: boolean;
   headerText?: string;
   headerStyles?: string;
@@ -41,9 +43,9 @@ const FormButton: React.FC<IButtonProps> = ({
   if (isLoadingButton) {
     return (
       <LoadingButton
-        buttonText={buttonText}
+        buttonText={buttonText!}
         className={classes.formButton}
-        onClick={onSubmit}
+        onClick={onSubmit!}
         buttonType={buttonType}
         disabled={disableButton}
         {...props}
@@ -56,7 +58,7 @@ const FormButton: React.FC<IButtonProps> = ({
       className={clsx(classes.formButton, buttonStyles)}
       variant={buttonVariant}
       color="secondary"
-      onClick={onSubmit}
+      onClick={onSubmit!}
       disabled={disableButton}
     >
       {buttonText}
@@ -68,11 +70,13 @@ const FormButton: React.FC<IButtonProps> = ({
 const CustomForm: React.FC<ICustomFormProps> = ({
   className,
   childrenHeader,
+  formVariant = 'outlined',
   hasHeader,
   headerText,
   headerStyles,
   mainStyles,
   children,
+  hasButtons = true,
   ...props
 }: ICustomFormProps) => {
   const classes = useStyles();
@@ -91,9 +95,9 @@ const CustomForm: React.FC<ICustomFormProps> = ({
           </header>
         ))}
       <main className={clsx(classes.main, mainStyles)}>
-        <FormControl variant="outlined" className={classes.formControl}>
+        <FormControl variant={formVariant} className={classes.formControl}>
           {children}
-          <FormButton {...props} />
+          {hasButtons && <FormButton {...props} />}
         </FormControl>
       </main>
     </div>

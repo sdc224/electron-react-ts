@@ -7,18 +7,58 @@ import { folderOrFileExist } from '@utils/fileHelper';
 import { resolve } from 'path';
 import GitlabPersonal from '../gitlab/personal';
 import GitlabEnterprise from '../gitlab/enterprise';
+import Git from '../git';
 
 export default class RepositoryHelper {
-  private repositories = new Array<IRepository>();
+  public static repositories = new Array<IRepository>();
+
+  public static gitlab: GitlabPersonal | GitlabEnterprise;
+
+  public static basePath: string;
 
   private pagination?: PaginationOptions;
 
   private store = new CacheStore();
 
+  // eslint-disable-next-line class-methods-use-this
+  public get repositories() {
+    return RepositoryHelper.repositories;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public get gitlab() {
+    return RepositoryHelper.gitlab;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public set gitlab(gitlab: GitlabPersonal | GitlabEnterprise) {
+    RepositoryHelper.gitlab = gitlab;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public get basePath() {
+    return RepositoryHelper.basePath;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public set basePath(basePath: string) {
+    RepositoryHelper.basePath = basePath;
+  }
+
   constructor(
-    private gitlab: GitlabPersonal | GitlabEnterprise,
-    private basePath: string
-  ) {}
+    gitlabParam?: GitlabPersonal | GitlabEnterprise,
+    basePathParam?: string
+  ) {
+    if (!this.gitlab) {
+      if (!gitlabParam) throw new Error('gitlabParam should be passed');
+      this.gitlab = gitlabParam;
+    }
+
+    if (!this.basePath) {
+      if (!basePathParam) throw new Error('basePathParam should be passed');
+      this.basePath = basePathParam;
+    }
+  }
 
   private getRepoPath = (projectSchema: GitlabProjectSchema) =>
     resolve(this.basePath, projectSchema.name);
@@ -59,12 +99,16 @@ export default class RepositoryHelper {
           hasDotGitFolder: isForkable && isCloned,
           isCurrentUserProject: isForkable,
           remote: {
-            origin: { name: 'origin', url: project.ssh_url_to_repo },
+            origin: {
+              name: 'origin',
+              url: project.ssh_url_to_repo
+            },
             central: {
               name: 'central',
               url: project.forked_from_project?.ssh_url_to_repo!
             }
-          }
+          },
+          extraRemotes: []
         });
       })
     );
@@ -74,8 +118,12 @@ export default class RepositoryHelper {
     paginatedRequestOption?: PaginatedRequestOptions
   ) => {
     // TODO : init method using decorator
-    await this.fetchAllGitlabProjects(paginatedRequestOption);
-    return { projects: this.repositories, pagination: this.pagination };
+    if (this.repositories?.length <= 0)
+      await this.fetchAllGitlabProjects(paginatedRequestOption);
+    return {
+      projects: this.repositories,
+      pagination: this.pagination
+    };
   };
 
   public getCloneableProjects = async () => {
@@ -103,6 +151,28 @@ export default class RepositoryHelper {
     const filteredForkerProjects = filteredCurrentUserProjects.filter(
       element => !forkerProjectsArray.includes(element.id)
     );
-    return { projects: filteredForkerProjects, pagination: this.pagination };
+    return {
+      projects: filteredForkerProjects,
+      pagination: this.pagination
+    };
+  };
+
+  public addExtraRemotes = async (git: Git, id: string | number) => {
+    if (this.repositories?.length <= 0)
+      throw new Error('Repositories not found');
+
+    const existingRemotes = this.repositories.find(a => a.id === id);
+
+    const remotes = (await git.getRemotes(existingRemotes!)) as IRemote[];
+
+    const repoIndex = this.repositories.indexOf(existingRemotes!);
+
+    const modifiedRemotes = remotes.filter(
+      r =>
+        r.name !== existingRemotes?.remote?.central?.name &&
+        r.name !== existingRemotes?.remote?.origin.name
+    );
+
+    this.repositories[repoIndex].extraRemotes = modifiedRemotes;
   };
 }

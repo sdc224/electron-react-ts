@@ -6,17 +6,19 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
+  DialogProps
 } from '@material-ui/core';
 
-interface ICustomDialogProps {
+interface ICustomDialogProps extends DialogProps {
   actions?: React.ReactNode;
   content?: React.ReactNode;
   contentText?: string;
   handleClose(event: {}, reason: 'backdropClick' | 'escapeKeyDown'): void;
   id: string;
   open: boolean;
-  title: string | React.ReactNode;
+  titleClassName?: string;
+  dividers?: boolean;
 }
 
 const CustomDialog = ({
@@ -26,7 +28,9 @@ const CustomDialog = ({
   handleClose,
   id,
   open,
-  title,
+  title = 'Dialog',
+  titleClassName,
+  dividers = false,
   ...dialogProps
 }: ICustomDialogProps) => {
   const modId = `dialog${id}`;
@@ -41,8 +45,10 @@ const CustomDialog = ({
       aria-labelledby={modId}
       {...dialogProps}
     >
-      <DialogTitle id={modId}>{title}</DialogTitle>
-      <DialogContent>
+      <DialogTitle className={titleClassName} id={modId}>
+        {title}
+      </DialogTitle>
+      <DialogContent dividers={dividers}>
         {content || <DialogContentText>{contentText}</DialogContentText>}
       </DialogContent>
       {actions && <DialogActions>{actions}</DialogActions>}

@@ -34,10 +34,6 @@ interface IRemote {
   readonly url: string;
 }
 
-interface IExtraRemote {
-  [key: string]: IRemote;
-}
-
 interface IHRCRemote {
   origin: IRemote;
   central?: IRemote;
@@ -48,7 +44,7 @@ interface IRepository extends GitlabProjectSchema {
   hasDotGitFolder: boolean;
   isCurrentUserProject: boolean;
   remote: IHRCRemote;
-  extraRemotes?: IExtraRemote[];
+  extraRemotes: IRemote[];
 }
 
 type RepositoryProjectAndPagination = {

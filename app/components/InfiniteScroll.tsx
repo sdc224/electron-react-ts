@@ -20,7 +20,7 @@ const InfiniteScroll = ({
 }: IInfiniteScrollProps) => {
   const [paginatedRequest, setPaginatedRequest] = React.useState<
     PaginatedRequestOptions
-  >({ perPage: 10, page: 1 });
+  >({ perPage: 100, page: 1 });
 
   // TODO : On Scroll
   // const handleScroll = () => {
