@@ -12,6 +12,8 @@ import { checkoutBranch, ProgressCallback, checkoutPaths } from './checkout';
 import { Branch } from '../../models/branch';
 import { merge, getMergeBase, abortMerge, isMergeHeadSet } from './merge';
 import { PushOptions, push } from './push';
+import { getBranches } from './forEachRef';
+
 // TODO : auth
 // import { IAuth } from '../authentication';
 
@@ -129,6 +131,12 @@ export default class Git implements IGit {
     remote: string,
     refspec: string
   ): Promise<void> => fetchRefspec(repository, remote, refspec);
+
+  /** List all branches for a specific repository */
+  public getBranches = (
+    repository: IRepository,
+    ...prefixes: string[]
+  ): Promise<ReadonlyArray<Branch>> => getBranches(repository, ...prefixes);
 
   /**
    * List the remotes, sorted alphabetically by `name`, for a repository.
