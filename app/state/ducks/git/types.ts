@@ -4,7 +4,7 @@ export const GitOperationTypes = {
   ERROR: 'ERROR'
 };
 
-export type GitNamespace = 'remote' | 'checkout';
+export type GitNamespace = 'remote' | 'checkout' | 'branch';
 
 export interface IGitOperation {
   loading: boolean;
@@ -16,6 +16,7 @@ export interface IGitOperationWithNamespaceState {
   // clone: IGitOperation;
   remote: IGitOperation;
   checkout: IGitOperation;
+  branch: IGitOperation;
 }
 
 export interface IGitOperationAwareState {

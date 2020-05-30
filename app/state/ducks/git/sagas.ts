@@ -27,9 +27,30 @@ function* watchFetchRemotes(): Generator {
   yield takeLatest(`@@remote/${GitOperationTypes.LOADING}`, fetchRemotes);
 }
 
+function* fetchBranches(
+  action: PayloadAction<TypeConstant, IRepository>
+): Generator {
+  try {
+    const git = new Git();
+
+    const branches = yield call(git.getBranches, action.payload);
+
+    yield put(successAction('branch', branches));
+  } catch (error) {
+    yield put(errorAction('branch', error));
+  }
+}
+
+/**
+ * @desc Watches latest specified action and runs effect method and passes action args to it
+ */
+function* watchFetchBranches(): Generator {
+  yield takeLatest(`@@branch/${GitOperationTypes.LOADING}`, fetchBranches);
+}
+
 /**
  * @desc saga init, forks in effects, other sagas
  */
 export default function* gitSaga() {
-  yield all([fork(watchFetchRemotes)]);
+  yield all([fork(watchFetchRemotes), fork(watchFetchBranches)]);
 }

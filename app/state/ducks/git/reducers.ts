@@ -41,5 +41,6 @@ export const gitReducer = (namespace: GitNamespace) => (
 export const gitRootReducer = combineReducers<IGitOperationWithNamespaceState>({
   // clone: gitReducer('clone'),
   remote: gitReducer('remote'),
-  checkout: gitReducer('checkout')
+  checkout: gitReducer('checkout'),
+  branch: gitReducer('branch')
 });
