@@ -35,7 +35,7 @@ export function getConfigValue(
   repository: IRepository,
   name: string
 ): Promise<string | null> {
-  return getConfigValueInPath(name, repository.path);
+  return getConfigValueInPath(name, repository.repoPath);
 }
 
 /** Look up a global config value by name. */
