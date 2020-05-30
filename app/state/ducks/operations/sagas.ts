@@ -5,7 +5,7 @@ import {
   fork,
   put,
   select,
-  takeEvery
+  takeLatest
 } from 'redux-saga/effects';
 import { PayloadAction, TypeConstant } from 'typesafe-actions';
 import { openFolderSystemDialog } from '@app/electronFunctions';
@@ -66,7 +66,7 @@ function* handleCloneProjectsFetch(): Generator {
  * @desc Watches every specified action and runs effect method and passes action args to it
  */
 function* watchFetchCloneProjectsRequest(): Generator {
-  yield takeEvery(
+  yield takeLatest(
     CloneActionTypes.FETCH_CLONABLE_PROJECTS,
     handleCloneProjectsFetch
   );
@@ -181,7 +181,7 @@ function* handleCloning(
  * @desc Watches every specified action and runs effect method and passes action args to it
  */
 function* watchCloning(): Generator {
-  yield takeEvery(CloneActionTypes.START_CLONING, handleCloning);
+  yield takeLatest(CloneActionTypes.START_CLONING, handleCloning);
 }
 
 /**
@@ -214,7 +214,7 @@ function* handleForkProjectsFetch(): Generator {
  * @desc Watches every specified action and runs effect method and passes action args to it
  */
 function* watchFetchForkProjectsRequest(): Generator {
-  yield takeEvery(
+  yield takeLatest(
     ForkActionTypes.FETCH_FORKABLE_PROJECTS,
     handleForkProjectsFetch
   );
@@ -292,7 +292,7 @@ function* handleForking(
  * @desc Watches every specified action and runs effect method and passes action args to it
  */
 function* watchForking(): Generator {
-  yield takeEvery(ForkActionTypes.START_FORKING, handleForking);
+  yield takeLatest(ForkActionTypes.START_FORKING, handleForking);
 }
 
 function* handleForkUpdating(
@@ -314,7 +314,7 @@ function* handleForkUpdating(
       return;
 
     try {
-      yield put(toggleForkProgress());
+      yield put(toggleForkUpdateProgress());
       yield put(
         action.payload.progressState.progressStart({
           progressType: 'linear',
@@ -373,7 +373,7 @@ function* handleForkUpdating(
  * @desc Watches every specified action and runs effect method and passes action args to it
  */
 function* watchForkUpdating(): Generator {
-  yield takeEvery(
+  yield takeLatest(
     ForkUpdateActionTypes.START_FORK_UPDATING,
     handleForkUpdating
   );

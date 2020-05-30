@@ -1,4 +1,4 @@
-import { all, call, fork, put, select, takeEvery } from 'redux-saga/effects';
+import { all, call, fork, put, select, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from 'typesafe-actions';
 import GitlabCommon from '@commands/lib/gitlab/common';
 import RepositoryHelper from '@commands/lib/repository/repositories';
@@ -43,7 +43,7 @@ function* handleAllProjectsFetch(
  * @desc Watches every specified action and runs effect method and passes action args to it
  */
 function* watchFetchAllProjectsRequest(): Generator {
-  yield takeEvery(
+  yield takeLatest(
     ProjectActionTypes.FETCH_ALL_PROJECTS_START,
     handleAllProjectsFetch
   );
