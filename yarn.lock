@@ -1136,29 +1136,29 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.13.0.tgz#fcb113d1aca4b471b709e8c9c168674fbd6e06d9"
   integrity sha512-xKOeQEl5O47GPZYIMToj6uuA2syyFlq9EMSl2ui0uytjY9xbe8XS0pexNWmxrdcCyNGyDmLyYw5FtKsalBUeOg==
 
-"@gitbeaker/browser@^19.6.0":
-  version "19.7.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/browser/-/browser-19.7.0.tgz#039a317997528f1722d75a7d553f2ae4ea8b27d1"
-  integrity sha512-0ZDPKthJ6ujpqW15BDh4f+2iAIXhbce+V0kIiF71EElh3tyRg0+vZIi6YLrN5W22eYchBYfbDAjwxdInFbWaMw==
+"@gitbeaker/browser@^19.7.1":
+  version "19.7.1"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/browser/-/browser-19.7.1.tgz#62d0a2de51ac11f26f69b7591e87df0b32091c10"
+  integrity sha512-uNkM+SSF5u+a3RAO+zxvqstPPNKycpLD7VjzKmMx4kCJhDvUt9xFVTqqVL6IpNWDpq5/gjyVLBVvQhRyouKwBA==
   dependencies:
-    "@gitbeaker/core" "^19.7.0"
-    "@gitbeaker/requester-utils" "^19.7.0"
-    ky "^0.19.1"
+    "@gitbeaker/core" "^19.7.1"
+    "@gitbeaker/requester-utils" "^19.7.1"
+    ky "^0.20.0"
 
-"@gitbeaker/core@^19.7.0":
-  version "19.7.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/core/-/core-19.7.0.tgz#6b783f2ffa3630b945d1c9a2cd349c3d1a82e6e2"
-  integrity sha512-Lbob0zLPCvEpKB0UIicJSqEj41TvTcX8v7xG/QyR+apjsHAgUmCFMexjSE9QvHn6wsKoKMMAnZ5qDTVX3iKeTQ==
+"@gitbeaker/core@^19.7.1":
+  version "19.7.1"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/core/-/core-19.7.1.tgz#e6b0ac7c5d4d10795581e803809bae8f3de0cc02"
+  integrity sha512-laqA+LW5IjU5RwNfemjF6ha3QuIapUu1WtZstZ+pa0cYPxxD/iVyFtqNOk2vr9Q0vPDD6V2xv9SxAG9hqp6rPA==
   dependencies:
-    "@gitbeaker/requester-utils" "^19.7.0"
+    "@gitbeaker/requester-utils" "^19.7.1"
     form-data "^3.0.0"
     li "^1.3.0"
     xcase "^2.0.1"
 
-"@gitbeaker/requester-utils@^19.7.0":
-  version "19.7.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/requester-utils/-/requester-utils-19.7.0.tgz#a755a0c631b750b36e328d9bee36934acf6ab277"
-  integrity sha512-otUFYvrLZFXZT792R+9cTc4mTtO01DKss+hHB7itRpfNpGU1sSl2ugUsxptMLAXSFK2hpx6yP7ap5/bfjKuktg==
+"@gitbeaker/requester-utils@^19.7.1":
+  version "19.7.1"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/requester-utils/-/requester-utils-19.7.1.tgz#20f7969c5d6eac5631de75b384b25d51553419cd"
+  integrity sha512-bntF3UDqEStGB0v5Mo9P4kN57QKrwCBoBK0yi7kkYsaTSS66I9C+shKLp3Se8l7HSIX1bXlnOw+9Ujf5HVJ0lA==
   dependencies:
     form-data "^3.0.0"
     query-string "^6.12.1"
@@ -9505,10 +9505,10 @@ known-css-properties@^0.19.0:
   resolved "https://registry.yarnpkg.com/known-css-properties/-/known-css-properties-0.19.0.tgz#5d92b7fa16c72d971bda9b7fe295bdf61836ee5b"
   integrity sha512-eYboRV94Vco725nKMlpkn3nV2+96p9c3gKXRsYqAJSswSENvBhN7n5L+uDhY58xQa0UukWsDMTGELzmD8Q+wTA==
 
-ky@^0.19.1:
-  version "0.19.1"
-  resolved "https://registry.yarnpkg.com/ky/-/ky-0.19.1.tgz#c533884028c83f78167d12905dfecaf6dd760bec"
-  integrity sha512-ZwciYrfaWpDI72U2HAruuGYGFW3PCfGNdWWSANGGssg9BGm4rRJ9s/sApiiRpj+8Y245/hlZW9c60zudLr6iwA==
+ky@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/ky/-/ky-0.20.0.tgz#4cebcd208f2d0d0b5970a63523afecfd79bd9e46"
+  integrity sha512-JAfwtwj+t7WqRus88PfBj25aAjRQUgMhk7aB2ufjQ6v8faoNwMy02mfSQ0iNXWCbJGcSl2JZ5ckaiywRjbq0Uw==
 
 last-call-webpack-plugin@^3.0.0:
   version "3.0.0"
