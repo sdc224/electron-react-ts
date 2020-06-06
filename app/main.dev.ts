@@ -6,7 +6,7 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, dialog, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import * as electronDebug from 'electron-debug';
@@ -69,7 +69,7 @@ const createWindow = async () => {
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   // TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+  // https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
@@ -80,6 +80,24 @@ const createWindow = async () => {
       mainWindow.show();
       mainWindow.focus();
     }
+  });
+
+  // Force external links from browser-window to open in a default browser from Electron
+  // https://stackoverflow.com/questions/32402327/how-can-i-force-external-links-from-browser-window-to-open-in-a-default-browser
+  mainWindow.webContents.on('new-window', async (e, url) => {
+    e.preventDefault();
+
+    // TODO : Remember option with checkbox
+    const result = await dialog.showMessageBox(mainWindow!, {
+      title: 'Gittian',
+      message: 'Do you want Gittian to open external website',
+      defaultId: 1,
+      detail: url,
+      type: 'info',
+      buttons: ['Cancel', 'OK']
+    });
+
+    if (result.response === 1) shell.openExternal(url);
   });
 
   mainWindow.on('closed', () => {
