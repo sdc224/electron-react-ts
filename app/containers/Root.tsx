@@ -8,6 +8,7 @@ import { IApplicationState } from '@ducks/index';
 import Loading from '@components/Loading';
 import { ThemeProvider } from '@material-ui/core';
 import theme from '@theme/';
+import { ConfirmationServiceProvider } from './ConfirmationService';
 
 const Routes = React.lazy(() => import('@routes/'));
 
@@ -20,9 +21,11 @@ const Root = ({ store, history }: Props) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <ThemeProvider theme={theme}>
-        <Suspense fallback={<Loading />}>
-          <Routes />
-        </Suspense>
+        <ConfirmationServiceProvider>
+          <Suspense fallback={<Loading />}>
+            <Routes />
+          </Suspense>
+        </ConfirmationServiceProvider>
       </ThemeProvider>
     </ConnectedRouter>
   </Provider>
