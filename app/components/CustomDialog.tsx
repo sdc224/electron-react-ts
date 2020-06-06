@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {
   Dialog,
   useTheme,
@@ -7,8 +8,12 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  DialogProps
+  DialogProps,
+  makeStyles
 } from '@material-ui/core';
+import styles from '@componentsTSStyles/customDialogStyles';
+
+const useStyles = makeStyles(styles);
 
 interface ICustomDialogProps extends DialogProps {
   actions?: React.ReactNode;
@@ -34,6 +39,7 @@ const CustomDialog = ({
   ...dialogProps
 }: ICustomDialogProps) => {
   const modId = `dialog${id}`;
+  const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -45,7 +51,11 @@ const CustomDialog = ({
       aria-labelledby={modId}
       {...dialogProps}
     >
-      <DialogTitle className={titleClassName} id={modId}>
+      <DialogTitle
+        className={clsx(classes.dialogTitle, titleClassName)}
+        disableTypography
+        id={modId}
+      >
         {title}
       </DialogTitle>
       <DialogContent dividers={dividers}>
