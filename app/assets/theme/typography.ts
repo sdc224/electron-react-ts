@@ -13,8 +13,8 @@ export default {
     color: palette.white,
     fontWeight: 500,
     fontSize: '29px',
-    letterSpacing: '-0.24px',
-    lineHeight: '32px'
+    letterSpacing: '0.0075em',
+    lineHeight: 1.6
   },
   h3: {
     color: palette.text!.primary,
@@ -41,7 +41,7 @@ export default {
     color: palette.text!.primary,
     fontWeight: 500,
     fontSize: '14px',
-    letterSpacing: '-0.05px',
+    letterSpacing: '0.007em',
     lineHeight: '20px'
   },
   subtitle1: {
