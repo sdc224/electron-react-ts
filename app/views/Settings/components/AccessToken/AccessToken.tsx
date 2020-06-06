@@ -15,7 +15,7 @@ interface IAccessTokenProps {
 
 const AccessToken = ({ className, ...rest }: IAccessTokenProps) => {
   const [values, setValues] = React.useState({
-    password: '',
+    accessToken: '',
     confirm: ''
   });
 
@@ -35,10 +35,10 @@ const AccessToken = ({ className, ...rest }: IAccessTokenProps) => {
           <TextField
             fullWidth
             label="Access Token"
-            name="password"
+            name="accessToken"
             onChange={handleChange}
             type="password"
-            value={values.password}
+            value={values.accessToken}
             variant="outlined"
           />
           <TextField
