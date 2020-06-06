@@ -26,6 +26,7 @@ import credentials from '@private/credentials';
 import { Organizations } from '@commands/models/organization';
 import GitlabCommon from '@commands/lib/gitlab/common';
 import { RegularExpressions } from '@constants/commandConstants';
+import { KeytarService, KeytarAccount } from '@constants/securityConstants';
 import styles from '@viewsTSStyles/signInStyles';
 
 // TODO : Add validator using decorators
@@ -173,7 +174,11 @@ const SignIn = () => {
       throw error;
     }
 
-    await setPassword('accessToken', 'gitlab', formState.values.accessToken!);
+    await setPassword(
+      KeytarService,
+      KeytarAccount,
+      formState.values.accessToken!
+    );
     history.push('/dashboard');
   };
 
