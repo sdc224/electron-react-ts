@@ -129,9 +129,11 @@ const SignIn = () => {
       }
     }));
   };
+
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleOpen = () => {
     setOpen(true);
   };

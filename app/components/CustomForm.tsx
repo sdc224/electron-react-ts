@@ -10,6 +10,7 @@ interface IButtonProps {
   buttonVariant?: 'text' | 'outlined' | 'contained';
   hasButtons?: boolean;
   isLoadingButton?: boolean;
+  kind: string;
   onSubmit?(): void;
   disableButton?: boolean;
   buttonText?: string;
@@ -35,6 +36,7 @@ const FormButton: React.FC<IButtonProps> = ({
   buttonType = 'normal',
   disableButton = false,
   isLoadingButton = false,
+  kind,
   onSubmit,
   ...props
 }: IButtonProps) => {
@@ -48,6 +50,7 @@ const FormButton: React.FC<IButtonProps> = ({
         onClick={onSubmit!}
         buttonType={buttonType}
         disabled={disableButton}
+        kind={kind}
         {...props}
       />
     );

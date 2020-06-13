@@ -21,13 +21,11 @@ const ForkUpdate = ({ project }: IForkUpdateProps) => {
         <DynamicFeedIcon />
       </IconButton>
 
-      {open && (
-        <ForkUpdateDialog
-          open={open}
-          project={project}
-          handleClose={handleClose}
-        />
-      )}
+      <ForkUpdateDialog
+        open={open}
+        project={project}
+        handleClose={handleClose}
+      />
     </>
   );
 };

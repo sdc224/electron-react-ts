@@ -74,6 +74,7 @@ const Fork: React.FC = () => {
         onSubmit={handleClick}
         disableButton={forkedRepo.length === 0}
         isLoadingButton
+        kind="fork"
       >
         <InputLabel ref={inputLabel} id="repo-select-label-fork">
           Please select any project from the list

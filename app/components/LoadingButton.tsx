@@ -21,10 +21,11 @@ interface IButtonContentProps {
 interface ILoadingButtonProps extends IButtonContentProps {
   className?: string;
   children?: React.ReactNode;
-  onClick(): void;
+  onClick(event?: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
   buttonType?: 'normal' | 'fab';
   buttonText: string;
   disabled?: boolean;
+  kind: string;
 }
 
 interface IFabButtonProps extends ProgressBarProps {
@@ -74,7 +75,8 @@ export default function LoadingButton({
   buttonType = 'normal',
   buttonText,
   buttonStyles,
-  disabled
+  disabled,
+  kind
 }: ILoadingButtonProps) {
   const classes = useStyles();
 
@@ -113,6 +115,7 @@ export default function LoadingButton({
           {buttonText}
         </Button>
         {progressState.init &&
+          progressState.kind === kind &&
           (progressState.progressType === 'circular' ? (
             <CircularProgress
               size={24}

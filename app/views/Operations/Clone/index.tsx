@@ -140,6 +140,7 @@ const Clone: React.FC = () => {
         onSubmit={handleClick}
         disableButton={clonedRepo.length === 0}
         isLoadingButton
+        kind="clone"
       >
         <InputLabel ref={inputLabel} id="repo-select-label">
           Please select any project from the list
