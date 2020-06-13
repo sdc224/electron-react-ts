@@ -5,5 +5,8 @@ export default createStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  fullHeight: {
+    height: '100%'
   }
 });
