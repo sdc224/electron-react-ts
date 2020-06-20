@@ -34,6 +34,19 @@ interface IRemote {
   readonly url: string;
 }
 
+interface IGitlabBranch {
+  canPush: boolean;
+  commit?: import('@gitbeaker/core/dist/types/services/Commits').CommitSchemaCamelized & {
+    webUrl?: string;
+  };
+  defaultBranch: boolean;
+  developersCanMerge: boolean;
+  developersCanPush: boolean;
+  merged?: boolean;
+  name: string;
+  protectedBranch: boolean;
+}
+
 interface IHRCRemote {
   origin: IRemote;
   central?: IRemote;
@@ -45,6 +58,7 @@ interface IRepository extends GitlabProjectSchema {
   isCurrentUserProject: boolean;
   remote: IHRCRemote;
   extraRemotes: IRemote[];
+  branches?: import('@commands/models/branch').Branch[];
 }
 
 type RepositoryProjectAndPagination = {
