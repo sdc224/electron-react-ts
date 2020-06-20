@@ -67,4 +67,35 @@ export default class GitlabOperations {
       throw new Error(error);
     }
   };
+
+  public getAllBranches = async (id: number | string) => {
+    const responseList = (await this.gitlab?.Branches.all(id)) as any[];
+    if (!responseList || responseList.length === 0) return null;
+    return responseList.map(
+      response =>
+        ({
+          canPush: response.can_push,
+          commit: {
+            authorEmail: response.commit?.author_email,
+            authorName: response.commit?.author_name,
+            authoredDate: response.commit?.authored_date,
+            committedDate: response.commit?.committed_date,
+            committerEmail: response.commit?.committed_email,
+            committerName: response.commit?.committed_name,
+            id: response.commit?.id,
+            message: response.commit?.message,
+            parentIds: response.commit?.parent_ids,
+            shortId: response.commit?.short_id,
+            title: response.commit?.title,
+            webUrl: response.commit?.web_url
+          },
+          defaultBranch: response.default,
+          developersCanMerge: response.developers_can_merge,
+          developersCanPush: response.developers_can_push,
+          merged: response.merged,
+          name: response.name,
+          protectedBranch: response.protected
+        } as IGitlabBranch)
+    );
+  };
 }
