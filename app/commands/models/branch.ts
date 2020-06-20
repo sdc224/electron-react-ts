@@ -62,7 +62,12 @@ export class Branch {
     public readonly name: string,
     public readonly upstream: string | null,
     public readonly tip: Commit,
-    public readonly type: BranchType
+    public readonly type: BranchType,
+    public readonly canPush = false,
+    public readonly defaultBranch = false,
+    public readonly developersCanMerge = false,
+    public readonly developersCanPush = false,
+    public readonly protectedBranch = false
   ) {}
 
   /** The name of the upstream's remote. */

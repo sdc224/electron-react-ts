@@ -57,7 +57,7 @@ export class Commit {
    * A list of co-authors parsed from the commit message
    * trailers.
    */
-  public readonly coAuthors: ReadonlyArray<GitAuthor>;
+  public readonly coAuthors?: ReadonlyArray<GitAuthor>;
 
   /**
    * A value indicating whether the author and the committer
@@ -86,9 +86,10 @@ export class Commit {
     public readonly author: CommitIdentity,
     public readonly committer: CommitIdentity,
     public readonly parentSHAs: ReadonlyArray<string>,
-    public readonly trailers: ReadonlyArray<ITrailer>
+    // TODO : trailers using @ for gitlab
+    public readonly trailers?: ReadonlyArray<ITrailer>
   ) {
-    this.coAuthors = extractCoAuthors(trailers);
+    if (trailers) this.coAuthors = extractCoAuthors(trailers);
 
     this.authoredByCommitter =
       this.author.name === this.committer.name &&

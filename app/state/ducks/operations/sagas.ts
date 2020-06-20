@@ -333,9 +333,9 @@ function* handleForkUpdating(
         forkUpdateProgress.forkUpdate,
         action.payload.projects[0],
         action.payload.options
-      )) as boolean;
+      )) as { success: boolean; output: string };
 
-      if (value) {
+      if (value.success) {
         yield put(
           action.payload.progressState.handleProgress({
             title: 'Fork Updating Completed',
@@ -345,7 +345,7 @@ function* handleForkUpdating(
         yield put(
           openSnackbar({
             kind: 'ForkUpdate',
-            text: 'Fork Updating Successfully Completed',
+            text: `Fork Updating Successfully Completed. Updated files: ${value.output}`,
             variant: 'success'
           })
         );

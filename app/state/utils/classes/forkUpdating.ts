@@ -22,7 +22,10 @@ export default class ForkUpdateRepositoryStore {
   public forkUpdate = async (
     repository: IRepository,
     options: IForkUpdateOptions
-  ): Promise<boolean> => {
+  ): Promise<{
+    success: boolean;
+    output: string;
+  }> => {
     if (!this.gitObject) {
       throw new Error('Git object is not defined');
     }
@@ -36,6 +39,7 @@ export default class ForkUpdateRepositoryStore {
     });
 
     let success = true;
+    let stdout = '';
     try {
       this.progressState.handleProgress({
         kind: 'fork-update',
@@ -50,7 +54,7 @@ export default class ForkUpdateRepositoryStore {
         kind: 'fork-update',
         title: 'Checkouting',
         // title: getErrorMessage(e),
-        value: 0.4
+        value: 0.45
       });
 
       await this.gitObject.checkoutBranch(repository, options.forkBranch);
@@ -59,16 +63,18 @@ export default class ForkUpdateRepositoryStore {
         kind: 'fork-update',
         title: 'Merging',
         // title: getErrorMessage(e),
-        value: 0.45
+        value: 0.6
       });
 
-      await this.gitObject.merge(repository, options.cloudBranch.upstream!);
+      stdout = (
+        await this.gitObject.merge(repository, options.cloudBranch.upstream!)
+      ).stdout;
 
       this.progressState.handleProgress({
         kind: 'fork-update',
         title: 'Pushing',
         // title: getErrorMessage(e),
-        value: 0.5
+        value: 0.8
       });
 
       await this.gitObject.push(
@@ -103,6 +109,6 @@ export default class ForkUpdateRepositoryStore {
 
     // this.remove(repository);
 
-    return success;
+    return { success, output: stdout };
   };
 }

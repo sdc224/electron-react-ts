@@ -19,6 +19,8 @@ import CustomForm from './CustomForm';
 import LoadingButton from './LoadingButton';
 import InfinityLoading from './InfinityLoading';
 
+// TODO : Stepper
+
 const schema = {
   remote: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -61,6 +63,7 @@ interface ISelectBranchProps extends ISelectProps {
   type: 'cloud' | 'fork';
   branches: Branch[];
   selectedValue?: string;
+  disabled?: boolean;
 }
 
 interface IForkUpdateProps {
@@ -120,13 +123,15 @@ const SelectBranch = ({
   handleChange,
   selectedValue,
   type,
-  error
+  error,
+  disabled = false
 }: ISelectBranchProps) => (
   <CustomForm formVariant="filled" hasButtons={false} kind="fork-update">
     <InputLabel id={`select-${type}-branch-label`}>
       {`Select ${toTitleCase(type)} Branch`}
     </InputLabel>
     <Select
+      disabled={disabled}
       error={error}
       name={`${type}Branch`}
       labelId={`select-${type}-branch-label`}
@@ -173,6 +178,7 @@ const ForkUpdateDialog: React.FC<IForkUpdateProps> = ({
   const { gitOperationState: gitBranchState, start: fetchBranches } = useGit(
     'branch'
   );
+  const { gitOperationState: gitFetchState, start: gitFetch } = useGit('fetch');
   const progressState = useProgress();
   const { startForkUpdating } = useForkUpdate();
 
@@ -199,6 +205,19 @@ const ForkUpdateDialog: React.FC<IForkUpdateProps> = ({
       errors: errors || {}
     }));
   }, [formState.values]);
+
+  React.useEffect(() => {
+    if (open && project)
+      gitFetch({
+        repository: project,
+        remote: formState.values.remote?.split('::')[0]!
+      });
+  }, [formState.values.remote!]);
+
+  React.useEffect(() => {
+    if (open && project && !gitFetchState.loading && gitFetchState.success)
+      fetchBranches(project);
+  }, [gitFetchState.loading]);
 
   const hasError = (field: keyof IValue) =>
     !!(formState.touched[field] && formState.errors[field]);
@@ -247,7 +266,11 @@ const ForkUpdateDialog: React.FC<IForkUpdateProps> = ({
   };
 
   const getContentArea = () => {
-    if (gitRemoteState.loading || gitBranchState.loading)
+    if (
+      gitRemoteState.loading ||
+      gitBranchState.loading ||
+      gitFetchState.loading
+    )
       return <InfinityLoading fullHeight />;
 
     if (gitRemoteState.error || gitBranchState.error)
@@ -263,15 +286,25 @@ const ForkUpdateDialog: React.FC<IForkUpdateProps> = ({
             project={project}
           />
           <SelectBranch
+            disabled={
+              !(
+                (gitBranchState.success as Branch[]) &&
+                (gitFetchState.success as boolean)
+              )
+            }
             error={hasError('cloudBranch')}
-            branches={gitBranchState.success as Branch[]}
+            branches={(gitBranchState.success as Branch[]).filter(b =>
+              b.name.includes(formState.values.remote?.split('::')[0]!)
+            )}
             handleChange={handleChange}
             selectedValue={formState.values.cloudBranch || ''}
             type="cloud"
           />
           <SelectBranch
             error={hasError('forkBranch')}
-            branches={gitBranchState.success as Branch[]}
+            branches={(gitBranchState.success as Branch[]).filter(
+              b => b.remote === 'origin'
+            )}
             handleChange={handleChange}
             selectedValue={formState.values.forkBranch || ''}
             type="fork"
@@ -297,6 +330,7 @@ const ForkUpdateDialog: React.FC<IForkUpdateProps> = ({
           <LoadingButton
             buttonText="Fork Update"
             kind="fork-update"
+            progressColor="primary"
             disabled={Boolean(
               gitRemoteState.loading ||
                 gitRemoteState.error ||

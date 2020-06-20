@@ -3,6 +3,9 @@ import {
   PaginatedRequestOptions,
   PaginationOptions
 } from '@gitbeaker/core/dist/types/infrastructure/RequestHelper';
+import { Branch, BranchType } from '@commands/models/branch';
+import { Commit } from '@commands/models/commit';
+import CommitIdentity from '@commands/models/commitIdentity';
 import { folderOrFileExist } from '@utils/fileHelper';
 import { resolve } from 'path';
 import GitlabPersonal from '../gitlab/personal';
@@ -157,6 +160,38 @@ export default class RepositoryHelper {
     };
   };
 
+  public addCentralRemote = async (git: Git, id: string | number) => {
+    if (this.repositories?.length <= 0)
+      throw new Error('Repositories not found');
+
+    const project = this.repositories.find(a => a.id === id);
+
+    if (!project) return null;
+
+    try {
+      await git.addRemote(
+        project,
+        project?.remote.central?.name!,
+        project?.remote.central?.url!
+      );
+
+      return true;
+    } catch (error1) {
+      // info remote already added
+      try {
+        await git.setRemoteURL(
+          project,
+          project?.remote.central?.name!,
+          project?.remote.central?.url!
+        );
+
+        return true;
+      } catch (error2) {
+        throw new Error('Remote adding failed');
+      }
+    }
+  };
+
   public addExtraRemotes = async (git: Git, id: string | number) => {
     if (this.repositories?.length <= 0)
       throw new Error('Repositories not found');
@@ -174,5 +209,63 @@ export default class RepositoryHelper {
     );
 
     this.repositories[repoIndex].extraRemotes = modifiedRemotes;
+  };
+
+  public addBranches = async (id: string | number) => {
+    if (this.repositories?.length <= 0)
+      throw new Error('Repositories not found');
+
+    const project = this.repositories.find(a => a.id === id);
+    const projectIndex = this.repositories.indexOf(project!);
+
+    try {
+      const cloudBranches = await this.gitlab.getAllBranches(
+        project?.forked_from_project?.id!
+      );
+
+      const branches: Branch[] = [];
+
+      cloudBranches?.forEach(cloudBranch => {
+        const author = new CommitIdentity(
+          cloudBranch.commit?.authorName!,
+          cloudBranch.commit?.authorEmail!,
+          cloudBranch.commit?.authoredDate!
+        );
+
+        const committer = new CommitIdentity(
+          cloudBranch.commit?.committerName!,
+          cloudBranch.commit?.committerEmail!,
+          cloudBranch.commit?.committedDate!
+        );
+
+        const branch = new Branch(
+          cloudBranch.name,
+          `central/${cloudBranch.name}`,
+          new Commit(
+            cloudBranch.commit?.id!,
+            cloudBranch.commit?.shortId!,
+            cloudBranch.commit?.title!,
+            cloudBranch.commit?.message!,
+            author,
+            committer,
+            cloudBranch.commit?.parentIds!
+          ),
+          BranchType.Remote,
+          cloudBranch.canPush,
+          cloudBranch.defaultBranch,
+          cloudBranch.developersCanMerge,
+          cloudBranch.developersCanPush,
+          cloudBranch.protectedBranch
+        );
+
+        branches.push(branch);
+      });
+
+      this.repositories[projectIndex].branches = branches;
+
+      return branches;
+    } catch (err) {
+      throw new Error('Adding branch failed');
+    }
   };
 }

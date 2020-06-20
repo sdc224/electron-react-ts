@@ -99,7 +99,7 @@ export async function push(
     });
   }
 
-  const result = await git(args, repository.path, 'push', opts);
+  const result = await git(args, repository.repoPath, 'push', opts);
 
   if (result.gitErrorDescription) {
     throw new GitError(result, args);

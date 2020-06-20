@@ -177,8 +177,14 @@ export default class Git implements IGit {
     paths: ReadonlyArray<string>
   ): Promise<void> => checkoutPaths(repository, paths);
 
-  public merge = (repository: IRepository, branch: string): Promise<boolean> =>
-    merge(repository, branch);
+  public merge = (
+    repository: IRepository,
+    branch: string
+  ): Promise<{
+    status: boolean;
+    stdout: string;
+    stderr?: string;
+  }> => merge(repository, branch);
 
   public getMergeBase = (
     repository: IRepository,

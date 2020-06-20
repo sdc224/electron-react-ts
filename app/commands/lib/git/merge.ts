@@ -14,8 +14,8 @@ const noopMergeMessage = 'Already up to date.\n';
 export async function merge(
   repository: IRepository,
   branch: string
-): Promise<boolean> {
-  const { exitCode, stdout } = await git(
+): Promise<{ status: boolean; stdout: string; stderr?: string }> {
+  const { exitCode, stdout, stderr } = await git(
     ['merge', branch],
     repository.repoPath,
     'merge',
@@ -25,10 +25,10 @@ export async function merge(
   );
 
   if (exitCode === 0 && stdout !== noopMergeMessage) {
-    return true;
+    return { status: true, stdout };
   }
 
-  return false;
+  return { status: false, stdout, stderr };
 }
 
 /**
@@ -44,7 +44,7 @@ export async function getMergeBase(
 ): Promise<string | null> {
   const process = await git(
     ['merge-base', firstCommitish, secondCommitish],
-    repository.path,
+    repository.repoPath,
     'merge-base',
     {
       // - 1 is returned if a common ancestor cannot be resolved
@@ -89,7 +89,7 @@ export async function getMergeBase(
 
   const result = await spawnAndComplete(
     ['merge-tree', mergeBase, ours.tip.sha, theirs.tip.sha],
-    repository.path,
+    repository.repoPath,
     'mergeTree'
   );
 
