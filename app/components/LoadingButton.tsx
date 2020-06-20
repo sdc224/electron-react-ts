@@ -26,6 +26,7 @@ interface ILoadingButtonProps extends IButtonContentProps {
   buttonText: string;
   disabled?: boolean;
   kind: string;
+  progressColor?: 'primary' | 'secondary';
 }
 
 interface IFabButtonProps extends ProgressBarProps {
@@ -76,7 +77,8 @@ export default function LoadingButton({
   buttonText,
   buttonStyles,
   disabled,
-  kind
+  kind,
+  progressColor = 'secondary'
 }: ILoadingButtonProps) {
   const classes = useStyles();
 
@@ -126,7 +128,7 @@ export default function LoadingButton({
             />
           ) : (
             <LinearProgress
-              color="secondary"
+              color={progressColor}
               className={classes.linearProgress}
               variant={newVariant as LinearProgressVariant}
               value={progressState.value * 100}
