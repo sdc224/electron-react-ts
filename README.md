@@ -21,7 +21,7 @@ It also has redux, following ducks architecture
 [circleci-url]: https://circleci.com/gh/sdc224/electron-react-ts
 [azure-pipelines-image]: https://sdcworld.visualstudio.com/electron-react-ts/_apis/build/status/sdc224.electron-react-ts?branchName=master
 [azure-pipelines-url]: https://sdcworld.visualstudio.com/electron-react-ts/_build/latest?definitionId=2&branchName=master
-[github-actions-status]: https://github.com/sdc224/electron-react-ts/workflows/Test/badge.svg
+[github-actions-status]: https://github.com/sdc224/electron-react-ts/workflows/GitHub%20Actions/badge.svg
 [github-actions-url]: https://github.com/sdc224/electron-react-ts/actions
 [appveyor-image]: https://ci.appveyor.com/api/projects/status/github/sdc224/electron-react-ts?branch=master&svg=true
 [appveyor-url]: https://ci.appveyor.com/project/sdc224/electron-react-ts/branch/master
