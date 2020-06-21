@@ -6,5 +6,8 @@
       "depTypeList": ["peerDependencies"],
       "enabled": false
     }
-  ]
+  ],
+  "pin": {
+    "enabled": true
+  }
 }
