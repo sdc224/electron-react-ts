@@ -62,6 +62,9 @@ const createWindow = async () => {
     height: 728,
     frame: false,
     webPreferences: {
+      // Electron Security warning due to this line
+      // Avoid: https://stackoverflow.com/questions/48854265/why-do-i-see-an-electron-security-warning-after-updating-my-electron-project-t
+      // Workaround: https://stackoverflow.com/questions/52236641/electron-ipc-and-nodeintegration/57656281#57656281
       nodeIntegration: true
     }
   });
