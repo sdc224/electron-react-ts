@@ -42,7 +42,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX="g++-8"; fi
 
 install:
-  - yarn --ignore-engines
+  - yarn --frozen-lockfile
   # On Linux, initialize "virtual display". See before_script
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -66,5 +66,5 @@ before_script:
 script:
   - yarn package-ci
   - yarn lint
-  - yarn ts
+  - yarn tsc
   - yarn test

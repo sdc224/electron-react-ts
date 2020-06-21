@@ -29,10 +29,10 @@ clone_depth: 1
 install:
   - ps: Install-Product node $env:nodejs_version x64
   - set CI=true
-  - yarn
+  - yarn --frozen-lockfile
 
 test_script:
   - yarn package-ci
   - yarn lint
-  - yarn ts
+  - yarn tsc
   - yarn test
