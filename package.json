@@ -138,7 +138,7 @@
     "electron-rebuild": "1.11.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
-    "enzyme-to-json": "3.4.4",
+    "enzyme-to-json": "3.5.0",
     "eslint": "6.8.0",
     "eslint-config-erb": "0.2.0",
     "eslint-config-prettier": "6.11.0",
