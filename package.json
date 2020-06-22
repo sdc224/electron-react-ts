@@ -153,7 +153,7 @@
     "eslint-plugin-react": "7.20.0",
     "eslint-plugin-testcafe": "0.2.1",
     "fbjs-scripts": "1.2.0",
-    "file-loader": "5.1.0",
+    "file-loader": "6.0.0",
     "git-url-parse": "11.1.2",
     "husky": "4.2.5",
     "identity-obj-proxy": "3.0.0",
