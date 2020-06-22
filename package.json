@@ -201,7 +201,7 @@
     "core-js": "3.6.5",
     "devtron": "1.4.0",
     "dugite": "1.88.7",
-    "electron-debug": "3.0.1",
+    "electron-debug": "3.1.0",
     "electron-log": "4.1.2",
     "electron-store": "5.2.0",
     "electron-updater": "4.3.1",
