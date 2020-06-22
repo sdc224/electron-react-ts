@@ -1,3 +1,5 @@
+/* eslint no-console: off */
+
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -6,15 +8,16 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
+import path from 'path';
 import { app, BrowserWindow, dialog, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import * as electronDebug from 'electron-debug';
-import sourceMapSupport from 'source-map-support';
-import electronDevtoolsInstaller, {
-  REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS
-} from 'electron-devtools-installer';
+// import * as electronDebug from 'electron-debug';
+// import sourceMapSupport from 'source-map-support';
+// import electronDevtoolsInstaller, {
+//   REACT_DEVELOPER_TOOLS,
+//   REDUX_DEVTOOLS
+// } from 'electron-devtools-installer';
 
 export default class AppUpdater {
   constructor() {
@@ -27,24 +30,30 @@ export default class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 
 if (process.env.NODE_ENV === 'production') {
-  sourceMapSupport.install();
+  import('source-map-support')
+    .then(sourceMapSupport => sourceMapSupport.install())
+    .catch(err => console.log(err));
 }
 
 if (
   process.env.NODE_ENV === 'development' ||
   process.env.DEBUG_PROD === 'true'
 ) {
-  electronDebug.default();
+  import('electron-debug')
+    .then(electronDebug => electronDebug.default())
+    .catch(err => console.log(err));
 }
 
 const installExtensions = async () => {
+  const installer = await import('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
+  const extensions = [
+    installer.REACT_DEVELOPER_TOOLS,
+    installer.REDUX_DEVTOOLS
+  ];
 
   return Promise.all(
-    extensions.map(extension =>
-      electronDevtoolsInstaller(extension, forceDownload)
-    )
+    extensions.map(extension => installer.default(extension, forceDownload))
   ).catch(error => new Error(`Error while installing extensions\n${error}`));
 };
 
@@ -61,12 +70,16 @@ const createWindow = async () => {
     width: 1024,
     height: 728,
     frame: false,
-    webPreferences: {
-      // Electron Security warning due to this line
-      // Avoid: https://stackoverflow.com/questions/48854265/why-do-i-see-an-electron-security-warning-after-updating-my-electron-project-t
-      // Workaround: https://stackoverflow.com/questions/52236641/electron-ipc-and-nodeintegration/57656281#57656281
-      nodeIntegration: true
-    }
+    webPreferences:
+      (process.env.NODE_ENV === 'development' ||
+        process.env.E2E_BUILD === 'true') &&
+      process.env.ERB_SECURE !== 'true'
+        ? {
+            nodeIntegration: true
+          }
+        : {
+            preload: path.join(__dirname, 'dist/renderer.prod.js')
+          }
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
