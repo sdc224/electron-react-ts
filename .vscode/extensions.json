@@ -6,6 +6,7 @@
     "ms-vscode.vs-keybindings",
     "eamodio.gitlens",
     "kisstkondoros.vscode-codemetrics",
-    "PKief.material-icon-theme"
+    "PKief.material-icon-theme",
+    "msjsdiag.debugger-for-chrome"
   ]
 }
