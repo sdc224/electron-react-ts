@@ -171,7 +171,7 @@
     "sinon": "8.1.1",
     "spectron": "10.0.1",
     "style-loader": "1.2.1",
-    "stylelint": "13.5.0",
+    "stylelint": "13.6.1",
     "stylelint-config-prettier": "8.0.1",
     "stylelint-config-standard": "19.0.0",
     "terser-webpack-plugin": "2.3.6",
