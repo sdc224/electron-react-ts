@@ -196,7 +196,7 @@ export function parseMergeResult(text: string): MergeResult {
     currentMergeEntry = undefined;
   }
 
-  const entriesWithConflicts = entries.filter(e => e.hasConflicts || false);
+  const entriesWithConflicts = entries.filter((e) => e.hasConflicts || false);
 
   if (entriesWithConflicts.length > 0) {
     return {

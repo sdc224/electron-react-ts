@@ -25,7 +25,7 @@ export interface ICommitContext {
 function extractCoAuthors(trailers: ReadonlyArray<ITrailer>) {
   const coAuthors = new Array<GitAuthor>();
 
-  trailers.forEach(trailer => {
+  trailers.forEach((trailer) => {
     if (isCoAuthoredByTrailer(trailer)) {
       const author = GitAuthor.parse(trailer.value);
       if (author) {

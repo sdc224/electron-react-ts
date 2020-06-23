@@ -59,7 +59,7 @@ export async function git(
   //   throw err;
   // });
   // TODO : Work on dugite, cloning fix in dirname
-  const result = await GitProcess.exec(args, path, opts).catch(err => {
+  const result = await GitProcess.exec(args, path, opts).catch((err) => {
     // If this is an exception thrown by Node.js (as opposed to
     // dugite) let's keep the salient details but include the name of
     // the operation.

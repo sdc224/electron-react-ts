@@ -42,10 +42,10 @@ const installExtensions = async () => {
   const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
 
   return Promise.all(
-    extensions.map(extension =>
+    extensions.map((extension) =>
       electronDevtoolsInstaller(extension, forceDownload)
     )
-  ).catch(error => new Error(`Error while installing extensions\n${error}`));
+  ).catch((error) => new Error(`Error while installing extensions\n${error}`));
 };
 
 const createWindow = async () => {

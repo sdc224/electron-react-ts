@@ -16,7 +16,7 @@ export class CacheManager implements IDisposable {
   }
 
   public remove(key: string) {
-    this.storage = this.storage?.filter(s => !s[key]);
+    this.storage = this.storage?.filter((s) => !s[key]);
   }
 
   public dispose(): void {

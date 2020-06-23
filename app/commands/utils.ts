@@ -89,10 +89,10 @@ export async function mkdirp(path: string, mode?: number): Promise<boolean> {
 
 /** Create a copy of an object by assigning/merging it with a subset of its properties. */
 export function assign<T>(destination: T, ...sources: any[]): T {
-  sources.forEach(source => {
+  sources.forEach((source) => {
     Object.keys(source).forEach(
       // eslint-disable-next-line no-return-assign, no-param-reassign
-      key => ((destination as any)[key] = source[key])
+      (key) => ((destination as any)[key] = source[key])
     );
   });
 

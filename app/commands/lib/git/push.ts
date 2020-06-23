@@ -73,7 +73,7 @@ export async function push(
     opts = await executionOptionsWithProgress(
       { ...opts, trackLFSProgress: true },
       new PushProgressParser(),
-      progress => {
+      (progress) => {
         const description =
           progress.kind === 'progress' ? progress.details.text : progress.text;
         const value = progress.percent;

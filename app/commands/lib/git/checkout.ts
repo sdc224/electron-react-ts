@@ -75,7 +75,7 @@ export async function checkoutBranch(
     opts = await executionOptionsWithProgress(
       { ...opts, trackLFSProgress: true },
       new CheckoutProgressParser(),
-      progress => {
+      (progress) => {
         if (progress.kind === 'progress') {
           const description = progress.details.text;
           const value = progress.percent;
