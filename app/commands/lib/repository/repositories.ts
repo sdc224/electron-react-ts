@@ -132,7 +132,7 @@ export default class RepositoryHelper {
   public getCloneableProjects = async () => {
     const res = await this.getAllProjects();
     return {
-      projects: res?.projects?.filter(r => r.isCurrentUserProject),
+      projects: res?.projects?.filter((r) => r.isCurrentUserProject),
       pagination: this.pagination
     };
   };
@@ -142,17 +142,17 @@ export default class RepositoryHelper {
 
     const forkerProjectsArray: number[] = [];
 
-    res?.projects?.forEach(p => {
+    res?.projects?.forEach((p) => {
       if (p.isCurrentUserProject && p.forked_from_project)
         forkerProjectsArray.push(p.forked_from_project.id);
     });
 
     const filteredCurrentUserProjects = res?.projects?.filter(
-      p => !p.isCurrentUserProject
+      (p) => !p.isCurrentUserProject
     );
 
     const filteredForkerProjects = filteredCurrentUserProjects.filter(
-      element => !forkerProjectsArray.includes(element.id)
+      (element) => !forkerProjectsArray.includes(element.id)
     );
     return {
       projects: filteredForkerProjects,
@@ -164,7 +164,7 @@ export default class RepositoryHelper {
     if (this.repositories?.length <= 0)
       throw new Error('Repositories not found');
 
-    const project = this.repositories.find(a => a.id === id);
+    const project = this.repositories.find((a) => a.id === id);
 
     if (!project) return null;
 
@@ -196,14 +196,14 @@ export default class RepositoryHelper {
     if (this.repositories?.length <= 0)
       throw new Error('Repositories not found');
 
-    const existingRemotes = this.repositories.find(a => a.id === id);
+    const existingRemotes = this.repositories.find((a) => a.id === id);
 
     const remotes = (await git.getRemotes(existingRemotes!)) as IRemote[];
 
     const repoIndex = this.repositories.indexOf(existingRemotes!);
 
     const modifiedRemotes = remotes.filter(
-      r =>
+      (r) =>
         r.name !== existingRemotes?.remote?.central?.name &&
         r.name !== existingRemotes?.remote?.origin.name
     );
@@ -215,7 +215,7 @@ export default class RepositoryHelper {
     if (this.repositories?.length <= 0)
       throw new Error('Repositories not found');
 
-    const project = this.repositories.find(a => a.id === id);
+    const project = this.repositories.find((a) => a.id === id);
     const projectIndex = this.repositories.indexOf(project!);
 
     try {
@@ -225,7 +225,7 @@ export default class RepositoryHelper {
 
       const branches: Branch[] = [];
 
-      cloudBranches?.forEach(cloudBranch => {
+      cloudBranches?.forEach((cloudBranch) => {
         const author = new CommitIdentity(
           cloudBranch.commit?.authorName!,
           cloudBranch.commit?.authorEmail!,

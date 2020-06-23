@@ -23,9 +23,9 @@ export const getRemotes = async (
   const output = result.stdout;
   const lines = output.split('\n');
   const remotes = lines
-    .filter(x => x.endsWith('(fetch)'))
-    .map(x => x.split(/\s+/))
-    .map(x => ({ name: x[0], url: x[1] }));
+    .filter((x) => x.endsWith('(fetch)'))
+    .map((x) => x.split(/\s+/))
+    .map((x) => ({ name: x[0], url: x[1] }));
 
   return remotes;
 };

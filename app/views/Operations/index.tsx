@@ -164,7 +164,7 @@ const Operations: React.FC = () => {
           textColor="inherit"
           aria-label="scrollable force tabs example"
         >
-          {getOperationTabs.map(tab => (
+          {getOperationTabs.map((tab) => (
             <Tab key={tab.id} {...tab} />
           ))}
         </Tabs>
@@ -174,7 +174,7 @@ const Operations: React.FC = () => {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        {getOperations.map(operation => (
+        {getOperations.map((operation) => (
           <TabPanel key={operation.value} {...operation} />
         ))}
       </SwipeableViews>

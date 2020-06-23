@@ -26,7 +26,7 @@ const Routes: React.FC = () => {
       <CustomSnackbar />
       <Switch>
         <Redirect exact from="/" to={path} />
-        {routes.map(route => (
+        {routes.map((route) => (
           <RouteWithLayout
             key={route.key}
             exact={route.exact}

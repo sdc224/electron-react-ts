@@ -87,11 +87,11 @@ const Fork: React.FC = () => {
           onChange={handleChange}
           labelWidth={labelWidth}
           // TODO : Deletable Chip
-          renderValue={selected => (
+          renderValue={(selected) => (
             <div className={classes.chips}>
               {(selected as number[])
-                .map(i => forkState!.projects[i]!.name)
-                .map(value => (
+                .map((i) => forkState!.projects[i]!.name)
+                .map((value) => (
                   <Chip key={value} label={value} className={classes.chip} />
                 ))}
             </div>

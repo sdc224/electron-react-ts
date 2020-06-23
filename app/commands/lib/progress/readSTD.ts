@@ -14,7 +14,7 @@ function createProgressProcessCallback(
   // lfsProgressPath: string | null,
   progressCallback: (progress: IGitProgress | IGitOutput) => void
 ): (process: ChildProcess) => void {
-  return process => {
+  return (process) => {
     // TODO : Future Plans
     // if (lfsProgressPath) {
     //   const lfsParser = new GitLFSProgressParser();

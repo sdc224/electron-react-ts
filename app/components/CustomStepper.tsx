@@ -9,7 +9,7 @@ interface ICustomStepperProps {
 const CustomStepper = ({ steps, activeStep = 0 }: ICustomStepperProps) => {
   return (
     <Stepper alternativeLabel activeStep={activeStep}>
-      {steps.map(label => (
+      {steps.map((label) => (
         <Step key={label}>
           <StepLabel>{label}</StepLabel>
         </Step>
