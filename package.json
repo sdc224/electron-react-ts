@@ -207,7 +207,6 @@
     "electron-updater": "4.3.1",
     "history": "4.10.1",
     "immer": "5.3.6",
-    "node-abi": "^2.18.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-hot-loader": "4.12.21",
