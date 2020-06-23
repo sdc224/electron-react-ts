@@ -10,7 +10,6 @@ It also has redux, following ducks architecture
 [![Build Status][azure-pipelines-image]][azure-pipelines-url]
 [![Build Status][github-actions-status]][github-actions-url]
 [![Appveyor Build Status][appveyor-image]][appveyor-url]
-[![Build Status][travis-image]][travis-url]
 
 [![Dependency Status][david-image]][david-url]
 [![DevDependency Status][david-dev-image]][david-dev-url]
@@ -25,8 +24,6 @@ It also has redux, following ducks architecture
 [github-actions-url]: https://github.com/sdc224/electron-react-ts/actions
 [appveyor-image]: https://ci.appveyor.com/api/projects/status/github/sdc224/electron-react-ts?branch=master&svg=true
 [appveyor-url]: https://ci.appveyor.com/project/sdc224/electron-react-ts/branch/master
-[travis-image]: https://travis-ci.com/sdc224/electron-react-ts.svg?branch=master
-[travis-url]: https://travis-ci.com/sdc224/electron-react-ts
 [david-image]: https://img.shields.io/david/sdc224/electron-react-ts.svg
 [david-url]: https://david-dm.org/sdc224/electron-react-ts
 [david-dev-image]: https://img.shields.io/david/dev/sdc224/electron-react-ts.svg?label=devDependencies
