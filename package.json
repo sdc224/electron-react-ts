@@ -75,9 +75,6 @@
     "yarn": ">=0.21.3"
   },
   "homepage": "https://github.com/sdc224/electron-react-ts#readme",
-  "resolutions": {
-    "node-abi": "2.18.0"
-  },
   "devDependencies": {
     "@babel/core": "7.10.3",
     "@babel/plugin-proposal-class-properties": "7.10.1",
