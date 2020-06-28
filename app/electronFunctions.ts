@@ -1,49 +1,33 @@
-import { remote, BrowserWindow } from 'electron';
+import { ipcRenderer } from 'electron';
 
-let browserWindow: BrowserWindow | null = null;
-
-const initialize = () => {
-  browserWindow = remote.getCurrentWindow();
-};
-
-export const getAppPath = () => remote.app.getAppPath();
+export const getAppPath = async () =>
+  (await ipcRenderer.invoke('appPath')) as string;
 
 export const minimizeWindow = () => {
-  if (!browserWindow) initialize();
-
-  browserWindow?.minimize();
+  ipcRenderer.invoke('minimize-window');
 };
 
 export const maximizeWindow = () => {
-  if (!browserWindow) initialize();
-
-  browserWindow?.maximize();
+  ipcRenderer.invoke('maximize-window');
 };
 
 export const unMaximizeWindow = () => {
-  if (!browserWindow) initialize();
-
-  browserWindow?.unmaximize();
+  ipcRenderer.invoke('unmaximize-window');
 };
 
 export const closeWindow = () => {
-  if (!browserWindow) initialize();
-
-  browserWindow?.close();
+  ipcRenderer.invoke('close-window');
 };
 
-export const isMaximized = (): boolean => {
-  if (!browserWindow) initialize();
-
-  return !!browserWindow?.isMaximized();
+export const isMaximized = (): Promise<boolean> => {
+  return ipcRenderer.invoke('is-maximized-window');
 };
 
-export const openFolderSystemDialog = (
+export const openFolderSystemDialog = async (
   title?: string,
   defaultPath?: string
 ) => {
-  if (!browserWindow) initialize();
-  return remote.dialog.showOpenDialog(browserWindow!, {
+  return ipcRenderer.invoke('showOpenDialog', {
     title,
     defaultPath,
     properties: ['openDirectory']

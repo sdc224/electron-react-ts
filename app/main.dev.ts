@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -6,15 +7,16 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
-import { app, BrowserWindow, dialog, shell } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  dialog,
+  shell,
+  ipcMain,
+  OpenDialogOptions
+} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import * as electronDebug from 'electron-debug';
-import sourceMapSupport from 'source-map-support';
-import electronDevtoolsInstaller, {
-  REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS
-} from 'electron-devtools-installer';
 
 export default class AppUpdater {
   constructor() {
@@ -27,25 +29,38 @@ export default class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 
 if (process.env.NODE_ENV === 'production') {
-  sourceMapSupport.install();
+  import('source-map-support')
+    .then((sourceMapSupport) => sourceMapSupport.install())
+    .catch((error) => console.error(error));
 }
 
 if (
   process.env.NODE_ENV === 'development' ||
   process.env.DEBUG_PROD === 'true'
 ) {
-  electronDebug.default();
+  import('electron-debug')
+    .then((electronDebug) => electronDebug.default())
+    .catch((error) => console.error(error));
 }
 
 const installExtensions = async () => {
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
+  try {
+    const installer = await import('electron-devtools-installer');
+    const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+    const extensions = [
+      installer.REACT_DEVELOPER_TOOLS,
+      installer.REDUX_DEVTOOLS
+    ];
 
-  return Promise.all(
-    extensions.map((extension) =>
-      electronDevtoolsInstaller(extension, forceDownload)
-    )
-  ).catch((error) => new Error(`Error while installing extensions\n${error}`));
+    return Promise.all(
+      extensions.map((extension) => installer.default(extension, forceDownload))
+    ).catch(
+      (error) => new Error(`Error while installing extensions\n${error}`)
+    );
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 const createWindow = async () => {
@@ -53,7 +68,11 @@ const createWindow = async () => {
     process.env.NODE_ENV === 'development' ||
     process.env.DEBUG_PROD === 'true'
   ) {
-    await installExtensions();
+    try {
+      await installExtensions();
+    } catch (error) {
+      console.error('Extension Installation Failed');
+    }
   }
 
   mainWindow = new BrowserWindow({
@@ -131,3 +150,42 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
+
+ipcMain.handle('minimize-window', () => {
+  if (!mainWindow) return;
+
+  mainWindow.minimize();
+});
+
+ipcMain.handle('maximize-window', () => {
+  if (!mainWindow) return;
+
+  mainWindow.maximize();
+});
+
+ipcMain.handle('unmaximize-window', () => {
+  if (!mainWindow) return;
+
+  mainWindow.unmaximize();
+});
+
+ipcMain.handle('close-window', () => {
+  if (!mainWindow) return;
+
+  mainWindow.close();
+});
+
+ipcMain.handle('is-maximized-window', () => {
+  if (!mainWindow) return null;
+
+  return mainWindow.isMaximized();
+});
+
+ipcMain.handle('appPath', () => app.getAppPath());
+
+ipcMain.handle(
+  'showOpenDialog',
+  (_event, openDialogOptions: OpenDialogOptions) => {
+    dialog.showOpenDialog(mainWindow!, openDialogOptions);
+  }
+);

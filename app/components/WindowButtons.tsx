@@ -49,14 +49,22 @@ const MinimizeButton: React.FC = () => (
 );
 
 const MaximizeButton: React.FC = () => {
-  const [maximizedState, setMaximizedState] = React.useState(isMaximized());
+  const [maximizedState, setMaximizedState] = React.useState(false);
+
+  const setMaximizedStateAsync = React.useCallback(() => isMaximized(), [
+    isMaximized
+  ]);
 
   React.useEffect(() => {
-    setMaximizedState(isMaximized());
-  }, [isMaximized()]);
+    setMaximizedStateAsync()
+      .then((state) => setMaximizedState(state))
+      .catch((err) => {
+        throw err;
+      });
+  }, []);
 
-  const maximize = () => {
-    if (isMaximized()) {
+  const maximize = async () => {
+    if (await isMaximized()) {
       unMaximizeWindow();
       setMaximizedState(false);
     } else {
