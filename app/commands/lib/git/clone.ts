@@ -64,7 +64,7 @@ export const clone = async (
       opts,
       // { ...opts, trackLFSProgress: true },
       new CloneProgressParser(),
-      progress => {
+      (progress) => {
         const description =
           progress.kind === 'progress' ? progress.details.text : progress.text;
         const value = progress.percent;

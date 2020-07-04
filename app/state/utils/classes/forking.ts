@@ -53,7 +53,7 @@ export default class ForkingRepositoriesStore {
 
     let success = true;
     try {
-      await this.gitlabObject.fork(project, progress => {
+      await this.gitlabObject.fork(project, (progress) => {
         this.progressState.handleProgress(progress);
         // this.stateByID.set(repository.id, progress);
       });

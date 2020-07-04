@@ -12,7 +12,7 @@ const RouteWithLayout = (props: IProps & RouteProps) => {
   return (
     <Route
       {...rest}
-      render={matchProps => (
+      render={(matchProps) => (
         <Layout>
           <Component {...matchProps} />
         </Layout>

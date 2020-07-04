@@ -50,7 +50,7 @@ export default class CloningRepositoriesStore {
 
     let success = true;
     try {
-      await this.gitObject.clone(url, path, options, progress => {
+      await this.gitObject.clone(url, path, options, (progress) => {
         this.progressState.handleProgress(progress);
         // this.stateByID.set(repository.id, progress);
       });

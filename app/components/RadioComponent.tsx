@@ -44,7 +44,7 @@ const RadioComponent = <T extends unknown>({
           value={value}
           onChange={handleChange}
         >
-          {radioProps.map(radio => (
+          {radioProps.map((radio) => (
             <FormControlLabel key={radio.id} control={<Radio />} {...radio} />
           ))}
         </RadioGroup>

@@ -49,7 +49,7 @@ const SidebarNav = (props: IProps & ListProps) => {
 
   return (
     <List {...rest} className={clsx(classes.root, className)}>
-      {operations.map(operation => (
+      {operations.map((operation) => (
         <ListItem className={classes.item} disableGutters key={operation.title}>
           <HybridButton operation={operation} />
         </ListItem>

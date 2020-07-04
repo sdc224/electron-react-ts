@@ -293,7 +293,7 @@ const ForkUpdateDialog: React.FC<IForkUpdateProps> = ({
               )
             }
             error={hasError('cloudBranch')}
-            branches={(gitBranchState.success as Branch[]).filter(b =>
+            branches={(gitBranchState.success as Branch[]).filter((b) =>
               b.name.includes(formState.values.remote?.split('::')[0]!)
             )}
             handleChange={handleChange}
@@ -303,7 +303,7 @@ const ForkUpdateDialog: React.FC<IForkUpdateProps> = ({
           <SelectBranch
             error={hasError('forkBranch')}
             branches={(gitBranchState.success as Branch[]).filter(
-              b => b.remote === 'origin'
+              (b) => b.remote === 'origin'
             )}
             handleChange={handleChange}
             selectedValue={formState.values.forkBranch || ''}

@@ -46,7 +46,7 @@ const RepositoryGrid: React.FC<IRepositoryGridProps> = () => {
         getData={getAllProjects}
       >
         <Grid container spacing={2} innerRef={ref}>
-          {projectState.projects.map(project => (
+          {projectState.projects.map((project) => (
             <Grid item xs={12} sm={6} md={4} lg={4} key={project.id}>
               <CustomCard
                 id={project.id}

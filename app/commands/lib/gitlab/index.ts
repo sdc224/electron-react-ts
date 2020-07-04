@@ -72,7 +72,7 @@ export default class GitlabOperations {
     const responseList = (await this.gitlab?.Branches.all(id)) as any[];
     if (!responseList || responseList.length === 0) return null;
     return responseList.map(
-      response =>
+      (response) =>
         ({
           canPush: response.can_push,
           commit: {

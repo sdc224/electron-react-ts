@@ -56,7 +56,7 @@ export function parseRawUnfoldedTrailers(trailers: string, separators: string) {
   const lines = trailers.split('\n');
   const parsedTrailers = new Array<ITrailer>();
 
-  lines.forEach(line => {
+  lines.forEach((line) => {
     const trailer = parseSingleUnfoldedTrailer(line, separators);
 
     if (trailer) {
@@ -161,7 +161,7 @@ export async function mergeTrailers(
     args.push('--unfold');
   }
 
-  trailers.forEach(trailer => {
+  trailers.forEach((trailer) => {
     args.push('--trailer', `${trailer.token}=${trailer.value}`);
   });
 

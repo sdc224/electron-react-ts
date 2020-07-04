@@ -74,7 +74,7 @@ export const fetch = async (
     opts = await executionOptionsWithProgress(
       { ...opts, trackLFSProgress: true },
       new FetchProgressParser(),
-      progress => {
+      (progress) => {
         // In addition to progress output from the remote end and from
         // git itself, the stderr output from pull contains information
         // about ref updates. We don't need to bring those into the progress
