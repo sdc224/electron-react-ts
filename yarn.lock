@@ -1391,29 +1391,29 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.13.1.tgz#c53b4066edae16cd1fd669f687baf031b45fb9d6"
   integrity sha512-D819f34FLHeBN/4xvw0HR0u7U2G7RqjPSggXqf7LktsxWQ48VAfGwvMrhcVuaZV2fF069c/619RdgCCms0DHhw==
 
-"@gitbeaker/browser@23.0.0":
-  version "23.0.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/browser/-/browser-23.0.0.tgz#b5204880eef9def304ab148dca9ae169937e13e1"
-  integrity sha512-dJaIIFNKSHrv9M3pJmVAQt42ME80eUDuwXuymyQ3AQl+YsDSqBUebWFG5iXHi7NFpGhnf0Fi2r49yBpuXWswJA==
+"@gitbeaker/browser@23.2.0":
+  version "23.2.0"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/browser/-/browser-23.2.0.tgz#d0731006153c866f72a1741bc4c75698b3d09830"
+  integrity sha512-/zszfFskmsKzfD6xK8L6R5apGA623FDXTDz/PzVti03zeAKMDJ2gdMpt9p9L+rJvWnMtT/E3tEHH/CAh28mqwQ==
   dependencies:
-    "@gitbeaker/core" "^23.0.0"
-    "@gitbeaker/requester-utils" "^23.0.0"
+    "@gitbeaker/core" "^23.2.0"
+    "@gitbeaker/requester-utils" "^23.2.0"
     ky "^0.20.0"
 
-"@gitbeaker/core@^23.0.0":
-  version "23.0.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/core/-/core-23.0.0.tgz#126f8e8aa9d35c6bcb7016070018b1ac0c972995"
-  integrity sha512-qAcIv1czFFe58As9fI2znmXkg8FnKrM8nsYKxhXJscHFduObI24CLspTrGnIk4aG2WC6SD3l4hMwkRuz9mAwfw==
+"@gitbeaker/core@^23.2.0":
+  version "23.2.0"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/core/-/core-23.2.0.tgz#94b04eb45d35834ed46ef02f3f5649350f43aa07"
+  integrity sha512-azegZqCajryIN4e26eCkfDVZRkft0FtrU6viQC3WMg/NBmSqQvEXv1Rd/wmsd9XA//VQhmCcOzlOgsqbmv5QQg==
   dependencies:
-    "@gitbeaker/requester-utils" "^23.0.0"
+    "@gitbeaker/requester-utils" "^23.2.0"
     form-data "^3.0.0"
     li "^1.3.0"
     xcase "^2.0.1"
 
-"@gitbeaker/requester-utils@^23.0.0":
-  version "23.0.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/requester-utils/-/requester-utils-23.0.0.tgz#8f1d67b7a44e44115762c5d9d8ab681ae7c15acc"
-  integrity sha512-QfVMfhEgAh6eXg9n8Nf0arXEYleQ9AaLxiC7kwpdGC33JR6eTJvXWcDFJ/8ZmAreLdss7hN7J+jxT4DZJ/DUaw==
+"@gitbeaker/requester-utils@^23.2.0":
+  version "23.2.0"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/requester-utils/-/requester-utils-23.2.0.tgz#1ceb8ab53bd788ed2dca8fc8d5d69d0a9ab28da1"
+  integrity sha512-2UQYSwH2Lh2czycz/siyvuUh/o/lYAMJQhC4vDrzRsFwWUGp05hWvIpTTm4K5dKqQHcwBu6HKkxgYhczTyWOnw==
   dependencies:
     form-data "^3.0.0"
     query-string "^6.12.1"
