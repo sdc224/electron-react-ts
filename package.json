@@ -70,9 +70,9 @@
     "reload"
   ],
   "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x",
-    "yarn": ">=0.21.3"
+    "node": ">=10.13",
+    "npm": ">=6.x",
+    "yarn": ">=1.21.3"
   },
   "homepage": "https://github.com/sdc224/electron-react-ts#readme",
   "devDependencies": {
@@ -166,7 +166,6 @@
     "testcafe": "1.8.8",
     "testcafe-browser-provider-electron": "0.0.15",
     "testcafe-react-selectors": "4.0.0",
-    "typed-css-modules-webpack-plugin": "0.2.0",
     "typesafe-actions": "5.1.0",
     "typescript": "3.9.6",
     "url-loader": "4.1.0",
