@@ -178,7 +178,7 @@
     "yarn": "1.22.4"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.14.0",
+    "@fortawesome/fontawesome-free": "5.15.3",
     "@gitbeaker/browser": "23.2.0",
     "@hot-loader/react-dom": "16.13.0",
     "@material-ui/core": "4.11.0",
