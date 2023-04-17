@@ -101,7 +101,7 @@
     "@babel/register": "7.10.5",
     "@types/byline": "4.2.32",
     "@types/electron-devtools-installer": "2.2.0",
-    "@types/enzyme": "3.10.5",
+    "@types/enzyme": "3.10.13",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/history": "4.7.7",
     "@types/jest": "26.0.9",
