@@ -1504,32 +1504,32 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.14.0.tgz#a371e91029ebf265015e64f81bfbf7d228c9681f"
   integrity sha512-OfdMsF+ZQgdKHP9jUbmDcRrP0eX90XXrsXIdyjLbkmSBzmMXPABB8eobUJtivaupucYaByz6WNe1PI1JuYm3qA==
 
-"@gitbeaker/browser@23.2.0":
-  version "23.2.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/browser/-/browser-23.2.0.tgz#d0731006153c866f72a1741bc4c75698b3d09830"
-  integrity sha512-/zszfFskmsKzfD6xK8L6R5apGA623FDXTDz/PzVti03zeAKMDJ2gdMpt9p9L+rJvWnMtT/E3tEHH/CAh28mqwQ==
+"@gitbeaker/browser@23.7.0":
+  version "23.7.0"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/browser/-/browser-23.7.0.tgz#5d2b64953d4da56c17d65267bc0f5cf452ed560e"
+  integrity sha512-tOF95uKM3ubpMU11REZrdvztOOMp+3m/1Dt9Ez4GrCm2xg53ruGaEp7rx5HR9nNYMKJxA/GakhD+Ax1FXKnAtA==
   dependencies:
-    "@gitbeaker/core" "^23.2.0"
-    "@gitbeaker/requester-utils" "^23.2.0"
-    ky "^0.20.0"
+    "@gitbeaker/core" "^23.7.0"
+    "@gitbeaker/requester-utils" "^23.7.0"
+    ky "^0.23.0"
 
-"@gitbeaker/core@^23.2.0":
-  version "23.2.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/core/-/core-23.2.0.tgz#94b04eb45d35834ed46ef02f3f5649350f43aa07"
-  integrity sha512-azegZqCajryIN4e26eCkfDVZRkft0FtrU6viQC3WMg/NBmSqQvEXv1Rd/wmsd9XA//VQhmCcOzlOgsqbmv5QQg==
+"@gitbeaker/core@^23.7.0":
+  version "23.7.0"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/core/-/core-23.7.0.tgz#9d0599aa849abfa4c360a0c7ddae875ad54f195d"
+  integrity sha512-f41uccuuGX+NCS40+GWlvRmiF7fpMOlvW21hWVyV7W3+h648Rp1kWsAk7/x2ekjXInKAxmp3esrs9z0SKvOXKA==
   dependencies:
-    "@gitbeaker/requester-utils" "^23.2.0"
+    "@gitbeaker/requester-utils" "^23.7.0"
     form-data "^3.0.0"
     li "^1.3.0"
     xcase "^2.0.1"
 
-"@gitbeaker/requester-utils@^23.2.0":
-  version "23.2.0"
-  resolved "https://registry.yarnpkg.com/@gitbeaker/requester-utils/-/requester-utils-23.2.0.tgz#1ceb8ab53bd788ed2dca8fc8d5d69d0a9ab28da1"
-  integrity sha512-2UQYSwH2Lh2czycz/siyvuUh/o/lYAMJQhC4vDrzRsFwWUGp05hWvIpTTm4K5dKqQHcwBu6HKkxgYhczTyWOnw==
+"@gitbeaker/requester-utils@^23.7.0":
+  version "23.7.0"
+  resolved "https://registry.yarnpkg.com/@gitbeaker/requester-utils/-/requester-utils-23.7.0.tgz#80016ad6f7caec6ee37e59464daa11b4e8e65727"
+  integrity sha512-VKCoUQf5iUNdk9T/wXTHt1WoZSX2b6Qxq3dWii7wiiwnMyMV/KHe7lAkIZOlS/8X8L0CKmesGkt8ZsRbh7Vi9Q==
   dependencies:
     form-data "^3.0.0"
-    query-string "^6.12.1"
+    query-string "^6.13.3"
     xcase "^2.0.1"
 
 "@hot-loader/react-dom@16.13.0":
@@ -7073,6 +7073,11 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
+filter-obj@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/filter-obj/-/filter-obj-1.1.0.tgz#9b311112bc6c6127a16e016c6c5d7f19e0805c5b"
+  integrity sha512-8rXg1ZnX7xzy2NGDVkBVaAy+lSlPNwad13BtgSlLuxfIslyt5Vg64U7tFcCt4WS1R0hvtnQybT/IyCkGZ3DpXQ==
+
 finalhandler@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.1.2.tgz#b7e7d000ffd11938d0fdb053506f6ebabe9f587d"
@@ -9548,10 +9553,10 @@ known-css-properties@^0.19.0:
   resolved "https://registry.yarnpkg.com/known-css-properties/-/known-css-properties-0.19.0.tgz#5d92b7fa16c72d971bda9b7fe295bdf61836ee5b"
   integrity sha512-eYboRV94Vco725nKMlpkn3nV2+96p9c3gKXRsYqAJSswSENvBhN7n5L+uDhY58xQa0UukWsDMTGELzmD8Q+wTA==
 
-ky@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/ky/-/ky-0.20.0.tgz#4cebcd208f2d0d0b5970a63523afecfd79bd9e46"
-  integrity sha512-JAfwtwj+t7WqRus88PfBj25aAjRQUgMhk7aB2ufjQ6v8faoNwMy02mfSQ0iNXWCbJGcSl2JZ5ckaiywRjbq0Uw==
+ky@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/ky/-/ky-0.23.0.tgz#54c2f3fa9003d591cb2f368384e6c84795a92e64"
+  integrity sha512-+t2CbQsLmpN3HeYPBxN+VbZqBOd86njF3cvnueC77pJKVHRjiMI0Ac+pfkB8e17Bw1dGHbMk9hrHst9Bw7ndgw==
 
 language-subtag-registry@~0.3.2:
   version "0.3.20"
@@ -12060,12 +12065,13 @@ query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^6.12.1:
-  version "6.13.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.1.tgz#d913ccfce3b4b3a713989fe6d39466d92e71ccad"
-  integrity sha512-RfoButmcK+yCta1+FuU8REvisx1oEzhMKwhLUNcepQTPGcNMp1sIqjnfCtfnvGSQZQEhaBHvccujtWoUV3TTbA==
+query-string@^6.13.3:
+  version "6.14.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.14.1.tgz#7ac2dca46da7f309449ba0f86b1fd28255b0c86a"
+  integrity sha512-XDxAeVmpfu1/6IjyT/gXHOl+S0vQ9owggJ30hhWKdHAsNPOcasn5o9BW0eejZqL2e4vMjhAxoW3jVHcD6mbcYw==
   dependencies:
     decode-uri-component "^0.2.0"
+    filter-obj "^1.1.0"
     split-on-first "^1.0.0"
     strict-uri-encode "^2.0.0"
 
