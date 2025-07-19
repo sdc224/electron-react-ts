@@ -114,7 +114,7 @@
     "@types/redux-logger": "3.0.8",
     "@typescript-eslint/eslint-plugin": "2.34.0",
     "@typescript-eslint/parser": "2.34.0",
-    "babel-loader": "8.1.0",
+    "babel-loader": "8.4.1",
     "babel-plugin-dev-expression": "0.2.2",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "chalk": "4.1.0",
